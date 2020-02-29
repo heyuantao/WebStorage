@@ -2,6 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="62e4d7ef-91bf-44db-a8e3-7da930fe9347" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routes/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routes/download_routers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routes/index_routers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/routes/upload_routers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
     </list>
@@ -15,6 +20,7 @@
       <list>
         <option value="Flask Main" />
         <option value="JavaScript File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -22,7 +28,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1YRL51jDyZMoenWaDUwLZsDeB87" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -83,7 +91,7 @@
       <option name="presentableId" value="Default" />
       <updated>1582900272276</updated>
       <workItem from="1582900274907" duration="4650000" />
-      <workItem from="1582937074089" duration="15890000" />
+      <workItem from="1582937074089" duration="20525000" />
     </task>
     <servers />
   </component>
@@ -95,24 +103,24 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="178" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1582900879577" />
-    <state width="1877" height="196" key="GridCell.Tab.0.bottom" timestamp="1582980024745">
+    <state width="1877" height="196" key="GridCell.Tab.0.bottom" timestamp="1582988984540">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="196" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1582980024745" />
-    <state width="1877" height="196" key="GridCell.Tab.0.center" timestamp="1582980024745">
+    <state width="1877" height="196" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1582988984540" />
+    <state width="1877" height="196" key="GridCell.Tab.0.center" timestamp="1582988984540">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="196" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1582980024745" />
-    <state width="1877" height="196" key="GridCell.Tab.0.left" timestamp="1582980024745">
+    <state width="1877" height="196" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1582988984540" />
+    <state width="1877" height="196" key="GridCell.Tab.0.left" timestamp="1582988984540">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="196" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1582980024745" />
-    <state width="1877" height="196" key="GridCell.Tab.0.right" timestamp="1582980024745">
+    <state width="1877" height="196" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1582988984540" />
+    <state width="1877" height="196" key="GridCell.Tab.0.right" timestamp="1582988984540">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="196" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1582980024745" />
+    <state width="1877" height="196" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1582988984540" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/WebStorage$WebStorage.coverage" NAME="WebStorage Coverage Results" MODIFIED="1582980024727" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/WebStorage$WebStorage.coverage" NAME="WebStorage Coverage Results" MODIFIED="1582988984540" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
