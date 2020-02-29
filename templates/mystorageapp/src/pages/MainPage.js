@@ -1,5 +1,6 @@
 import React from "react";
 import { Upload, Button, message } from 'antd';
+import axios from 'axios';
 import { UploadOutlined } from '@ant-design/icons';
 import WebUploader from 'webuploader';
 import $ from 'jquery';
@@ -60,9 +61,13 @@ class MainPage extends React.Component{
         uploader.on('uploadSuccess', function(file) { //整个文件的所有分片都上传成功，调用该方法
             //上传的信息（文件唯一标识符，文件后缀名）
             const data = {'task_id': 'abc', 'ext': file.source['ext'], 'type': file.source['type']};
-            $.get('http://127.0.0.1:5000/api/upload/success', data);          //ajax携带data向该url发请求
-
-            _this.uploadFinished();
+            //$.get('http://127.0.0.1:5000/api/upload/success', data);          //ajax携带data向该url发请求
+            axios.post('http://127.0.0.1:5000/api/upload/success',data).then((res)=>{
+                _this.uploadFinished();
+            }).catch((err)=>{
+                console.log("error happen");
+                _this.uploadFinished();
+            })
         });
 
         uploader.on('uploadError', function(file) {   //上传过程中发生异常，调用该方法
