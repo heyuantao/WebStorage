@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="62e4d7ef-91bf-44db-a8e3-7da930fe9347" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/mystorageapp/src/pages/MainPage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/mystorageapp/src/setupProxy.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/mystorageapp/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/templates/mystorageapp/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/mystorageapp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/templates/mystorageapp/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/mystorageapp/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/mystorageapp/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +19,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/templates/mystorageapp" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1YRL51jDyZMoenWaDUwLZsDeB87" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -86,7 +83,7 @@
       <option name="presentableId" value="Default" />
       <updated>1582900272276</updated>
       <workItem from="1582900274907" duration="4650000" />
-      <workItem from="1582937074089" duration="12650000" />
+      <workItem from="1582937074089" duration="13371000" />
     </task>
     <servers />
   </component>
