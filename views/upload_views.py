@@ -1,8 +1,8 @@
 #-*- coding=utf-8 -*-
 from flask import render_template, request, session, jsonify, current_app
+from random import random
+from uuid import uuid4
 import os
-
-
 
 def api_upload_view():  # 一个分片上传后被调用
     TMP_UPLOAD_PATH = current_app.config['TMP_UPLOAD_PATH']
@@ -50,4 +50,6 @@ def api_upload_success_view():  # 所有分片均上传完后被调用
     return jsonify({'status': 'sucess'})
 
 def api_upload_token_view():
-    return "token is xdfsfs"
+    task = uuid4().hex
+    token_dict = {"key":"absdfdsfds.zip","task":task}
+    return jsonify(token_dict)

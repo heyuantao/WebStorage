@@ -11,7 +11,6 @@ class MainPage extends React.Component{
         this.state = {
             editable: false, mediaFileList: [], mediaUploading: false, mediaPercent: 0, mediaUrl:"",
         };
-
     }
 
     componentDidMount() {
@@ -58,8 +57,7 @@ class MainPage extends React.Component{
             _this.setState({mediaPercent:percentage_string});
         });
 
-        uploader.on('uploadSuccess', function(file) { //整个文件的所有分片都上传成功，调用该方法
-            //上传的信息（文件唯一标识符，文件后缀名）
+        uploader.on('uploadSuccess', function(file) { //整个文件的所有分片都上传成功，调用该方法 上传的信息（文件唯一标识符，文件后缀名）
             const data = {'task': task, 'key':key,'ext': file.source['ext'], 'type': file.source['type']};
             axios.post('http://127.0.0.1:5000/api/upload/success',data).then((res)=>{
                 console.log('Upload success finished !')
@@ -74,11 +72,7 @@ class MainPage extends React.Component{
             console.log('Upload error finished !');
             _this.uploadErrorFinished();
         });
-        {/*
-        uploader.on('uploadComplete', function(file) {//上传结束，无论文件最终是否上传成功，该方法都会被调用
-            console.log('Upload complete !')
-        });
-        */}
+
         const runtimeForRuid = new WebUploader.Runtime.Runtime();
         const wuFile = new WebUploader.File(new WebUploader.Lib.File(WebUploader.guid('rt_'),file));
         uploader.addFiles(wuFile);
@@ -90,7 +84,13 @@ class MainPage extends React.Component{
         const {mediaFileList} = this.state;
         const new_file = mediaFileList[0];
         this.setState({mediaUploading:true});
-        this.handleUploadProcess("01213434322","3ad43543sfex.zip",new_file);
+        axios.get("http://127.0.0.1:5000/api/upload/token/").then((res)=>{
+            const task = res.data.task;
+            const key = res.data.key;
+            console.log(res);
+            this.handleUploadProcess(task,key,new_file);
+        })
+        //this.handleUploadProcess("01213434322","3ad43543sfex.zip",new_file);
     }
 
     uploadFinished =()=>{
