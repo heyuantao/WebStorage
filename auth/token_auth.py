@@ -1,11 +1,9 @@
 #-*- coding=utf-8 -*-
 from flask import Flask
 from flask_httpauth import HTTPBasicAuth, HTTPDigestAuth, HTTPTokenAuth
+from config import config
 
-tokens = {
-    "secret-token-1": "john",
-    "secret-token-2": "susan"
-}
+token_list = config.App.AUTH_TOKEN
 
 class TokenAuth:
     auth = None
@@ -16,7 +14,7 @@ class TokenAuth:
 
         @auth.verify_token
         def verify_token(token):
-            if token in tokens:
+            if token in token_list:
                 return True
             return False
 

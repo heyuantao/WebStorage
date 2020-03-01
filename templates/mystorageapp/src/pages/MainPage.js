@@ -59,7 +59,7 @@ class MainPage extends React.Component{
 
         uploader.on('uploadSuccess', function(file) { //整个文件的所有分片都上传成功，调用该方法 上传的信息（文件唯一标识符，文件后缀名）
             const data = {'task': task, 'key':key,'ext': file.source['ext'], 'type': file.source['type']};
-            axios.post('http://127.0.0.1:5000/api/upload/success',data).then((res)=>{
+            axios.post('http://127.0.0.1:5000/api/upload/success/',data).then((res)=>{
                 console.log('Upload success finished !')
                 _this.uploadSuccessFinished();
             }).catch((err)=>{
@@ -84,13 +84,15 @@ class MainPage extends React.Component{
         const {mediaFileList} = this.state;
         const new_file = mediaFileList[0];
         this.setState({mediaUploading:true});
-        axios.get("http://127.0.0.1:5000/api/upload/token/").then((res)=>{
+        axios.post("http://127.0.0.1:5000/api/upload/token/",{},{headers: {'Authorization': 'Token 1234567890'}}
+        ).then((res)=>{
             const task = res.data.task;
             const key = res.data.key;
-            console.log(res);
             this.handleUploadProcess(task,key,new_file);
+        }).catch((err)=>{
+            message.error('初始化失败，请刷新该页面');
+            this.setState({mediaUploading:false});
         })
-        //this.handleUploadProcess("01213434322","3ad43543sfex.zip",new_file);
     }
 
     uploadFinished =()=>{

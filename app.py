@@ -5,7 +5,6 @@ from config import config
 
 
 def create_app():
-    print(config.App.STATIC_FOLDER)
     app = Flask(__name__,static_folder=config.App.STATIC_FOLDER, template_folder=config.App.TEMPLATE_FOLDER)
     app.config.from_object(config)
     CORS(app)
@@ -19,8 +18,6 @@ def create_app():
     from routes import Route
     route_instance = Route()
     route_instance.init_app(app, auth_instance.get_auth())
-    print("good")
-    print(auth_instance.get_auth())
 
     return app
 

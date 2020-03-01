@@ -19,3 +19,6 @@ class Storage:
         key_info_dict = {'key':key,'file_path':file_path}
         return key_info_dict
 
+    def getConent(self,key):
+        pass
+
