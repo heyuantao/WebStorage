@@ -1,12 +1,12 @@
 #-*- coding=utf-8 -*-
-
-from flask import Flask, render_template, request, session, jsonify
+from flask import Flask
 from flask_cors import CORS
-import os
+from config import config
 
 
 def create_app():
-    app = Flask(__name__,static_folder="./templates/mystorageapp/build/static", template_folder="./templates/mystorageapp/build")
+    app = Flask(__name__,static_folder=config.STATIC_FOLDER, template_folder=config.TEMPLATE_FOLDER)
+    app.config.from_object(config)
     CORS(app)
     app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
@@ -14,7 +14,6 @@ def create_app():
     routes.init_app(app)
 
     return app
-
 
 
 if __name__ == '__main__':
