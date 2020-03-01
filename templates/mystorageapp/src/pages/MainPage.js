@@ -3,7 +3,6 @@ import { Upload, Button, message } from 'antd';
 import axios from 'axios';
 import { UploadOutlined } from '@ant-design/icons';
 import WebUploader from 'webuploader';
-//import $ from 'jquery';
 
 class MainPage extends React.Component{
 
@@ -21,7 +20,6 @@ class MainPage extends React.Component{
 
     componentWillUnmount() {
         if(this._uploader!==null){
-            console.log(this._uploader);
             this._uploader.destroy();
         }
     }
@@ -29,23 +27,23 @@ class MainPage extends React.Component{
     uploadSuccessFinished =()=>{
         this.setState({mediaUploading:false,mediaPercent: 0, mediaFileList: []});
         if(this._uploader!==null){
-            console.log(this._uploader);
             this._uploader.destroy();
         }
+        message.success('上传成功');
     }
 
     uploadErrorFinished =()=>{
         this.setState({mediaUploading:false,mediaPercent: 0});
         if(this._uploader!==null){
-            console.log(this._uploader);
             this._uploader.destroy();
         }
+        message.error('上传失败')
     }
 
     handleUploadProcess =(task_id,file)=>{
         const _this=this;
         const uploader = WebUploader.create({
-            swf: 'https://cdn.bootcss.com/webuploader/0.1.1/Uploader.swf', //swf位置，这个可能与flash有关
+            //swf: 'https://cdn.bootcss.com/webuploader/0.1.1/Uploader.swf', //swf位置，这个可能与flash有关
             server: 'http://127.0.0.1:5000/api/upload/',                        //接收每一个分片的服务器地址
             chunked: true, chunkSize: 5 * 1024 * 1024, chunkRetry: 3, threads: 1, duplicate: true,
             formData: {task_id:task_id},
@@ -107,8 +105,6 @@ class MainPage extends React.Component{
         uploader.reset();
         this.setState({mediaFileList:[],mediaUploading:false});
     }
-
-
 
     render() {
         const {mediaFileList,editable,mediaUploading,mediaPercent} = this.state;
