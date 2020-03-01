@@ -2,10 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="62e4d7ef-91bf-44db-a8e3-7da930fe9347" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/storage/FileStorage.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exceptions/AppExceptions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/upload_routers.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/upload_routers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exceptions/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/exceptions/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/index_routers.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index_routers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/FileStorage.py" beforeDir="false" afterPath="$PROJECT_DIR$/storage/FileStorage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/backup/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/backup/deleted/index3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/backup/index2.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/backup/deleted/index2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/backup/deleted/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/upload_views.py" beforeDir="false" afterPath="$PROJECT_DIR$/views/upload_views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,16 +45,18 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/views" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Projects\WebStorage\templates\backup\deleted" />
+      <recent name="D:\Projects\WebStorage\templates\backup" />
+      <recent name="D:\Projects\WebStorage\templates\mystorageapp\src" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Projects\WebStorage\views" />
       <recent name="D:\Projects\WebStorage\templates" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Projects\WebStorage\templates\backup" />
-      <recent name="D:\Projects\WebStorage\templates\mystorageapp\src" />
     </key>
   </component>
   <component name="RunManager">
@@ -98,6 +107,13 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/templates/mystorageapp/node_modules/wait-for-expect/lib/toBeInRangeMatcher.d.js" />
+        <option value="$PROJECT_DIR$/templates/mystorageapp/node_modules/wait-for-expect/lib/waitForExpect.spec.d.js" />
+        <option value="$PROJECT_DIR$/templates/mystorageapp/node_modules/wait-for-expect/lib/index.d.js" />
+      </list>
+    </option>
   </component>
   <component name="WindowStateProjectService">
     <state x="358" y="3" key="#WebStorage" timestamp="1583036490822">
@@ -109,25 +125,25 @@
     </state>
     <state x="191" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1583036538627" />
     <state x="414" y="178" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1582900879577" />
-    <state width="1237" height="124" key="GridCell.Tab.0.bottom" timestamp="1583037412709">
+    <state width="1237" height="124" key="GridCell.Tab.0.bottom" timestamp="1583048092428">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="124" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1583037412709" />
+    <state width="1237" height="124" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1583048092428" />
     <state width="1877" height="306" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583034369767" />
-    <state width="1237" height="124" key="GridCell.Tab.0.center" timestamp="1583037412707">
+    <state width="1237" height="124" key="GridCell.Tab.0.center" timestamp="1583048092428">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="124" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1583037412707" />
+    <state width="1237" height="124" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1583048092428" />
     <state width="1877" height="306" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583034369767" />
-    <state width="1237" height="124" key="GridCell.Tab.0.left" timestamp="1583037412707">
+    <state width="1237" height="124" key="GridCell.Tab.0.left" timestamp="1583048092428">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="124" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1583037412707" />
+    <state width="1237" height="124" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1583048092428" />
     <state width="1877" height="306" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583034369767" />
-    <state width="1237" height="124" key="GridCell.Tab.0.right" timestamp="1583037412709">
+    <state width="1237" height="124" key="GridCell.Tab.0.right" timestamp="1583048092428">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="124" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1583037412709" />
+    <state width="1237" height="124" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1583048092428" />
     <state width="1877" height="306" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583034369767" />
     <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1583034284769">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -148,6 +164,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/WebStorage$WebStorage.coverage" NAME="WebStorage Coverage Results" MODIFIED="1583034369767" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/WebStorage$WebStorageLaptop.coverage" NAME="WebStorageLaptop Coverage Results" MODIFIED="1583037412697" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/WebStorage$WebStorageLaptop.coverage" NAME="WebStorageLaptop Coverage Results" MODIFIED="1583048092401" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

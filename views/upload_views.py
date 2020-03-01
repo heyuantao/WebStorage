@@ -5,7 +5,8 @@ import os
 
 
 def api_upload_view():  # 一个分片上传后被调用
-    UPLOAD_PATH = current_app.config['UPLOAD_PATH']
+    TMP_UPLOAD_PATH = current_app.config['TMP_UPLOAD_PATH']
+
     upload_file = request.files['file']
     session['real_filename'] = upload_file.filename
     print(session['real_filename'])
@@ -15,12 +16,14 @@ def api_upload_view():  # 一个分片上传后被调用
     chunk = request.form.get('chunk', 0)  # 获取该分片在所有分片中的序号
     filename = '%s%s' % (key, chunk)  # 构成该分片唯一标识符
     print(filename)
-    upload_file.save(UPLOAD_PATH+'/%s' % filename)  # 保存分片到本地
+    upload_file.save(TMP_UPLOAD_PATH+'/%s' % filename)  # 保存分片到本地
     return jsonify({'status': 'sucess', 'mode': 'clip'})
 
 
 def api_upload_success_view():  # 所有分片均上传完后被调用
+    TMP_UPLOAD_PATH = current_app.config['TMP_UPLOAD_PATH']
     UPLOAD_PATH = current_app.config['UPLOAD_PATH']
+
     task = request.json.get('task')
     key = request.json.get('key')
     print("Task is {} key is {} in post to success api".format(task, key))
@@ -36,7 +39,7 @@ def api_upload_success_view():  # 所有分片均上传完后被调用
     with open(UPLOAD_PATH+'/%s' % (saved_filename), 'wb') as target_file:  # 创建新文件
         while True:
             try:
-                filename = UPLOAD_PATH+'/%s%d' % (key, chunk)
+                filename = TMP_UPLOAD_PATH+'/%s%d' % (key, chunk)
                 source_file = open(filename, 'rb')  # 按序打开每个分片
                 target_file.write(source_file.read())
                 source_file.close()

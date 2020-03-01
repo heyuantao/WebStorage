@@ -1,4 +1,7 @@
 /__pycache__
-/routes/__pycache__/*
+/routes/__pycache__
 /views/__pycache__
-/static/upload/*
+/exceptions/__pycache__
+
+/data/merged/*
+/data/tmp/*

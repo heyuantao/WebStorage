@@ -5,6 +5,7 @@ from config import config
 
 
 def create_app():
+    print(config.STATIC_FOLDER)
     app = Flask(__name__,static_folder=config.STATIC_FOLDER, template_folder=config.TEMPLATE_FOLDER)
     app.config.from_object(config)
     CORS(app)
