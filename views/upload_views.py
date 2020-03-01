@@ -45,3 +45,6 @@ def api_upload_success_view():  # 所有分片均上传完后被调用
             chunk += 1
             os.remove(filename)  # 删除该分片，节约空间
     return jsonify({'status': 'sucess'})
+
+def api_upload_token_view():
+    return "token is xdfsfs"

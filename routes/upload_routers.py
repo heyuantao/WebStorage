@@ -1,5 +1,5 @@
 #-*- coding=utf-8 -*-
-from views.upload_views import api_upload_view, api_upload_success_view
+from views.upload_views import api_upload_view, api_upload_success_view, api_upload_token_view
 
 def init_app(app):
 
@@ -16,4 +16,4 @@ def init_app(app):
 
     @app.route('/api/upload/token/', methods=['POST', 'GET'])
     def upload_token():
-        return "this is token"
+        return api_upload_token_view()
