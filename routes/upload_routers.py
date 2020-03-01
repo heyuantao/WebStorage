@@ -9,8 +9,9 @@ def init_app(app):
         upload_file = request.files['file']
         session['real_filename'] = upload_file.filename
         print(session['real_filename'])
-        task = request.form.get('task_id')  # 获取文件唯一标识符
-        print(task)
+        task = request.form.get('task')  # 获取文件唯一标识符
+        key = request.form.get('key')
+        print("Task is {} key is {} in post to upload api".format(task,key))
         chunk = request.form.get('chunk', 0)  # 获取该分片在所有分片中的序号
         filename = '%s%s' % (task, chunk)  # 构成该分片唯一标识符
         print(filename)
@@ -19,7 +20,9 @@ def init_app(app):
 
     @app.route('/api/upload/success', methods=['POST'])
     def upload_success():  # 所有分片均上传完后被调用
-        task = request.json.get('task_id')
+        task = request.json.get('task')
+        key = request.json.get('key')
+        print("Task is {} key is {} in post to success api".format(task, key))
         ext = request.json.get('ext', '')
         upload_type = request.json.get('type')
         if len(ext) == 0 and upload_type:
@@ -40,7 +43,6 @@ def init_app(app):
                     break
                 chunk += 1
                 os.remove(filename)  # 删除该分片，节约空间
-        # return render_template('index.html')
         return jsonify({'status': 'sucess'})
 
     @app.route('/api/upload/token/', methods=['POST', 'GET'])

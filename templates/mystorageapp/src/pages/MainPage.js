@@ -40,21 +40,14 @@ class MainPage extends React.Component{
         message.error('上传失败')
     }
 
-    handleUploadProcess =(task_id,file)=>{
+    handleUploadProcess =(task,key,file)=>{
         const _this=this;
         const uploader = WebUploader.create({
             //swf: 'https://cdn.bootcss.com/webuploader/0.1.1/Uploader.swf', //swf位置，这个可能与flash有关
             server: 'http://127.0.0.1:5000/api/upload/',                        //接收每一个分片的服务器地址
             chunked: true, chunkSize: 5 * 1024 * 1024, chunkRetry: 3, threads: 1, duplicate: true,
-            formData: {task_id:task_id},
+            formData: {task:task,key:key},
         });
-        {/*
-        uploader.on('uploadBeforeSend', function (obj, data, headers) {
-            data.task_id = "abc";
-            console.log(data);
-        });
-        */}
-        //uploader.reset();
 
         uploader.on('startUpload', function() {       //开始上传时，调用该方法
         });
@@ -67,7 +60,7 @@ class MainPage extends React.Component{
 
         uploader.on('uploadSuccess', function(file) { //整个文件的所有分片都上传成功，调用该方法
             //上传的信息（文件唯一标识符，文件后缀名）
-            const data = {'task_id': 'abc', 'ext': file.source['ext'], 'type': file.source['type']};
+            const data = {'task': task, 'key':key,'ext': file.source['ext'], 'type': file.source['type']};
             axios.post('http://127.0.0.1:5000/api/upload/success',data).then((res)=>{
                 console.log('Upload success finished !')
                 _this.uploadSuccessFinished();
@@ -97,7 +90,7 @@ class MainPage extends React.Component{
         const {mediaFileList} = this.state;
         const new_file = mediaFileList[0];
         this.setState({mediaUploading:true});
-        this.handleUploadProcess("abcefg",new_file);
+        this.handleUploadProcess("01213434322","3ad43543sfex.zip",new_file);
     }
 
     uploadFinished =()=>{
