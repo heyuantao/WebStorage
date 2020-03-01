@@ -2,10 +2,12 @@
 from flask import render_template, request, session, jsonify, current_app
 from random import random
 from uuid import uuid4
+from config import config
 import os
 
+
 def api_upload_view():  # 一个分片上传后被调用
-    TMP_UPLOAD_PATH = current_app.config['TMP_UPLOAD_PATH']
+    TMP_UPLOAD_PATH = config.FileStorage.TMP_UPLOAD_PATH
 
     upload_file = request.files['file']
     session['real_filename'] = upload_file.filename
@@ -21,8 +23,8 @@ def api_upload_view():  # 一个分片上传后被调用
 
 
 def api_upload_success_view():  # 所有分片均上传完后被调用
-    TMP_UPLOAD_PATH = current_app.config['TMP_UPLOAD_PATH']
-    UPLOAD_PATH = current_app.config['UPLOAD_PATH']
+    TMP_UPLOAD_PATH = config.FileStorage.TMP_UPLOAD_PATH
+    UPLOAD_PATH = config.FileStorage.UPLOAD_PATH
 
     task = request.json.get('task')
     key = request.json.get('key')

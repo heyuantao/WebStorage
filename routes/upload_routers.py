@@ -1,6 +1,6 @@
 #-*- coding=utf-8 -*-
 from views.upload_views import api_upload_view, api_upload_success_view, api_upload_token_view
-
+from auth import get_auth
 def init_app(app):
 
 

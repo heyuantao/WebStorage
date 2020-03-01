@@ -4,7 +4,7 @@ import os
 
 
 def api_download_key_info_view():
-    settings = current_app.config
+    settings = current_app.config['FileStorage']
     return jsonify(settings['UPLOAD_PATH'])
 
 

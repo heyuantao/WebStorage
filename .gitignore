@@ -1,4 +1,5 @@
 /__pycache__
+/auth/__pycache__
 /routes/__pycache__
 /views/__pycache__
 /exceptions/__pycache__

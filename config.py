@@ -1,10 +1,17 @@
 import os
 
-class Config:
+class FileStorageConfig:
     TMP_UPLOAD_PATH ="./data/tmp"                               #before merge
     UPLOAD_PATH = "./data/merged"                               #not end with slash
-    STATIC_FOLDER = "./templates/mystorageapp/build/static"     #not end with slash
-    TEMPLATE_FOLDER = "./templates/mystorageapp/build"          #not end with slash
 
+
+class AppConfig:
+    STATIC_FOLDER = "./templates/mystorageapp/build/static"  # not end with slash
+    TEMPLATE_FOLDER = "./templates/mystorageapp/build"  # not end with slash
+
+
+class Config:
+    FileStorage = FileStorageConfig()
+    App = AppConfig()
 
 config = Config()
