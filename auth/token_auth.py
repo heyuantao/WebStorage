@@ -7,16 +7,18 @@ tokens = {
     "secret-token-2": "susan"
 }
 
-auth = None
+class TokenAuth:
+    auth = None
 
-def init_app(app):
-    auth = HTTPTokenAuth(scheme='Token')
+    def init_app(self, app=None):
+        auth = HTTPTokenAuth(scheme='Token')
+        self.auth = auth
 
-    @auth.verify_token
-    def verify_token(token):
-        if token in tokens:
-            return True
-        return False
+        @auth.verify_token
+        def verify_token(token):
+            if token in tokens:
+                return True
+            return False
 
-def get_auth():
-    return auth
+    def get_auth(self):
+        return self.auth

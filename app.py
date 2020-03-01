@@ -11,11 +11,16 @@ def create_app():
     CORS(app)
     app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
-    from . import routes
-    routes.init_app(app)
+    from auth import Auth
+    auth_instance = Auth()
+    auth_instance.init_app(app)
 
-    from . import auth
-    auth.init_app(app)
+
+    from routes import Route
+    route_instance = Route()
+    route_instance.init_app(app, auth_instance.get_auth())
+    print("good")
+    print(auth_instance.get_auth())
 
     return app
 
