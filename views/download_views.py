@@ -1,6 +1,7 @@
 #-*- coding=utf-8 -*-
 from flask import render_template, request, session, jsonify, current_app, stream_with_context, Response
 from config import config
+from db import database
 import os
 
 
@@ -11,6 +12,7 @@ def api_download_info_view():
 
 def api_download_url_view():
     key = request.json.get('key')
+
     return jsonify({'key': key, 'exist': False, 'url':'http://127.0.0.1/abc.zip'})
 
 
