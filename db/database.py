@@ -19,7 +19,7 @@ class Database:
     def init_app(self,app=None):
         self.host='127.0.0.1'
         self.port=6379
-        self.connection_pool = redis.ConnectionPool(host=self.host, port=self.port, db=0) #password
+        self.connection_pool = redis.ConnectionPool(host=self.host, port=self.port, db=0, decode_responses=True) #password
         self.connection = redis.StrictRedis(connection_pool=self.connection_pool)
         #self.connection_pool = redis.ConnectionPool(self.host, self.port, db=0)
         #self.connection = redis.Redis(connection_pool=self.connection_pool)
@@ -39,10 +39,33 @@ class Database:
         connection.expire(key_with_prefix, timedelta(hours =2))
         return task
 
+    def is_upload_task_valid(self,key,task):
+        connection = self.connection
+
+        key_with_prefix = self.token_prefix + ":" + key
+        if connection.exists(key_with_prefix):
+            result = connection.get(key_with_prefix)
+            if result == task:
+                return True
+            else:
+                return False
+        else:
+            return False
+
+    def clear_upload_task_by_key(self,key):
+        connection = self.connection
+        key_with_prefix = self.token_prefix + ":" + key
+        connection.delete(key_with_prefix)
+
     def append_clip_name_to_key(self, key, clip_name):
         connection = self.connection
         key_with_prefix = self.upload_prefix+":"+key
         connection.lpush(key_with_prefix, clip_name)
+
+    def clear_clip_list_by_key(self, key):
+        connection = self.connection
+        key_with_prefix = self.upload_prefix + ":" + key
+        connection.delete(key_with_prefix)
 
     def get_download_task_by_key(self, key):
         connection = self.connection
