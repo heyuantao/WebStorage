@@ -1,0 +1,1 @@
+from .desig_pattern import Singleton

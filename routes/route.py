@@ -11,7 +11,7 @@ class Route:
             return render_template('index.html')
 
 
-        @app.route('/api/download/info/', methods=['POST'])     #获取文件信息
+        @app.route('/api/download/info/', methods=['POST','GET'])     #获取文件信息
         @auth.login_required
         def api_download_info():
             return api_download_info_view()

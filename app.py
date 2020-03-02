@@ -19,6 +19,10 @@ def create_app():
     route_instance = Route()
     route_instance.init_app(app, auth_instance.get_auth())
 
+    from database import RedisClient
+    redis_instance = RedisClient()
+    redis_instance.init_app(app)
+
     return app
 
 
