@@ -116,11 +116,11 @@ class MainPage extends React.Component{
                         <UploadOutlined /> Select File
                     </Button>
                 </Upload>
-                <Button type="primary" onClick={this.handleUploadClick} disabled={mediaFileList.length === 0} loading={mediaUploading} style={{ marginTop: 16 }} >
-                    {mediaUploading ? 'Uploading: '+mediaPercent+"%" : 'Start Upload'}
-                </Button>
+
                 <div>
-                    <Button>{this.state.mediaPercent}</Button>
+                    <Button type="primary" onClick={this.handleUploadClick} disabled={mediaFileList.length === 0} loading={mediaUploading} style={{ marginTop: 16 }} >
+                        {mediaUploading ? 'Uploading: '+mediaPercent+"%" : 'Start Upload'}
+                    </Button>
                 </div>
 
             </div>
