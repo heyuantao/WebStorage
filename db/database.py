@@ -18,9 +18,11 @@ class Database:
 
     def init_app(self,app=None):
         self.host='127.0.0.1'
-        self.port=6370
-        connection_pool = redis.ConnectionPool(self.host, self.port, db=0)
-        self.connection = redis.Redis(connection_pool=connection_pool)
+        self.port=6379
+        self.connection_pool = redis.ConnectionPool(host=self.host, port=self.port, db=0) #password
+        self.connection = redis.StrictRedis(connection_pool=self.connection_pool)
+        #self.connection_pool = redis.ConnectionPool(self.host, self.port, db=0)
+        #self.connection = redis.Redis(connection_pool=self.connection_pool)
         print("KV database init finished !")
 
     def get_upload_task_by_key(self,key):
@@ -37,23 +39,22 @@ class Database:
         connection.expire(key_with_prefix, timedelta(hours =2))
         return task
 
-    def append_clip_name_to_key(self, key, clip):
+    def append_clip_name_to_key(self, key, clip_name):
         connection = self.connection
         key_with_prefix = self.upload_prefix+":"+key
-        connection.lpush(key_with_prefix, clip)
+        connection.lpush(key_with_prefix, clip_name)
 
     def get_download_task_by_key(self, key):
         connection = self.connection
-
         key_with_prefix = self.download_prefix + ":" + key
         task = uuid4().hex
 
         if connection.exists(key_with_prefix):
             result = connection.get(key_with_prefix)
-            return result
+            return str(result)
         connection.set(key_with_prefix,task)
-        connection.expire(timedelta(hours =8))
-        return task
+        connection.expire(key_with_prefix,timedelta(hours =8))
+        return str(task)
 
     def is_download_task_valid(self,key,task):
         connection = self.connection

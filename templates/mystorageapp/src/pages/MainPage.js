@@ -84,7 +84,7 @@ class MainPage extends React.Component{
         const {mediaFileList} = this.state;
         const new_file = mediaFileList[0];
         this.setState({mediaUploading:true});
-        axios.post("http://127.0.0.1:5000/api/upload/token/",{},{headers: {'Authorization': 'Token 1234567890'}}
+        axios.post("http://127.0.0.1:5000/api/upload/token/",{'key':'hyt.zip'},{headers: {'Authorization': 'Token 1234567890'}}
         ).then((res)=>{
             const task = res.data.task;
             const key = res.data.key;

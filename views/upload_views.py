@@ -5,6 +5,8 @@ from uuid import uuid4
 from config import config
 import os
 
+from db import Database
+
 
 def api_upload_view():  # 一个分片上传后被调用
     TMP_UPLOAD_PATH = config.FileStorage.TMP_UPLOAD_PATH
@@ -53,5 +55,8 @@ def api_upload_success_view():  # 所有分片均上传完后被调用
 
 def api_upload_token_view():
     task = uuid4().hex
+    key = request.json.get('key')
+    db = Database()
+    task= db.get_download_task_by_key(key)
     token_dict = {"key":"absdfdsfds.zip","task":task}
     return jsonify(token_dict)
