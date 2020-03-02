@@ -16,7 +16,7 @@ def api_upload_view():  # 一个分片上传后被调用
     print(session['real_filename'])
     task = request.form.get('task')  # 获取文件唯一标识符
     key = request.form.get('key')
-    print("Task is {} key is {} in post to upload api".format(task, key))
+    print("Key is {} and Task is {} in post to success api".format(key, task))
     chunk = request.form.get('chunk', 0)  # 获取该分片在所有分片中的序号
     filename = '%s%s' % (key, chunk)  # 构成该分片唯一标识符
     print(filename)
@@ -28,9 +28,10 @@ def api_upload_success_view():  # 所有分片均上传完后被调用
     TMP_UPLOAD_PATH = config.FileStorage.TMP_UPLOAD_PATH
     UPLOAD_PATH = config.FileStorage.UPLOAD_PATH
 
-    task = request.json.get('task')
     key = request.json.get('key')
-    print("Task is {} key is {} in post to success api".format(task, key))
+    task = request.json.get('task')
+
+    print("Key is {} and Task is {} in post to success api".format(key, task))
     ext = request.json.get('ext', '')
     upload_type = request.json.get('type')
     if len(ext) == 0 and upload_type:
@@ -54,9 +55,8 @@ def api_upload_success_view():  # 所有分片均上传完后被调用
     return jsonify({'status': 'sucess'})
 
 def api_upload_token_view():
-    task = uuid4().hex
     key = request.json.get('key')
     db = Database()
     task= db.get_download_task_by_key(key)
-    token_dict = {"key":"absdfdsfds.zip","task":task}
+    token_dict = {"key":key,"task":task}
     return jsonify(token_dict)

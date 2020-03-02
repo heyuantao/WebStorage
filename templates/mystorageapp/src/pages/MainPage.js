@@ -23,6 +23,15 @@ class MainPage extends React.Component{
         }
     }
 
+    makeid =()=> {
+        let text = "";
+        const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for (var i = 0; i < 5; i++) {
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+        return text;
+    }
+
     uploadSuccessFinished =()=>{
         this.setState({mediaUploading:false,mediaPercent: 0, mediaFileList: []});
         if(this._uploader!==null){
@@ -83,8 +92,10 @@ class MainPage extends React.Component{
     handleUploadClick = () => {
         const {mediaFileList} = this.state;
         const new_file = mediaFileList[0];
+        const new_file_name = this.makeid()+new_file.name;
         this.setState({mediaUploading:true});
-        axios.post("http://127.0.0.1:5000/api/upload/token/",{'key':'hyt.zip'},{headers: {'Authorization': 'Token 1234567890'}}
+        console.log(new_file_name);
+        axios.post("http://127.0.0.1:5000/api/upload/token/",{'key':new_file_name},{headers: {'Authorization': 'Token 1234567890'}}
         ).then((res)=>{
             const task = res.data.task;
             const key = res.data.key;

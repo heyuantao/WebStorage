@@ -29,7 +29,7 @@ class Database:
         connection = self.connection
 
         key_with_prefix = self.token_prefix+":"+key
-        task = uuid4().hex
+        task = str(uuid4().hex)
 
         if connection.exists(key_with_prefix):
             connection.expire(key_with_prefix, timedelta(hours=2))
@@ -47,14 +47,14 @@ class Database:
     def get_download_task_by_key(self, key):
         connection = self.connection
         key_with_prefix = self.download_prefix + ":" + key
-        task = uuid4().hex
+        task = str(uuid4().hex)
 
         if connection.exists(key_with_prefix):
             result = connection.get(key_with_prefix)
-            return str(result)
+            return result
         connection.set(key_with_prefix,task)
         connection.expire(key_with_prefix,timedelta(hours =8))
-        return str(task)
+        return task
 
     def is_download_task_valid(self,key,task):
         connection = self.connection
