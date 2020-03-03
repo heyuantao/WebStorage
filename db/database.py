@@ -10,6 +10,12 @@ from storage import Storage
 
 logger = logging.getLogger(__name__)
 
+#标识可下载文件列表的状态
+class DownloadFileStatus:
+    PRESENT="present"       #文件在磁盘存放
+    DELETING="deleting"     #文件待删除
+
+#使用redis来存放各类数据
 @Singleton
 class Database:
     def __init__(self, host='127.0.0.1', port=6370):
@@ -21,7 +27,6 @@ class Database:
         self.upload_prefix      = "upload:"       #分片上传节点，用列表方式记录了每个分片信息，列表最后用success来表示分片是否上传完成
         self.merge_prefix       = "merge:"        #合并节点
         self.download_prefix    = "download:"     #下载阶段
-
 
 
     #flask 初始化调用该函数
@@ -36,24 +41,6 @@ class Database:
         except Exception as e:
             logger.error("Error in conncetion redis !")
             raise MessageException('Error in conncetion redis at Database.init_app() ')
-
-
-        try:
-            pattern = self.file_prefix+"*"
-            matched_list = self.connection.keys(pattern=pattern)
-            if len(matched_list)>0:
-                self.connection.delete(*matched_list)      #clear the old data
-
-            logger.debug("Read upload file list to redis ...")
-            storage = Storage()
-            upload_file_list = storage.get_upload_file_list()
-            for key in upload_file_list:
-                key_with_prefix = self.file_prefix + key
-                self.connection.set(key_with_prefix,"")
-        except Exception as e:
-            logger.error(traceback.format_exc())
-            logger.error("Error in read upload file list to redis !")
-            raise MessageException('Error in read upload file list to redis at Database.init_app() ')
 
 
     #---------------------------上传前期处理函数--------------------------------------#
@@ -117,6 +104,7 @@ class Database:
     #--------------------------------------------------------------------------------#
 
     #-------------------------------------文件下载处理函数-----------------------------#
+    #根据传入的文件名key，生成下载任务的task，并根据key和task来生成下载链接
     def get_download_task_by_key(self, key):
         connection = self.connection
         key_with_prefix = self.download_prefix + key
@@ -125,10 +113,12 @@ class Database:
         if connection.exists(key_with_prefix):
             result = connection.get(key_with_prefix)
             return result
+
         connection.set(key_with_prefix,task)
-        connection.expire(key_with_prefix,timedelta(hours =8))
+        connection.expire(key_with_prefix,timedelta(hours =1))
         return task
 
+    #检验下载链接的key和task是否有效
     def is_download_task_valid(self,key,task):
         connection = self.connection
 
@@ -145,9 +135,9 @@ class Database:
 
     # -------------------------------------文件列表函数--------------------------------#
     #当文件合并完成，将文件加入文件列表中
-    def add_to_file_list_by_key(self, key):
+    def add_to_downloadable_file_list_by_key(self, key):
         key_with_prefix = self.file_prefix + key
-        self.connection.set(key_with_prefix,"")
+        self.connection.set(key_with_prefix,DownloadFileStatus.PRESENT)
 
     # ---------------------------------------------------------------------------------#
 

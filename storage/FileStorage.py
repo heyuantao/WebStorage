@@ -65,3 +65,16 @@ class FileStorage:
                     break
                 chunk += 1
                 os.remove(clip_file_name)                                                    # 删除该分片，节约空间
+
+
+    #处理文件的读，采用yield的方式来读取，防止一次占用过多的内存,在此处应当处理几种情况，1.文件合并已经完成（直接读） 2.文件正在合并
+    def get_key_content_generate(self, key):    #可能会抛出异常
+        file_abs_path = os.path.join(self.file_path,key)
+        chunk_size = 5*1024*1024
+        file = open(file_abs_path,'rb')
+
+        while True:
+            data = file.read(chunk_size)
+            if not data:
+                break
+            yield data

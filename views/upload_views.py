@@ -70,7 +70,7 @@ def api_upload_success_view():  # 所有分片均上传完后被调用
         store.merge_clip_of_key(key)
 
     db.clear_clip_upload_status_list_of_key(key)
-    db.add_to_file_list_by_key(key)
+    db.add_to_downloadable_file_list_by_key(key)
 
     return jsonify({'status': 'sucess'}), status.HTTP_200_OK
 
