@@ -6,10 +6,13 @@ import os
 import logging
 
 from db import Database
+from storage import Storage
 
 
 logger = logging.getLogger(__name__)
+
 db = Database()
+store = Storage()
 
 def api_upload_view():  # 一个分片上传后被调用
     TMP_UPLOAD_PATH = config.FileStorage.TMP_UPLOAD_PATH
@@ -21,13 +24,13 @@ def api_upload_view():  # 一个分片上传后被调用
     if not db.is_upload_task_valid(key,task):
         return jsonify({'error':'not valid'}),status.HTTP_403_FORBIDDEN
 
-    upload_file = request.files['file']   #real_filename = upload_file.filename
+    upload_file_clip = request.files['file']            #real_filename = upload_file.filename
 
-    chunk = request.form.get('chunk', 0)  # 获取该分片在所有分片中的序号
-    filename = '%s%s' % (key, chunk)  # 构成该分片唯一标识符
+    chunk = request.form.get('chunk', 0)                # 获取该分片在所有分片中的序号
+    filename = '%s%s' % (key, chunk)                    # 构成该分片唯一标识符
 
-    upload_file.save(TMP_UPLOAD_PATH+'/%s' % filename)  # 保存分片到本地
-
+    #upload_file.save(TMP_UPLOAD_PATH+'/%s' % filename)  # 保存分片到本地
+    store.save_clip(upload_file_clip, key, chunk)
     db.append_clip_upload_partial_status_of_key(key,filename)
 
     return jsonify({'status': 'sucess', 'mode': 'clip'}), status.HTTP_200_OK
@@ -50,25 +53,25 @@ def api_upload_success_view():  # 所有分片均上传完后被调用
     if len(ext) == 0 and upload_type:
         ext = upload_type.split('/')[1]
     ext = '' if len(ext) == 0 else '.%s' % ext  # 构建文件后缀名
-    chunk = 0
+
 
     saved_filename = key
     logger.debug("Saved Filename {}".format(saved_filename))
 
     db.append_clip_upload_success_status_of_key(key)
+    clip_count = db.get_clip_upload_status_list_length_of_key(key)
 
-    with open(UPLOAD_PATH+'/%s' % (saved_filename), 'wb') as target_file:  # 创建新文件
-        while True:
-            try:
-                filename = TMP_UPLOAD_PATH+'/%s%d' % (key, chunk)
-                source_file = open(filename, 'rb')  # 按序打开每个分片
-                target_file.write(source_file.read())
-                source_file.close()
-            except IOError:
-                break
-            chunk += 1
-            os.remove(filename)  # 删除该分片，节约空间
+    #如果分片数量不超过4(20M)，程序立刻进行合并分片。如果分片数量过多，则有异步进程进行合并
+    if(clip_count<=4):
+        print("Clip count for key \"{}\" is \"{}\" merge immediately !".format(key, clip_count))
+        store.merge_clip_of_key(key)
+    else:
+        print("Clip count for key \"{}\" is \"{}\" merge slowly !".format(key, clip_count))
+        store.merge_clip_of_key(key)
+
     db.clear_clip_upload_status_list_of_key(key)
+    db.add_to_file_list_by_key(key)
+
     return jsonify({'status': 'sucess'}), status.HTTP_200_OK
 
 def api_upload_token_view():

@@ -46,7 +46,7 @@ class Database:
 
             logger.debug("Read upload file list to redis ...")
             storage = Storage()
-            upload_file_list = storage.getUploadFileList()
+            upload_file_list = storage.get_upload_file_list()
             for key in upload_file_list:
                 key_with_prefix = self.file_prefix + key
                 self.connection.set(key_with_prefix,"")
@@ -108,9 +108,12 @@ class Database:
 
     #清除key对应的分片列表的内容，该函数在分片文件合并完成后被调用
     def clear_clip_upload_status_list_of_key(self, key):
-        connection = self.connection
         key_with_prefix = self.upload_prefix + key
-        connection.delete(key_with_prefix)
+        self.connection.delete(key_with_prefix)
+
+    def get_clip_upload_status_list_length_of_key(self, key):
+        key_with_prefix = self.upload_prefix + key
+        return self.connection.llen(key_with_prefix)-1          #success is not count
     #--------------------------------------------------------------------------------#
 
     #-------------------------------------文件下载处理函数-----------------------------#
@@ -140,10 +143,13 @@ class Database:
             return False
     #---------------------------------------------------------------------------------#
 
+    # -------------------------------------文件列表函数--------------------------------#
+    #当文件合并完成，将文件加入文件列表中
+    def add_to_file_list_by_key(self, key):
+        key_with_prefix = self.file_prefix + key
+        self.connection.set(key_with_prefix,"")
 
-
-
-
+    # ---------------------------------------------------------------------------------#
 
 
 
