@@ -2,6 +2,9 @@
 from flask import Flask
 from flask_cors import CORS
 from config import config
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def create_app():
@@ -14,10 +17,13 @@ def create_app():
     auth_instance = Auth()
     auth_instance.init_app(app)
 
-
     from routes import Route
     route_instance = Route()
     route_instance.init_app(app, auth_instance.get_auth())
+
+    from storage import Storage
+    storage_instance = Storage()
+    storage_instance.init_app(app)
 
     from db import Database
     redis_instance = Database()
@@ -27,5 +33,6 @@ def create_app():
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
     app = create_app()
     app.run(port=34567,host="0.0.0.0")
