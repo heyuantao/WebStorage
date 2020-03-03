@@ -27,7 +27,7 @@ def api_upload_view():  # 一个分片上传后被调用
 
     upload_file.save(TMP_UPLOAD_PATH+'/%s' % filename)  # 保存分片到本地
 
-    db.append_clip_name_to_key(key,filename)
+    db.append_clip_upload_partial_status_of_key(key,filename)
 
     return jsonify({'status': 'sucess', 'mode': 'clip'}), status.HTTP_200_OK
 
@@ -54,8 +54,7 @@ def api_upload_success_view():  # 所有分片均上传完后被调用
     saved_filename = key
     print("Saved Filename {}".format(saved_filename))
 
-    db.clear_upload_task_by_key(key)
-    db.append_clip_name_to_key(key,"success")
+    db.append_clip_upload_success_status_of_key(key)
 
     with open(UPLOAD_PATH+'/%s' % (saved_filename), 'wb') as target_file:  # 创建新文件
         while True:
@@ -68,7 +67,7 @@ def api_upload_success_view():  # 所有分片均上传完后被调用
                 break
             chunk += 1
             os.remove(filename)  # 删除该分片，节约空间
-    db.clear_clip_list_by_key(key)
+    db.clear_clip_upload_status_list_of_key(key)
     return jsonify({'status': 'sucess'}), status.HTTP_200_OK
 
 def api_upload_token_view():

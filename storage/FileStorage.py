@@ -35,11 +35,11 @@ class FileStorage:
     def getUploadFileList(self):
         uploaded_dir_path = self.file_path
         file_list = []
-        print(uploaded_dir_path)
+        #print(uploaded_dir_path)
         for item in os.listdir(uploaded_dir_path):
             item_abs_path = os.path.join(uploaded_dir_path,item)
             if os.path.isfile(item_abs_path):
                 file_list.append(item)
-        print(file_list)
+        #print(file_list)
         return file_list
 

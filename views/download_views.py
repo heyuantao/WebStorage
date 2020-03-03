@@ -23,10 +23,10 @@ def api_download_view():
     def generate():
         i=1
         while True:
-            if i>1000000:
+            if i>2000000:
                 break
             i=i+1
-            yield "sdffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffsdfffffffffffffffffffffffffffffffffffff"
+            yield "sdfffffffffffffffffffffffffffffffffffffff"
 
     response = Response(stream_with_context(generate()))
     header = 'attachment; filename='+key
