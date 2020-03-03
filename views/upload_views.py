@@ -1,21 +1,22 @@
 #-*- coding=utf-8 -*-
 from flask import render_template, request, session, jsonify, current_app
 from flask_api import status
-from random import random
-from uuid import uuid4
 from config import config
 import os
+import logging
+
 from db import Database
 
+
+logger = logging.getLogger(__name__)
 db = Database()
 
 def api_upload_view():  # 一个分片上传后被调用
     TMP_UPLOAD_PATH = config.FileStorage.TMP_UPLOAD_PATH
-    #db = Database()
 
     task = request.form.get('task')  # 获取文件唯一标识符
     key = request.form.get('key')
-    print("Key is {} and Task is {} in post to upload api".format(key, task))
+    logger.debug("Key is {} and Task is {} in post to upload api".format(key, task))
 
     if not db.is_upload_task_valid(key,task):
         return jsonify({'error':'not valid'}),status.HTTP_403_FORBIDDEN
@@ -39,7 +40,7 @@ def api_upload_success_view():  # 所有分片均上传完后被调用
     key = request.json.get('key')
     task = request.json.get('task')
 
-    print("Key is {} and Task is {} in post to success api".format(key, task))
+    logger.debug("Key is {} and Task is {} in post to success api".format(key, task))
 
     if not db.is_upload_task_valid(key,task):
         return jsonify({'status': 'error'}), status.HTTP_403_FORBIDDEN
@@ -52,7 +53,7 @@ def api_upload_success_view():  # 所有分片均上传完后被调用
     chunk = 0
 
     saved_filename = key
-    print("Saved Filename {}".format(saved_filename))
+    logger.debug("Saved Filename {}".format(saved_filename))
 
     db.append_clip_upload_success_status_of_key(key)
 
