@@ -39,6 +39,7 @@ def api_download_view():
         response = Response(stream_with_context(content_generate))
         header = 'attachment; filename='+key
         response.headers["Content-Disposition"] = header
+        #response.headers.add('Accept-Ranges', 'bytes')
         return response
 
     except Exception as e:
