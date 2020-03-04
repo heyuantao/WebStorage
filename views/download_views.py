@@ -31,7 +31,7 @@ def api_free_download_view():
 
     if not db.is_download_file_by_key(key):
         return jsonify({'status':'error','error_message':'not exist'}), status.HTTP_404_NOT_FOUND
-    
+
     if db.is_key_contents_in_merge_status(key):
         clip_list = db.get_clip_upload_status_list_of_key(key)
         return _download_unmerged_content_of_key(key, clip_list)
