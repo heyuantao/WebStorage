@@ -16,6 +16,7 @@ class DownloadFileStatus:
     PRESENT="present"       #文件在磁盘存放
     DELETING="deleting"     #文件待删除
 
+
 #使用redis来存放各类数据
 @Singleton
 class Database:
@@ -83,12 +84,14 @@ class Database:
     #将上传的文件分片信息记录到redis中，该记录以list进行保存，list的每个内容为分片的文件名，在上传彻底结束后，该list还有有一个"success"的内容
     def append_clip_upload_partial_status_of_key(self, key, clip_name):
         key_with_prefix = self.upload_prefix + key
-        self.connection.lpush(key_with_prefix, clip_name)
+        #self.connection.lpush(key_with_prefix, clip_name)
+        self.connection.sadd(key_with_prefix, clip_name)
 
     #分片上传完成后，将成功的信息记录在key对应的分片列表中，该函数在文件分片全部上传完成后被调用
     def append_clip_upload_success_status_of_key(self, key):
         key_with_prefix = self.upload_prefix + key
-        self.connection.lpush(key_with_prefix,"success")
+        #self.connection.lpush(key_with_prefix,"success")
+        self.connection.sadd(key_with_prefix, "success")
 
         self._delete_upload_task_by_key(key)
 
@@ -97,16 +100,17 @@ class Database:
         key_with_prefix = self.upload_prefix + key
         self.connection.delete(key_with_prefix)
 
-    def is_key_contents_merging(self, key):
+    #该key对应的文件是否正在合并，根据判断其集合是否含有名字叫'success'的内容，如果不存在说明文件还在上传阶段或上传发生了失败
+    def is_key_contents_in_merge_status(self, key):
         key_with_prefix = self.upload_prefix + key
-        if (self.connection.lindex(key_with_prefix, 0) =='success') and ( self.connection.llen(key_with_prefix) >0 ):
+        if self.connection.sismember(key_with_prefix, "success"):
             return True
         else:
             return False
 
     def get_clip_upload_status_list_length_of_key(self, key):
         key_with_prefix = self.upload_prefix + key
-        return self.connection.llen(key_with_prefix)-1          #success is not count
+        return self.connection.scard(key_with_prefix)-1          #success is not count
     #--------------------------------------------------------------------------------#
 
     #-------------------------------------文件下载处理函数-----------------------------#

@@ -33,6 +33,17 @@ def api_download_view():
     if not db.is_download_task_valid(key,task):
         return jsonify({'status':'error'}), status.HTTP_403_FORBIDDEN
 
+    if db.is_key_contents_in_merge_status():
+        return _download_unmerged_content_by_key(key)
+    else:
+        return _download_merged_content_by_key(key)
+
+#处理还在合并过程中的文件，要进行复杂的异常处理
+def _download_unmerged_content_by_key(key):
+    return
+
+#返回已经合并过的文件，该过程比较简单，直接读文件即可
+def _download_merged_content_by_key(key):
     try:
         content_generate = store.get_key_content_generate(key)
         response = Response(stream_with_context(content_generate))
@@ -44,4 +55,3 @@ def api_download_view():
     except Exception as e:
         logger.error(traceback.format_exc())
         return jsonify({'status':'error'}), status.HTTP_404_NOT_FOUND
-

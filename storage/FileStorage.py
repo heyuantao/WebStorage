@@ -54,6 +54,7 @@ class FileStorage:
         saved_file_path = "{0}/{1}".format(self.file_path, saved_file_name)
 
         #with open(self.file_path + '/%s' % (saved_filename), 'wb') as target_file:  # 创建新文件
+        clip_file_list = []
         with open(saved_file_path, 'wb') as saved_file:  # 创建新文件
             while True:
                 try:
@@ -66,7 +67,11 @@ class FileStorage:
                 except IOError:
                     break
                 chunk += 1
-                os.remove(clip_file_name)                                                    # 删除该分片，节约空间
+                clip_file_list.append(clip_file_name)
+                #os.remove(clip_file_name) # 删除该分片，节约空间
+        #待所有文件合并后，删除分片，这样确保总有可用的文件分片在磁盘上存储
+        for item in clip_file_list:
+            os.remove(item)
 
 
     #从磁盘中删除文件
