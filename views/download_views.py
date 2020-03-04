@@ -28,6 +28,10 @@ def api_download_url_view():
 #不验证下载task的view用于测试文件下载
 def api_free_download_view():
     key = request.args.get('key', '0')
+
+    if not db.is_download_file_by_key(key):
+        return jsonify({'status':'error','error_message':'not exist'}), status.HTTP_404_NOT_FOUND
+    
     if db.is_key_contents_in_merge_status(key):
         clip_list = db.get_clip_upload_status_list_of_key(key)
         return _download_unmerged_content_of_key(key, clip_list)
@@ -38,6 +42,9 @@ def api_free_download_view():
 def api_download_view():
     key = request.args.get('key','0')
     task = request.args.get('task','0')
+
+    if not db.is_download_file_by_key(key):
+        return jsonify({'status':'error','error_message':'not exist'}), status.HTTP_404_NOT_FOUND
 
     if not db.is_download_task_valid(key,task):
         return jsonify({'status':'error'}), status.HTTP_403_FORBIDDEN

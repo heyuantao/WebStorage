@@ -160,6 +160,14 @@ class Database:
         self.connection.delete(key_with_prefix)
         #self.connection.set(key_with_prefix, DownloadFileStatus.PRESENT)
 
+    #检查是否在可下载文件列表中
+    def is_download_file_by_key(self,key):
+        key_with_prefix = self.file_prefix + key
+        if self.connection.exists(key_with_prefix):
+            return True
+        else:
+            return False
+
     #返回缓存的文件列表
     def get_file_list_cache(self):
         file_pattern = self.file_prefix + "*"
