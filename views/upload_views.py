@@ -1,8 +1,7 @@
 #-*- coding=utf-8 -*-
-from flask import render_template, request, session, jsonify, current_app
+from flask import request, jsonify, current_app
 from flask_api import status
 from config import config
-import os
 import logging
 
 from db import Database

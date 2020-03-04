@@ -1,11 +1,10 @@
 #-*- coding=utf-8 -*-
-from flask import render_template, request, session, jsonify, current_app, stream_with_context, Response
+from flask import request, jsonify, current_app, stream_with_context, Response
 from flask_api import status
 import traceback
 from config import config
 from db import Database
 from storage import Storage
-import os
 import logging
 
 logger = logging.getLogger(__name__)

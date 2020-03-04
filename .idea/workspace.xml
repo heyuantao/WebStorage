@@ -40,21 +40,23 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/views" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/templates/backup/deleted" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Projects\WebStorage\views" />
-      <recent name="D:\Projects\WebStorage\templates" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Projects\WebStorage\templates\test" />
       <recent name="D:\Projects\WebStorage\utils" />
       <recent name="D:\Projects\WebStorage\templates\backup\deleted" />
       <recent name="D:\Projects\WebStorage\templates\backup" />
       <recent name="D:\Projects\WebStorage\templates\mystorageapp\src" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Projects\WebStorage\templates\backup\deleted" />
+      <recent name="D:\Projects\WebStorage\views" />
+      <recent name="D:\Projects\WebStorage\templates" />
     </key>
   </component>
   <component name="RunManager">
@@ -111,7 +113,7 @@
       <workItem from="1583159845031" duration="2284000" />
       <workItem from="1583199144985" duration="2874000" />
       <workItem from="1583228467938" duration="14204000" />
-      <workItem from="1583299480475" duration="701000" />
+      <workItem from="1583299480475" duration="1882000" />
     </task>
     <servers />
   </component>
