@@ -139,6 +139,17 @@ class Database:
         key_with_prefix = self.file_prefix + key
         self.connection.set(key_with_prefix,DownloadFileStatus.PRESENT)
 
+    #返回缓存的文件列表
+    def get_file_list_cache(self):
+        file_pattern = self.file_prefix + "*"
+        matched_file_name_with_prefix_list = self.connection.keys(pattern=file_pattern)
+        matched_file_name_without_prefix_lit = []
+        begin = len(self.file_prefix)
+        for item_with_prefix in matched_file_name_with_prefix_list:
+            if item_with_prefix.startswith(self.file_prefix):
+                file_name_without_prefix = item_with_prefix[begin:]
+                matched_file_name_without_prefix_lit.append(file_name_without_prefix)
+        return matched_file_name_without_prefix_lit
     # ---------------------------------------------------------------------------------#
 
 
