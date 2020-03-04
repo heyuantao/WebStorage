@@ -1,6 +1,7 @@
 /__pycache__
 /db/__pycache__
 /storage/__pycache__
+/celery/__pycache__
 /utils/__pycache__
 /auth/__pycache__
 /routes/__pycache__

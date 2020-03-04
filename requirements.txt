@@ -3,3 +3,4 @@ Flask-API==2.0
 Flask-Cors==3.0.8
 Flask-HTTPAuth==3.3.0
 redis==3.4.1
+celery==4.4.1
