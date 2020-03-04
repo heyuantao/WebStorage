@@ -24,4 +24,9 @@ def api_file_list_view():
     return jsonify(return_json)
 
 def api_file_delete_view():
-    pass
+    key = request.json.get('key','0')
+    if key=='0':
+        return jsonify({'status': 'error'}), status.HTTP_404_NOT_FOUND
+    db.delete_downloadable_file_list_by_key(key)
+    store.delete_by_key(key)
+    return jsonify({'status': 'success'})

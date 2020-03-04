@@ -21,7 +21,7 @@ def api_upload_view():  # 一个分片上传后被调用
     logger.debug("Key is {} and Task is {} in post to upload api".format(key, task))
 
     if not db.is_upload_task_valid(key,task):
-        return jsonify({'error':'not valid'}),status.HTTP_403_FORBIDDEN
+        return jsonify({'status':'error'}),status.HTTP_403_FORBIDDEN
 
     upload_file_clip = request.files['file']            #real_filename = upload_file.filename
 

@@ -139,6 +139,12 @@ class Database:
         key_with_prefix = self.file_prefix + key
         self.connection.set(key_with_prefix,DownloadFileStatus.PRESENT)
 
+    #从缓存中删除某个文件
+    def delete_downloadable_file_list_by_key(self, key):
+        key_with_prefix = self.file_prefix + key
+        self.connection.delete(key_with_prefix)
+        #self.connection.set(key_with_prefix, DownloadFileStatus.PRESENT)
+
     #返回缓存的文件列表
     def get_file_list_cache(self):
         file_pattern = self.file_prefix + "*"

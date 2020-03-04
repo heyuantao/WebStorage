@@ -31,7 +31,7 @@ def api_download_view():
     task = request.args.get('task','0')
 
     if not db.is_download_task_valid(key,task):
-        return jsonify({'error':'invalid'}), status.HTTP_403_FORBIDDEN
+        return jsonify({'status':'error'}), status.HTTP_403_FORBIDDEN
 
     try:
         content_generate = store.get_key_content_generate(key)
@@ -43,5 +43,5 @@ def api_download_view():
 
     except Exception as e:
         logger.error(traceback.format_exc())
-        return jsonify({'error':'invalid'}), status.HTTP_404_NOT_FOUND
+        return jsonify({'status':'error'}), status.HTTP_404_NOT_FOUND
 
