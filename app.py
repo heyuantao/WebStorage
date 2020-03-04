@@ -38,9 +38,9 @@ def create_app():
     redis_instance = Database()
     redis_instance.init_app(app)
 
-    from celery import Task
-    task_instance = Task()
-    task_instance.init_app(app)
+    #from task import Task
+    #task_instance = Task()
+    #task_instance.init_app(app)
 
 
     #init finished

@@ -6,6 +6,7 @@ import logging
 
 from db import Database
 from storage import Storage
+from task import merge_file_by_key_in_celery
 
 
 logger = logging.getLogger(__name__)
@@ -61,12 +62,12 @@ def api_upload_success_view():  # 所有分片均上传完后被调用
     clip_count = db.get_clip_upload_status_list_length_of_key(key)
 
     #如果分片数量不超过4(20M)，程序立刻进行合并分片。如果分片数量过多，则有异步进程进行合并
-    if(clip_count<=4):
+    if(clip_count<=2):
         print("Clip count for key \"{}\" is \"{}\" merge immediately !".format(key, clip_count))
         store.merge_clip_of_key(key)
     else:
         print("Clip count for key \"{}\" is \"{}\" merge slowly !".format(key, clip_count))
-        store.merge_clip_of_key(key)
+        merge_file_by_key_in_celery.delay(key)
 
     db.clear_clip_upload_status_list_of_key(key)
     db.add_to_downloadable_file_list_by_key(key)

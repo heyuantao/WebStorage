@@ -19,7 +19,7 @@ class DownloadFileStatus:
 #使用redis来存放各类数据
 @Singleton
 class Database:
-    def __init__(self, host='127.0.0.1', port=6370 , db=0):
+    def __init__(self, host='127.0.0.1', port=6379 , db=0):
         self.host = host
         self.port = port
         self.db = db
@@ -30,17 +30,17 @@ class Database:
         self.merge_prefix       = "merge:"        #合并节点
         self.download_prefix    = "download:"     #下载阶段
 
-
-    #flask 初始化调用该函数
-    def init_app(self,app=None):
         try:
             logger.debug("Connect to redis ...")
-            self.connection_pool = redis.ConnectionPool(host=self.host, port=self.port, db=0, decode_responses=True) #password
+            self.connection_pool = redis.ConnectionPool(host=self.host, port=self.port, db=self.db, decode_responses=True) #password
             self.connection = redis.StrictRedis(connection_pool=self.connection_pool)
         except Exception as e:
             logger.error("Error in conncetion redis !")
             raise MessageException('Error in conncetion redis at Database.init_app() ')
 
+    #flask 初始化调用该函数
+    def init_app(self,app=None):
+        logger.debug("Init database !")
 
     #---------------------------上传前期处理函数--------------------------------------#
     #通过文件名key来获得对应的task编号，如果对应的key存在，则直接返回，否则在redis数据库中创建task编号并返回

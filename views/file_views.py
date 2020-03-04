@@ -21,6 +21,7 @@ def api_file_list_view():
     for item in file_list_in_db_cache:
         file_list.append(item)
     return_json={'files':file_list,'count':len(file_list)}
+
     return jsonify(return_json)
 
 def api_file_delete_view():
