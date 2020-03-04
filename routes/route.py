@@ -1,6 +1,7 @@
 #-*- coding=utf-8 -*-
 from flask import render_template, request, session, jsonify
-from views.download_views import api_download_info_view,api_download_url_view,api_download_view
+from views.download_views import api_download_info_view, api_download_url_view, api_download_view, \
+    api_free_download_view
 from views.file_views import api_file_list_view, api_file_delete_view
 from views.upload_views import api_upload_view, api_upload_success_view, api_upload_token_view
 
@@ -26,6 +27,10 @@ class Route:
         @app.route('/api/download/content', methods=['GET',])  #下载文件
         def api_download_key():
             return api_download_view()
+
+        @app.route('/api/download/freecontent', methods=['GET',])  #下载文件
+        def api_free_download_key():
+            return api_free_download_view()
         # ------------------------------------------------------------------------------------#
 
         # ------------------------------------用于文件上传的接口---------------------------------#

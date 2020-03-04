@@ -61,6 +61,7 @@ def api_upload_success_view():  # 所有分片均上传完后被调用
     db.append_clip_upload_success_status_of_key(key)
     clip_count = db.get_clip_upload_status_list_length_of_key(key)
 
+
     #如果分片数量不超过4(20M)，程序立刻进行合并分片。如果分片数量过多，则有异步进程进行合并
     if(clip_count<=4):
         print("Clip count for key \"{}\" is \"{}\" merge immediately !".format(key, clip_count))
@@ -70,8 +71,8 @@ def api_upload_success_view():  # 所有分片均上传完后被调用
     else:
         print("Clip count for key \"{}\" is \"{}\" merge slowly !".format(key, clip_count))
         merge_file_by_key_in_celery.delay(key)
-        #db.clear_clip_upload_status_list_of_key(key) #call in async task
-        #db.add_to_downloadable_file_list_by_key(key)
+        #db.clear_clip_upload_status_list_of_key(key) #call in async task #文件在合并的时候，依然可以下载
+        db.add_to_downloadable_file_list_by_key(key)
 
     return jsonify({'status': 'sucess'}), status.HTTP_200_OK
 

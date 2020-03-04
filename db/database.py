@@ -108,6 +108,11 @@ class Database:
         else:
             return False
 
+    #对应key的已上传文件列表，如果上传成功则含有"success"
+    def get_clip_upload_status_list_of_key(self, key):
+        key_with_prefix = self.upload_prefix + key
+        return list(self.connection.smembers(key_with_prefix))
+
     def get_clip_upload_status_list_length_of_key(self, key):
         key_with_prefix = self.upload_prefix + key
         return self.connection.scard(key_with_prefix)-1          #success is not count
@@ -144,7 +149,7 @@ class Database:
     #---------------------------------------------------------------------------------#
 
     # -------------------------------------文件列表函数--------------------------------#
-    #当文件合并完成，将文件加入文件列表中
+    #当文件上传完成，将文件加入文件列表中，此时文件仍然可能是以分片形式存在的
     def add_to_downloadable_file_list_by_key(self, key):
         key_with_prefix = self.file_prefix + key
         self.connection.set(key_with_prefix,DownloadFileStatus.PRESENT)

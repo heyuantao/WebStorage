@@ -25,6 +25,15 @@ def api_download_url_view():
     download_url = "{0}{1}?key={2}&task={3}".format(site_url,api_url,key,task)
     return jsonify({'key': key, 'url':download_url})
 
+#不验证下载task的view用于测试文件下载
+def api_free_download_view():
+    key = request.args.get('key', '0')
+    if db.is_key_contents_in_merge_status(key):
+        clip_list = db.get_clip_upload_status_list_of_key(key)
+        return _download_unmerged_content_of_key(key, clip_list)
+    else:
+        return _download_merged_content_of_key(key)
+
 
 def api_download_view():
     key = request.args.get('key','0')
@@ -34,18 +43,29 @@ def api_download_view():
         return jsonify({'status':'error'}), status.HTTP_403_FORBIDDEN
 
     if db.is_key_contents_in_merge_status():
-        return _download_unmerged_content_by_key(key)
+        clip_list = db.get_clip_upload_status_list_of_key(key)
+        return _download_unmerged_content_of_key(key, clip_list)
     else:
-        return _download_merged_content_by_key(key)
+        return _download_merged_content_of_key(key)
 
 #处理还在合并过程中的文件，要进行复杂的异常处理
-def _download_unmerged_content_by_key(key):
-    return
+def _download_unmerged_content_of_key(key, clip_list):
+    try:
+        content_generate = store.get_merging_content_generate_of_key_and_clipinforamtion(key, clip_list)
+        response = Response(stream_with_context(content_generate))
+        header = 'attachment; filename='+key
+        response.headers["Content-Disposition"] = header
+        #response.headers.add('Accept-Ranges', 'bytes')
+        return response
+
+    except Exception as e:
+        logger.error(traceback.format_exc())
+        return jsonify({'status':'error'}), status.HTTP_404_NOT_FOUND
 
 #返回已经合并过的文件，该过程比较简单，直接读文件即可
-def _download_merged_content_by_key(key):
+def _download_merged_content_of_key(key):
     try:
-        content_generate = store.get_key_content_generate(key)
+        content_generate = store.get_content_generate_of_key(key)
         response = Response(stream_with_context(content_generate))
         header = 'attachment; filename='+key
         response.headers["Content-Disposition"] = header

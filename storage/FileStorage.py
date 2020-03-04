@@ -60,7 +60,7 @@ class FileStorage:
                 try:
                     #filename = self.tmp_path + '/%s%d' % (key, chunk)
                     clip_file_name = "{0}/{1}{2}".format(self.tmp_path, key, chunk)
-                    time.sleep(3)
+                    #time.sleep(3)
                     clip_file = open(clip_file_name, 'rb')                              # 按序打开每个分片
                     saved_file.write(clip_file.read())
                     clip_file.close()
@@ -83,7 +83,7 @@ class FileStorage:
             logger.info("Delete a file \"{}\" with is not exist on disk !".format(key))
 
     #处理文件的读，采用yield的方式来读取，防止一次占用过多的内存,在此处应当处理几种情况，1.文件合并已经完成（直接读） 2.文件正在合并
-    def get_key_content_generate(self, key):    #可能会抛出异常
+    def get_content_generate_of_key(self, key):    #可能会抛出异常
         file_abs_path = os.path.join(self.file_path,key)
         chunk_size = 5*1024*1024
         file = open(file_abs_path,'rb')
@@ -93,3 +93,46 @@ class FileStorage:
             if not data:
                 break
             yield data
+
+        file.close()
+
+
+    #clip_list 包含了"success"状态，合并文件的过程会先产生合并后的文件，该文件生成后再去删除各个文件分片
+    def get_merging_content_generate_of_key_and_clipinforamtion(self, key, clip_list):
+        clip_count = len(clip_list)-1
+        begin, end = 0, clip_count-1    #分片的开始标记和结束标记，类似key{begin}和key{end}
+        chunk_size = 5*1024*1024
+        chunk = 0                        #chunk为文件分片序号，从0到clip_count-1
+        #for chunk in range(clip_count):
+        while True:
+            # 分片已经结束
+            if chunk>end:
+                break
+            #分片没有结束
+            clip_file_name = "{0}/{1}{2}".format(self.tmp_path, key, chunk)
+            #首先读文件分片，如果出错再去读合并后的文件
+            try:
+                clip_file = open(clip_file_name,"rb")
+                clip_file_content = clip_file.read()
+                yield clip_file_content
+                clip_file.close()
+                chunk = chunk+1
+                continue
+            except IOError:
+                logger.debug("This clip \"{}\" not exist".format(clip_file_name))
+
+
+            #合并后的文件
+            merged_file_path = os.path.join(self.file_path, key)
+            try:
+                seek_postion =chunk_size*chunk
+                merged_file = open(merged_file_path,"rb")
+                merged_file.seek(seek_postion)
+                content = merged_file.read(chunk_size)
+                merged_file.close()
+                yield content
+                chunk = chunk+1
+                continue
+            except IOError:
+                logger.error("Read Merged file \"{}\" should not be error, this may be a bug !".format(merged_file_path))
+
