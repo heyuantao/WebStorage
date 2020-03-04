@@ -5,7 +5,6 @@ from celery import Celery
 from config import config
 from db import Database
 from storage import Storage
-import redis
 import logging
 import traceback
 

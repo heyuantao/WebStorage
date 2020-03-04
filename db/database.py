@@ -97,6 +97,13 @@ class Database:
         key_with_prefix = self.upload_prefix + key
         self.connection.delete(key_with_prefix)
 
+    def is_key_contents_merging(self, key):
+        key_with_prefix = self.upload_prefix + key
+        if (self.connection.lindex(key_with_prefix, 0) =='success') and ( self.connection.llen(key_with_prefix) >0 ):
+            return True
+        else:
+            return False
+
     def get_clip_upload_status_list_length_of_key(self, key):
         key_with_prefix = self.upload_prefix + key
         return self.connection.llen(key_with_prefix)-1          #success is not count
