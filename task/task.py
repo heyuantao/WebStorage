@@ -22,4 +22,6 @@ def do_something():
 def merge_file_by_key_in_celery(key):
     print("merge file begin in celery {}".format(key))
     store.merge_clip_of_key(key)
+    db.clear_clip_upload_status_list_of_key(key)
+    db.add_to_downloadable_file_list_by_key(key)
     print("merge file end in celery {}".format(key))
