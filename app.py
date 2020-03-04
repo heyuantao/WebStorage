@@ -38,6 +38,11 @@ def create_app():
     redis_instance = Database()
     redis_instance.init_app(app)
 
+    from celery import Task
+    task_instance = Task()
+    task_instance.init_app(app)
+
+
     #init finished
     read_upload_file_list_to_db(redis_instance, storage_instance)
     return app

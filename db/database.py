@@ -3,6 +3,7 @@
 from utils import Singleton,MessageException
 from uuid import uuid4
 from datetime import datetime,timedelta
+from config import config
 import redis
 import logging
 import traceback
@@ -18,9 +19,10 @@ class DownloadFileStatus:
 #使用redis来存放各类数据
 @Singleton
 class Database:
-    def __init__(self, host='127.0.0.1', port=6370):
+    def __init__(self, host='127.0.0.1', port=6370 , db=0):
         self.host = host
         self.port = port
+        self.db = db
         #各个状态列队在内存中的标识，用prefix:key的方式来表示
         self.file_prefix        = "file:"         #浏览阶段，软件初始化时将文件内容信息从目录中读入redis缓存，并根据缓存在判断文件是否存在
         self.task_prefix        = "task:"         #上传前期，根据上传对项目key来生成对应的上传编号
@@ -31,9 +33,6 @@ class Database:
 
     #flask 初始化调用该函数
     def init_app(self,app=None):
-        self.host='127.0.0.1'
-        self.port=6379
-
         try:
             logger.debug("Connect to redis ...")
             self.connection_pool = redis.ConnectionPool(host=self.host, port=self.port, db=0, decode_responses=True) #password

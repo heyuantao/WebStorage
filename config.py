@@ -11,6 +11,7 @@ class AppConfig:
     STATIC_FOLDER = "./templates/mystorageapp/build/static"  # not end with slash
     TEMPLATE_FOLDER = "./templates/mystorageapp/build"  # not end with slash
     AUTH_TOKEN = ["1234567890","abcdefghi"]
+    CELERY_BACKEND = "redis://127.0.0.1:6379/1"
 
 @Singleton
 class Config:
