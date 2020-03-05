@@ -31,6 +31,8 @@ class Database:
         self.merge_prefix       = "merge:"        #合并节点
         self.download_prefix    = "download:"     #下载阶段
 
+        self.file_list_key      = "file_list"
+
         try:
             logger.debug("Connect to redis ...")
             self.connection_pool = redis.ConnectionPool(host=self.host, port=self.port, db=self.db, decode_responses=True) #password
@@ -187,25 +189,32 @@ class Database:
     # -------------------------------------文件列表函数--------------------------------#
     #当文件上传完成，将文件加入文件列表中，此时文件仍然可能是以分片形式存在的
     def add_to_downloadable_file_list_by_key(self, key):
-        key_with_prefix = self.file_prefix + key
-        self.connection.set(key_with_prefix,DownloadFileStatus.PRESENT)
+        ##key_with_prefix = self.file_prefix + key
+        ##self.connection.set(key_with_prefix, DownloadFileStatus.PRESENT)
+        file_list_key = self.file_list_key
+        self.connection.hset(file_list_key, key ,DownloadFileStatus.PRESENT)
+
 
     #从缓存中删除某个文件
     def delete_downloadable_file_list_by_key(self, key):
-        key_with_prefix = self.file_prefix + key
-        self.connection.delete(key_with_prefix)
-        #self.connection.set(key_with_prefix, DownloadFileStatus.PRESENT)
+        ##key_with_prefix = self.file_prefix + key
+        ##self.connection.delete(key_with_prefix)
+        file_list_key = self.file_list_key
+        self.connection.hdel(file_list_key, key)
 
     #检查是否在可下载文件列表中
     def is_download_file_by_key(self,key):
-        key_with_prefix = self.file_prefix + key
-        if self.connection.exists(key_with_prefix):
+        #key_with_prefix = self.file_prefix + key
+        #if self.connection.exists(key_with_prefix):
+        file_list_key = self.file_list_key
+        if self.connection.hexists(file_list_key, key):
             return True
         else:
             return False
 
     #返回缓存的文件列表
     def get_file_list_cache(self):
+        '''
         file_pattern = self.file_prefix + "*"
         matched_file_name_with_prefix_list = self.connection.keys(pattern=file_pattern)
         matched_file_name_without_prefix_list = []
@@ -215,6 +224,9 @@ class Database:
                 file_name_without_prefix = item_with_prefix[begin:]
                 matched_file_name_without_prefix_list.append(file_name_without_prefix)
         return matched_file_name_without_prefix_list
+        '''
+        file_list_key = self.file_list_key
+        return self.connection.hkeys(file_list_key)
     # ---------------------------------------------------------------------------------#
 
 
