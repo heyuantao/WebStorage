@@ -37,9 +37,6 @@ def api_upload_view():  # 一个分片上传后被调用
 
 
 def api_upload_success_view():  # 所有分片均上传完后被调用
-    TMP_UPLOAD_PATH = config.FileStorage.TMP_UPLOAD_PATH
-    UPLOAD_PATH = config.FileStorage.UPLOAD_PATH
-
     key = request.json.get('key')
     task = request.json.get('task')
 
@@ -57,7 +54,7 @@ def api_upload_success_view():  # 所有分片均上传完后被调用
 
     saved_filename = key
     logger.debug("Saved Filename {}".format(saved_filename))
-
+    #append 'success' to clip list and clear token for upload
     db.append_clip_upload_success_status_of_key(key)
     clip_count = db.get_clip_upload_status_list_length_of_key(key)
 
