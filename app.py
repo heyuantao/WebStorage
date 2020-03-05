@@ -47,8 +47,9 @@ def create_app():
     read_upload_file_list_to_db(redis_instance, storage_instance)
     return app
 
+application = create_app()
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
-    app = create_app()
-    app.run(port=34567,host="0.0.0.0")
+    #app = create_app()
+    application.run(port=34567,host="0.0.0.0")
