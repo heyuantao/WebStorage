@@ -1,7 +1,7 @@
 /__pycache__
 /db/__pycache__
 /storage/__pycache__
-/celery/__pycache__
+/task/__pycache__
 /utils/__pycache__
 /auth/__pycache__
 /routes/__pycache__
@@ -10,3 +10,5 @@
 
 /data/merged/*
 /data/tmp/*
+
+/celerybeat.pid

@@ -44,7 +44,7 @@ class FileStorage:
 
     #删除文件的分片，clip_name是分片的名字
     def delete_clip(self,clip_name):
-        clip_abs_path = os.path.join(self.file_path,clip_name)
+        clip_abs_path = os.path.join(self.tmp_path,clip_name)
         try:
             os.remove(clip_abs_path)
         except IOError:

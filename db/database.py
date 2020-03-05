@@ -95,7 +95,7 @@ class Database:
 
         self._delete_upload_task_by_key(key)
 
-    #清除key对应的分片列表的内容，该函数在分片文件合并完成后被调用
+    #清除key对应的分片列表的内容，该函数在分片文件合并完成后被调用,或者当文件上传失败，被分片清理程序调用
     def clear_clip_upload_status_list_of_key(self, key):
         key_with_prefix = self.upload_prefix + key
         self.connection.delete(key_with_prefix)
@@ -118,30 +118,39 @@ class Database:
         return self.connection.scard(key_with_prefix)-1          #success is not count
 
     #获取上传失败任务对应的文件分片,使用yield的方式进行返回，每次返回一个分片
-    def get_upload_failure_task_file_clip_name_generate(self):
+    def get_upload_failure_key_list(self):
         key_with_prefix = self.upload_prefix + "*"
-        matched_upload_name_with_prefix_list = self.connection.keys(pattern=key_with_prefix)
-        upload_name_failure_with_prefix_list = []
+        matched_upload_key_with_prefix_list = self.connection.keys(pattern=key_with_prefix)
+        print(matched_upload_key_with_prefix_list)
+        upload_failure_key_without_prefix_list = []
         begin = len(self.upload_prefix)
-        for item_with_upload_prefix in matched_upload_name_with_prefix_list:
+        for item_with_upload_prefix in matched_upload_key_with_prefix_list:
+            key = item_with_upload_prefix[begin:]
             #如果key对应的value的set中含有sucess，则说明该文件正处于合并状态，则不删除分片
             if self.connection.sismember(item_with_upload_prefix,"success"):
                 continue
             #如果key对应的还在task中，则说明还处在上传状态,则不删除分片
-            key = item_with_upload_prefix[begin:]
             key_with_task_prefix = self.task_prefix + key
             if self.connection.exists(key_with_task_prefix):
                 continue
-            #key对应的内容即不再上传状态，也不在合并状态，一定是此前上传失败的任务，把该任务进行记录，并删除所有分片
+            #key对应的内容既不再上传状态，也不在合并状态，一定是此前上传失败的任务，把该任务进行记录，并删除所有分片
             #if item_with_prefix.startswith(self.file_prefix):
             #    upload_name_without_prefix = item_with_prefix[begin:]
-            upload_name_failure_with_prefix_list.append(item_with_upload_prefix)
+            #key = item_with_upload_prefix[begin:]
+            upload_failure_key_without_prefix_list.append(key)
+        return upload_failure_key_without_prefix_list
 
+        '''
         for item_with_prefix in upload_name_failure_with_prefix_list:
+            print(item_with_prefix)
             item_file_clip_list = list(self.connection.smembers(item_with_prefix))
+            key = item_with_prefix[begin:]
+            key_with_task_prefix = self.task_prefix + key
+            self._delete_upload_task_by_key(key_with_task_prefix)
+            print(item_file_clip_list)
             for clip_name in item_file_clip_list:
                 yield clip_name
-
+        '''
         #matched_file_name_without_prefix_lit = []
     #--------------------------------------------------------------------------------#
 
