@@ -49,7 +49,7 @@ def api_download_view():
     if not db.is_download_task_valid(key,task):
         return jsonify({'status':'error'}), status.HTTP_403_FORBIDDEN
 
-    if db.is_key_contents_in_merge_status():
+    if db.is_key_contents_in_merge_status(key):
         clip_list = db.get_clip_upload_status_list_of_key(key)
         return _download_unmerged_content_of_key(key, clip_list)
     else:
