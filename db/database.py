@@ -116,6 +116,24 @@ class Database:
     def get_clip_upload_status_list_length_of_key(self, key):
         key_with_prefix = self.upload_prefix + key
         return self.connection.scard(key_with_prefix)-1          #success is not count
+
+    #获取上传失败任务对应的文件分片,使用yield的方式进行返回，每次返回一个分片
+    def get_upload_failure_task_file_clip_name_generate(self):
+        key_with_prefix = self.upload_prefix + "*"
+        matched_upload_name_with_prefix_list = self.connection.keys(pattern=key_with_prefix)
+        matched_upload_name_without_prefix_list = []
+        begin = len(self.upload_prefix)
+        for item_with_prefix in matched_upload_name_with_prefix_list:
+            if item_with_prefix.startswith(self.file_prefix):
+                upload_name_without_prefix = item_with_prefix[begin:]
+                matched_upload_name_without_prefix_list.append(upload_name_without_prefix)
+
+        for item_without_prefix in matched_upload_name_without_prefix_list:
+            item_without_prefix_file_clip_list = list(self.connection.smembers(item_without_prefix))
+            for clip_name in item_without_prefix_file_clip_list:
+                yield clip_name
+
+        #matched_file_name_without_prefix_lit = []
     #--------------------------------------------------------------------------------#
 
     #-------------------------------------文件下载处理函数-----------------------------#
@@ -172,13 +190,13 @@ class Database:
     def get_file_list_cache(self):
         file_pattern = self.file_prefix + "*"
         matched_file_name_with_prefix_list = self.connection.keys(pattern=file_pattern)
-        matched_file_name_without_prefix_lit = []
+        matched_file_name_without_prefix_list = []
         begin = len(self.file_prefix)
         for item_with_prefix in matched_file_name_with_prefix_list:
             if item_with_prefix.startswith(self.file_prefix):
                 file_name_without_prefix = item_with_prefix[begin:]
-                matched_file_name_without_prefix_lit.append(file_name_without_prefix)
-        return matched_file_name_without_prefix_lit
+                matched_file_name_without_prefix_list.append(file_name_without_prefix)
+        return matched_file_name_without_prefix_list
     # ---------------------------------------------------------------------------------#
 
 

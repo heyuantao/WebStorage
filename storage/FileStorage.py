@@ -42,6 +42,14 @@ class FileStorage:
                 file_list.append(item)
         return file_list
 
+    #删除文件的分片，clip_name是分片的名字
+    def delete_clip(self,clip_name):
+        clip_abs_path = os.path.join(self.file_path,clip_name)
+        try:
+            os.remove(clip_abs_path)
+        except IOError:
+            logger.error("Delete clip \"{}\" error in FileStorage.delete_clip()".format(clip_abs_path))
+
     #将上传的文件分片进行保存，file为文件分片，chunk为分片的编号
     def save_clip(self,clip, key, chunk):
         clip_filename = '%s%s' % (key, chunk)               # 构成该分片唯一标识符
