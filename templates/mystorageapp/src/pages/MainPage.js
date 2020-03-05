@@ -52,7 +52,7 @@ class MainPage extends React.Component{
         const _this=this;
         const uploader = WebUploader.create({
             //swf: 'https://cdn.bootcss.com/webuploader/0.1.1/Uploader.swf', //swf位置，这个可能与flash有关
-            server: 'http://127.0.0.1:5000/api/upload/',                        //接收每一个分片的服务器地址
+            server: '/api/upload/',                        //接收每一个分片的服务器地址
             chunked: true, chunkSize: 5 * 1024 * 1024, chunkRetry: 3, threads: 1, duplicate: true,
             formData: {task:task,key:key},
         });
@@ -68,7 +68,7 @@ class MainPage extends React.Component{
 
         uploader.on('uploadSuccess', function(file) { //整个文件的所有分片都上传成功，调用该方法 上传的信息（文件唯一标识符，文件后缀名）
             const data = {'task': task, 'key':key,'ext': file.source['ext'], 'type': file.source['type']};
-            axios.post('http://127.0.0.1:5000/api/upload/success/',data).then((res)=>{
+            axios.post('/api/upload/success/',data).then((res)=>{
                 console.log('Upload success finished !')
                 _this.uploadSuccessFinished();
             }).catch((err)=>{
@@ -95,7 +95,7 @@ class MainPage extends React.Component{
         const new_file_name = this.makeid()+new_file.name;
         this.setState({mediaUploading:true});
         console.log(new_file_name);
-        axios.post("http://127.0.0.1:5000/api/upload/token/",{'key':new_file_name},{headers: {'Authorization': 'Token 1234567890'}}
+        axios.post("/api/upload/token/",{'key':new_file_name},{headers: {'Authorization': 'Token 1234567890'}}
         ).then((res)=>{
             const task = res.data.task;
             const key = res.data.key;
