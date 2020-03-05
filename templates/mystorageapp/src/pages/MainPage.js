@@ -53,7 +53,7 @@ class MainPage extends React.Component{
         const uploader = WebUploader.create({
             //swf: 'https://cdn.bootcss.com/webuploader/0.1.1/Uploader.swf', //swf位置，这个可能与flash有关
             server: '/api/upload/',                        //接收每一个分片的服务器地址
-            chunked: true, chunkSize: 5 * 1024 * 1024, chunkRetry: 3, threads: 1, duplicate: true,
+            chunked: true, chunkSize: 5 * 1024 * 1024, chunkRetry: 3, threads: 3, duplicate: true,
             formData: {task:task,key:key},
         });
 
