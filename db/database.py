@@ -25,13 +25,13 @@ class Database:
         self.port = port
         self.db = db
         #各个状态列队在内存中的标识，用prefix:key的方式来表示
-        self.file_prefix        = "file:"         #浏览阶段，软件初始化时将文件内容信息从目录中读入redis缓存，并根据缓存在判断文件是否存在
+        #self.file_prefix        = "file:"         #浏览阶段，软件初始化时将文件内容信息从目录中读入redis缓存，并根据缓存在判断文件是否存在
         self.task_prefix        = "task:"         #上传前期，根据上传对项目key来生成对应的上传编号
         self.upload_prefix      = "upload:"       #分片上传节点，用列表方式记录了每个分片信息，列表最后用success来表示分片是否上传完成
         self.merge_prefix       = "merge:"        #合并节点
         self.download_prefix    = "download:"     #下载阶段
 
-        self.file_list_key      = "file_list"
+        self.file_list_key      = "file_list"     #文件的哈希列表，用于下载和浏览，以(filename,status)的方式进行存放
 
         try:
             logger.debug("Connect to redis ...")
