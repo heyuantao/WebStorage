@@ -121,16 +121,25 @@ class Database:
     def get_upload_failure_task_file_clip_name_generate(self):
         key_with_prefix = self.upload_prefix + "*"
         matched_upload_name_with_prefix_list = self.connection.keys(pattern=key_with_prefix)
-        matched_upload_name_without_prefix_list = []
+        upload_name_failure_with_prefix_list = []
         begin = len(self.upload_prefix)
-        for item_with_prefix in matched_upload_name_with_prefix_list:
-            if item_with_prefix.startswith(self.file_prefix):
-                upload_name_without_prefix = item_with_prefix[begin:]
-                matched_upload_name_without_prefix_list.append(upload_name_without_prefix)
+        for item_with_upload_prefix in matched_upload_name_with_prefix_list:
+            #如果key对应的value的set中含有sucess，则说明该文件正处于合并状态，则不删除分片
+            if self.connection.sismember(item_with_upload_prefix,"success"):
+                continue
+            #如果key对应的还在task中，则说明还处在上传状态,则不删除分片
+            key = item_with_upload_prefix[begin:]
+            key_with_task_prefix = self.task_prefix + key
+            if self.connection.exists(key_with_task_prefix):
+                continue
+            #key对应的内容即不再上传状态，也不在合并状态，一定是此前上传失败的任务，把该任务进行记录，并删除所有分片
+            #if item_with_prefix.startswith(self.file_prefix):
+            #    upload_name_without_prefix = item_with_prefix[begin:]
+            upload_name_failure_with_prefix_list.append(item_with_upload_prefix)
 
-        for item_without_prefix in matched_upload_name_without_prefix_list:
-            item_without_prefix_file_clip_list = list(self.connection.smembers(item_without_prefix))
-            for clip_name in item_without_prefix_file_clip_list:
+        for item_with_prefix in upload_name_failure_with_prefix_list:
+            item_file_clip_list = list(self.connection.smembers(item_with_prefix))
+            for clip_name in item_file_clip_list:
                 yield clip_name
 
         #matched_file_name_without_prefix_lit = []
