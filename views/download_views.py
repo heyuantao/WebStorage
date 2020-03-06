@@ -1,6 +1,9 @@
 #-*- coding=utf-8 -*-
 from flask import request, jsonify, current_app, stream_with_context, Response
 from flask_api import status
+from werkzeug.urls import url_quote
+import urllib.parse
+import base64
 import traceback
 from config import config
 from db import Database
@@ -18,17 +21,22 @@ def api_download_info_view():
 
 
 def api_download_url_view():
+    #key = urllib.parse.quote(request.json.get('key'))
     key = request.json.get('key')
     task = db.get_download_task_by_key(key)
     site_url = config.App.SITE_URL
     api_url = "/api/download/content"
-    download_url = "{0}{1}?key={2}&task={3}".format(site_url,api_url,key,task)
+    download_url = "{0}{1}?key={2}&task={3}".format(site_url, api_url, base64.b64encode(urllib.parse.quote(key).encode("utf-8")).decode(), task) #urllib.parse.quote(key)
+    #dict = {'key':key,'task':task}
+    #download_url = "{0}{1}?{2}".format(site_url,api_url,urllib.parse.urlencode(dict))
     return jsonify({'key': key, 'url':download_url})
 
 #不验证下载task的view用于测试文件下载
 def api_free_download_view():
-    key = request.args.get('key', '0')
-
+    raw_key = request.args.get('key', '0')
+    #key = base64.urlsafe_b64decode(raw_key).decode("utf-8")
+    key = urllib.parse.unquote_plus(request.args.get('key', '0'))
+    print(key)
     if not db.is_download_file_by_key(key):
         return jsonify({'status':'error','error_message':'not exist'}), status.HTTP_404_NOT_FOUND
 
@@ -40,14 +48,27 @@ def api_free_download_view():
 
 
 def api_download_view():
-    key = request.args.get('key','0')
+    raw_key = request.args.get('key', '0')
+    #download_url = "{0}{1}?key={2}&task={3}".format(site_url, api_url, base64.b64encode(urllib.parse.quote(key).encode("utf-8")).decode(), task) #urllib.parse.quote(key)
+    other_key =raw_key.encode('utf-8').decode()
+    print(type(other_key))
+    print(other_key)
+    other2_key = base64.b64decode(other_key).decode()
+    other3_key = urllib.parse.unquote(other2_key)
+    key=other3_key
+
+    #key = base64.urlsafe_b64decode(raw_key).decode("utf-8")
+    #key = urllib.parse.unquote_plus(request.args.get('key', '0'))
+    # key = urllib.parse.unquote(request.args.get('key', '0'))
+    #print(key)
+    #key = urllib.parse.unquote(request.args.get('key','0'))
     task = request.args.get('task','0')
 
     if not db.is_download_file_by_key(key):
         return jsonify({'status':'error','error_message':'not exist'}), status.HTTP_404_NOT_FOUND
 
     if not db.is_download_task_valid(key,task):
-        return jsonify({'status':'error'}), status.HTTP_403_FORBIDDEN
+        return jsonify({'status':'error','error_message':'invalid'}), status.HTTP_403_FORBIDDEN
 
     if db.is_key_contents_in_merge_status(key):
         clip_list = db.get_clip_upload_status_list_of_key(key)
@@ -60,7 +81,7 @@ def _download_unmerged_content_of_key(key, clip_list):
     try:
         content_generate = store.get_merging_content_generate_of_key_and_clipinforamtion(key, clip_list)
         response = Response(stream_with_context(content_generate))
-        header = 'attachment; filename='+key
+        header = 'attachment; filename='+url_quote(key)
         response.headers["Content-Disposition"] = header
         #response.headers.add('Accept-Ranges', 'bytes')
         return response
@@ -74,7 +95,7 @@ def _download_merged_content_of_key(key):
     try:
         content_generate = store.get_content_generate_of_key(key)
         response = Response(stream_with_context(content_generate))
-        header = 'attachment; filename='+key
+        header = 'attachment; filename='+url_quote(key)
         response.headers["Content-Disposition"] = header
         #response.headers.add('Accept-Ranges', 'bytes')
         return response
