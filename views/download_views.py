@@ -15,29 +15,29 @@ logger = logging.getLogger(__name__)
 db = Database()
 store = Storage()
 
-def api_download_info_view():
+def api_file_info_view():
     key = request.json.get('key')
     return jsonify({'key':key,'exist':False})
 
 
-def api_download_url_view():
+def api_file_url_view():
     #key = urllib.parse.quote(request.json.get('key'))
     key = request.json.get('key')
     task = db.get_download_task_by_key(key)
     #site_url = config.App.SITE_URL
     site_url = "http://"+request.headers.get('host')
-    api_url = "/api/download/content"
+    api_url = "/file/content"
     #download_url = "{0}{1}?key={2}&task={3}".format(site_url, api_url, base64.b64encode(urllib.parse.quote(key).encode("utf-8")).decode(), task) #urllib.parse.quote(key)
     download_url = "{0}{1}?key={2}&task={3}".format(site_url, api_url, key, task) #urllib.parse.quote(key)
 
     return jsonify({'key': key, 'url':download_url})
 
 #不验证下载task的view用于测试文件下载
-def api_free_download_view():
-    raw_key = request.args.get('key', '0')
+def file_freecontent_view():
+    key = request.args.get('key', '0')
     #key = base64.urlsafe_b64decode(raw_key).decode("utf-8")
-    key = urllib.parse.unquote_plus(request.args.get('key', '0'))
-    print(key)
+    #key = urllib.parse.unquote_plus(request.args.get('key', '0'))
+    #print(key)
     if not db.is_download_file_by_key(key):
         return jsonify({'status':'error','error_message':'not exist'}), status.HTTP_404_NOT_FOUND
 
@@ -48,7 +48,7 @@ def api_free_download_view():
         return _download_merged_content_of_key(key)
 
 
-def api_download_view():
+def file_content_view():
     key = request.args.get('key', '0')
 
     '''

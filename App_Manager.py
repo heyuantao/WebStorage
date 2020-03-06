@@ -9,10 +9,6 @@ logger = logging.getLogger(__name__)
 
 
 def read_upload_file_list_to_db(db,store):
-    #pattern = self.file_prefix + "*"
-    #matched_list = self.connection.keys(pattern=pattern)
-    #if len(matched_list) > 0:
-    #    self.connection.delete(*matched_list)  # clear the old data
     file_list = store.get_upload_file_list()
     for file in file_list:
         db.add_to_downloadable_file_list_by_key(file)
@@ -27,8 +23,8 @@ def create_app():
     auth_instance = Auth()
     auth_instance.init_app(app)
 
-    from routes import Route
-    route_instance = Route()
+    from routes import Manager_Router
+    route_instance = Manager_Router()
     route_instance.init_app(app, auth_instance.get_auth())
 
     from storage import Storage
@@ -39,20 +35,13 @@ def create_app():
     redis_instance = Database()
     redis_instance.init_app(app)
 
-    #from task import Task
-    #task_instance = Task()
-    #task_instance.init_app(app)
-
-
     #init finished
     read_upload_file_list_to_db(redis_instance, storage_instance)
     return app
 
+#WSGIRequestHandler.protocol_version = "HTTP/1.1"
 application = create_app()
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
-    #app = create_app()
-    WSGIRequestHandler.protocol_version = "HTTP/1.1"
-    
-    application.run(port=34567,host="0.0.0.0")
+    application.run(port=5000,host="0.0.0.0")
