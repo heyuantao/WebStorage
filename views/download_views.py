@@ -24,7 +24,8 @@ def api_download_url_view():
     #key = urllib.parse.quote(request.json.get('key'))
     key = request.json.get('key')
     task = db.get_download_task_by_key(key)
-    site_url = config.App.SITE_URL
+    #site_url = config.App.SITE_URL
+    site_url = "http://"+request.headers.get('host')
     api_url = "/api/download/content"
     #download_url = "{0}{1}?key={2}&task={3}".format(site_url, api_url, base64.b64encode(urllib.parse.quote(key).encode("utf-8")).decode(), task) #urllib.parse.quote(key)
     download_url = "{0}{1}?key={2}&task={3}".format(site_url, api_url, key, task) #urllib.parse.quote(key)
