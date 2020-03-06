@@ -78,7 +78,8 @@ def api_download_view():
 def _download_unmerged_content_of_key(key, clip_list):
     try:
         content_generate = store.get_merging_content_generate_of_key_and_clipinforamtion(key, clip_list)
-        response = Response(stream_with_context(content_generate))
+        #response = Response(stream_with_context(content_generate))
+        response = Response(content_generate, content_type="application/octet-stream")
         header = 'attachment; filename='+url_quote(key)
         response.headers["Content-Disposition"] = header
         #response.headers.add('Accept-Ranges', 'bytes')
@@ -92,10 +93,10 @@ def _download_unmerged_content_of_key(key, clip_list):
 def _download_merged_content_of_key(key):
     try:
         content_generate = store.get_content_generate_of_key(key)
-        response = Response(stream_with_context(content_generate))
+        #response = Response(stream_with_context(content_generate))
+        response = Response(content_generate, content_type="application/octet-stream")
         header = 'attachment; filename='+url_quote(key)
         response.headers["Content-Disposition"] = header
-        #response.headers.add('Accept-Ranges', 'bytes')
         return response
 
     except Exception as e:
