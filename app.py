@@ -1,6 +1,7 @@
 #-*- coding=utf-8 -*-
 from flask import Flask
 from flask_cors import CORS
+from werkzeug.serving import WSGIRequestHandler
 from config import config
 import logging
 
@@ -52,4 +53,6 @@ application = create_app()
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     #app = create_app()
+    WSGIRequestHandler.protocol_version = "HTTP/1.1"
+    
     application.run(port=34567,host="0.0.0.0")
