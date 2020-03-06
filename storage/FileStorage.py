@@ -68,7 +68,7 @@ class FileStorage:
                 try:
                     #filename = self.tmp_path + '/%s%d' % (key, chunk)
                     clip_file_name = "{0}/{1}{2}".format(self.tmp_path, key, chunk)
-                    #time.sleep(3)
+                    time.sleep(3)
                     clip_file = open(clip_file_name, 'rb')                              # 按序打开每个分片
                     saved_file.write(clip_file.read())
                     clip_file.close()
@@ -147,3 +147,15 @@ class FileStorage:
     def get_content_size_of_key(self,key):
         file_abs_path = os.path.join(self.file_path, key)
         return os.stat(str(file_abs_path)).st_size
+
+    def get_merging_content_size_of_key(self, key, clip_list):
+        clip_total_size =0;
+        for item_clip in clip_list:
+            if item_clip=='success':
+                continue
+            try:
+                clip_abs_path = os.path.join(self.tmp_path, item_clip)
+                clip_total_size = clip_total_size + os.stat(str(clip_abs_path)).st_size
+            except IOError:
+                continue
+        return clip_total_size
