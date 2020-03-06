@@ -68,7 +68,7 @@ class FileStorage:
                 try:
                     #filename = self.tmp_path + '/%s%d' % (key, chunk)
                     clip_file_name = "{0}/{1}{2}".format(self.tmp_path, key, chunk)
-                    time.sleep(3)
+                    #time.sleep(3)
                     clip_file = open(clip_file_name, 'rb')                              # 按序打开每个分片
                     saved_file.write(clip_file.read())
                     clip_file.close()
@@ -149,7 +149,17 @@ class FileStorage:
         return os.stat(str(file_abs_path)).st_size
 
     def get_merging_content_size_of_key(self, key, clip_list):
-        clip_total_size =0;
+        clip_total_size = 0
+        clip_list_len = len(clip_list)-1        #不计算'success' 这个标记
+        if "success" not in clip_list:
+            raise  MessageException('You are download a file which is not merge successfull in FileStorage.get_merging_content_size_of_key()')
+        last_chunk_count = clip_list_len-1      #最后一个分片的名字
+        number_of_5m_chunk = clip_list_len-1    #5M分片的数量，只有最后一个分片大小不为5M
+        last_clip_abs_path = "{0}/{1}{2}".format(self.tmp_path, key, last_chunk_count)
+
+        clip_total_size = number_of_5m_chunk*5*1024*1024
+        clip_total_size = clip_total_size + os.stat(str(last_clip_abs_path)).st_size
+        '''
         for item_clip in clip_list:
             if item_clip=='success':
                 continue
@@ -158,4 +168,5 @@ class FileStorage:
                 clip_total_size = clip_total_size + os.stat(str(clip_abs_path)).st_size
             except IOError:
                 continue
+        '''
         return clip_total_size

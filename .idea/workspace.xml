@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="62e4d7ef-91bf-44db-a8e3-7da930fe9347" name="Default Changelist" comment="">
+    <list default="true" id="62e4d7ef-91bf-44db-a8e3-7da930fe9347" name="Default Changelist" comment="size append">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth/token_auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth/token_auth.py" afterDir="false" />
@@ -125,7 +125,7 @@
       <workItem from="1583419658491" duration="209000" />
       <workItem from="1583455577899" duration="9264000" />
       <workItem from="1583473814252" duration="766000" />
-      <workItem from="1583480652744" duration="3688000" />
+      <workItem from="1583480652744" duration="5338000" />
     </task>
     <servers />
   </component>
@@ -141,6 +141,10 @@
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="requirements.txt" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="size append" />
+    <option name="LAST_COMMIT_MESSAGE" value="size append" />
   </component>
   <component name="WindowStateProjectService">
     <state x="568" y="237" key="#HTTP_Proxy" timestamp="1583161168036">
@@ -174,26 +178,26 @@
     </state>
     <state x="420" y="98" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1583120802296" />
     <state x="630" y="150" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1583132018824" />
-    <state width="1877" height="311" key="GridCell.Tab.0.bottom" timestamp="1583485848780">
+    <state width="1877" height="311" key="GridCell.Tab.0.bottom" timestamp="1583487302295">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1237" height="97" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1583414131545" />
-    <state width="1877" height="311" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583485848780" />
-    <state width="1877" height="311" key="GridCell.Tab.0.center" timestamp="1583485848780">
+    <state width="1877" height="311" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583487302295" />
+    <state width="1877" height="311" key="GridCell.Tab.0.center" timestamp="1583487302294">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1237" height="97" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1583414131545" />
-    <state width="1877" height="311" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583485848780" />
-    <state width="1877" height="311" key="GridCell.Tab.0.left" timestamp="1583485848780">
+    <state width="1877" height="311" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583487302294" />
+    <state width="1877" height="311" key="GridCell.Tab.0.left" timestamp="1583487302294">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1237" height="97" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1583414131545" />
-    <state width="1877" height="311" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583485848780" />
-    <state width="1877" height="311" key="GridCell.Tab.0.right" timestamp="1583485848780">
+    <state width="1877" height="311" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583487302294" />
+    <state width="1877" height="311" key="GridCell.Tab.0.right" timestamp="1583487302295">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1237" height="97" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1583414131545" />
-    <state width="1877" height="311" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583485848780" />
+    <state width="1877" height="311" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583487302295" />
     <state width="1877" height="239" key="GridCell.Tab.1.bottom" timestamp="1583338636549">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -225,7 +229,7 @@
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1583333852338" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/WebStorage$WebStorage.coverage" NAME="WebStorage Coverage Results" MODIFIED="1583485612622" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/WebStorage$WebStorage.coverage" NAME="WebStorage Coverage Results" MODIFIED="1583487302280" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/WebStorage$WebStorageLaptop.coverage" NAME="WebStorage Coverage Results" MODIFIED="1583125283025" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
