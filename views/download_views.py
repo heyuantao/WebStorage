@@ -93,10 +93,14 @@ def _download_unmerged_content_of_key(key, clip_list):
 def _download_merged_content_of_key(key):
     try:
         content_generate = store.get_content_generate_of_key(key)
+        file_size = store.get_content_size_of_key(key)
         #response = Response(stream_with_context(content_generate))
         response = Response(content_generate, content_type="application/octet-stream")
         header = 'attachment; filename='+url_quote(key)
+        #headers['content-length'] = os.stat(str(file_path)).st_size
         response.headers["Content-Disposition"] = header
+        response.headers['content-length'] = file_size
+
         return response
 
     except Exception as e:

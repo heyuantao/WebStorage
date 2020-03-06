@@ -144,3 +144,6 @@ class FileStorage:
             except IOError:
                 logger.error("Read Merged file \"{}\" should not be error, this may be a bug !".format(merged_file_path))
 
+    def get_content_size_of_key(self,key):
+        file_abs_path = os.path.join(self.file_path, key)
+        return os.stat(str(file_abs_path)).st_size
