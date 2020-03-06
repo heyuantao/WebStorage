@@ -49,7 +49,7 @@ def api_free_download_view():
 
 def api_download_view():
     key = request.args.get('key', '0')
-        
+
     '''
     other_key =raw_key.encode('utf-8').decode()
     print(type(other_key))
