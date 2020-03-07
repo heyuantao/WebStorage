@@ -20,8 +20,9 @@ celery = Celery("task", broker = config.App.CELERY_BACKEND)
 def setup_periodic_tasks(sender, **kwargs):
     #hour =60*60*60
     hour = 60*20
-    sender.add_periodic_task(hour, clear_upload_failure_clips.s(), name="clear_upload_failure_clip")
-    sender.add_periodic_task(hour, delete_file_marked_as_deleting.s(), name="delete_file_mark_as_deleting")
+    little_time = 60*2
+    sender.add_periodic_task(little_time, clear_upload_failure_clips.s(), name="clear_upload_failure_clip")
+    sender.add_periodic_task(little_time, delete_file_marked_as_deleting.s(), name="delete_file_mark_as_deleting")
 
 
 #大文件可能需要较长的合并时间，因此将合并文件的任务在后台进行
