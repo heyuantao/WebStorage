@@ -201,9 +201,11 @@ class Database:
 
     #从缓存中删除某个文件,由于文件可能处于合并状态，因此先将文件从浏览列表中删除，并加入待删除文件列表，待后台进程定期删除该文件
     def delete_downloadable_file_list_by_key(self, key):
-        file_list_key = self.file_list_key
-        self.connection.hdel(file_list_key, key)
 
+        file_list_key = self.file_list_key
+        if not self.connection.hexists(file_list_key, key):
+            raise MessageException("file not exist")
+        self.connection.hdel(file_list_key, key)
         file_deleting_list_key = self.file_deleting_list_key
         self.connection.hset(file_deleting_list_key, key, DownloadFileStatus.PRESENT)
 

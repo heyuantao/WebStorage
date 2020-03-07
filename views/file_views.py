@@ -3,6 +3,7 @@ from flask import request, jsonify, current_app, stream_with_context, Response
 from flask_api import status
 import traceback
 from config import config
+from utils import MessageException
 from db import Database
 from storage import Storage
 import logging
@@ -28,7 +29,10 @@ def api_file_delete_view():
     key = request.json.get('key','0')
     if key=='0':
         return jsonify({'status': 'error'}), status.HTTP_404_NOT_FOUND
-    db.delete_downloadable_file_list_by_key(key)
-    #由异步任务来完成文件的删除
-    #store.delete_by_key(key)
-    return jsonify({'status': 'success'})
+    try:
+        db.delete_downloadable_file_list_by_key(key)
+        #由异步任务来完成文件的删除
+        #store.delete_by_key(key)
+        return jsonify({'status': 'success'})
+    except MessageException as e:
+        return jsonify({'status': 'error','error_message':str(e)}) , status.HTTP_400_BAD_REQUEST
