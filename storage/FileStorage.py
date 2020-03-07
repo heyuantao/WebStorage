@@ -84,11 +84,14 @@ class FileStorage:
 
     #从磁盘中删除文件
     def delete_by_key(self, key):
-        file_abs_path = os.path.join(self.file_path, key)
-        if os.path.exists(file_abs_path):
-            os.remove(file_abs_path)
-        else:
-            logger.info("Delete a file \"{}\" with is not exist on disk !".format(key))
+        try:
+            file_abs_path = os.path.join(self.file_path, key)
+            if os.path.exists(file_abs_path):
+                os.remove(file_abs_path)
+            else:
+                logger.error("Delete a file \"{}\" which is not exist ! in FileStorage.delete_by_key() ".format(key))
+        except Exception as e:
+            logger.critical("Delete a file \"{}\" error ! in FileStorage.delete_by_key() ".format(key))
 
     #处理文件的读，采用yield的方式来读取，防止一次占用过多的内存,在此处应当处理几种情况，1.文件合并已经完成（直接读） 2.文件正在合并
     def get_content_generate_of_key(self, key):    #可能会抛出异常
@@ -149,14 +152,17 @@ class FileStorage:
         return os.stat(str(file_abs_path)).st_size
 
     def get_merging_content_size_of_key(self, key, clip_list):
-        clip_total_size = 0
+
         clip_list_len = len(clip_list)-1        #不计算'success' 这个标记
         if "success" not in clip_list:
-            raise  MessageException('You are download a file which is not merge successfull in FileStorage.get_merging_content_size_of_key()')
+            msg_str = "You are download a key:\"{}\" which is not merge successfull in FileStorage.get_merging_content_size_of_key()".format(key)
+            logger.critical(msg_str)
+            raise  MessageException(msg_str)
         last_chunk_count = clip_list_len-1      #最后一个分片的名字
         number_of_5m_chunk = clip_list_len-1    #5M分片的数量，只有最后一个分片大小不为5M
         last_clip_abs_path = "{0}/{1}{2}".format(self.tmp_path, key, last_chunk_count)
 
+        #根据分片计算文件大小
         clip_total_size = number_of_5m_chunk*5*1024*1024
         clip_total_size = clip_total_size + os.stat(str(last_clip_abs_path)).st_size
         '''

@@ -4,7 +4,7 @@
 1.1 文件上传和管理模块
 
 启用用于上传和管理接口的微服务
-gunicorn -w 6 -b 0.0.0.0:5000 --log-level=error --timeout 30 App_Manager:application
+gunicorn -w 6 -b 0.0.0.0:5000 --log-level=debug --timeout 30 App_Manager:application
 
 启动工作列队
 celery -A task.task worker
@@ -14,7 +14,7 @@ celery -A task.task beat
 
 1.2 文件下载模块
 启用文件下载模块
-gunicorn -w 6 -b 0.0.0.0:5001 --log-level=error --timeout 30 -k gevent App_FileServer:application
+gunicorn -w 6 -b 0.0.0.0:5001 --log-level=debug --timeout 30 -k gevent App_FileServer:application
 注：文件下载模块面临长时间下载的场景，因此HTTP使用了长连接"keepalive"，因此如果前端使用反向代理的话确保反向代理也配置过长连接
 
 

@@ -29,5 +29,6 @@ def api_file_delete_view():
     if key=='0':
         return jsonify({'status': 'error'}), status.HTTP_404_NOT_FOUND
     db.delete_downloadable_file_list_by_key(key)
-    store.delete_by_key(key)
+    #由异步任务来完成文件的删除
+    #store.delete_by_key(key)
     return jsonify({'status': 'success'})

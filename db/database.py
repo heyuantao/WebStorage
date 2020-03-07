@@ -31,19 +31,21 @@ class Database:
         self.merge_prefix       = "merge:"        #合并节点
         self.download_prefix    = "download:"     #下载阶段
 
-        self.file_list_key      = "file_list"     #文件的哈希列表，用于下载和浏览，以(filename,status)的方式进行存放
+        self.file_list_key          = "file_list"           #文件的哈希列表，用于下载和浏览，以(filename,status)的方式进行存放
+        self.file_deleting_list_key = "file_deleting_list"  #待删除文件的哈希列表，待后端异步任务进行删除
 
         try:
-            logger.debug("Connect to redis ...")
+            logger.debug("Connect to redis ... in Database.__init__()")
             self.connection_pool = redis.ConnectionPool(host=self.host, port=self.port, db=self.db, decode_responses=True) #password
             self.connection = redis.StrictRedis(connection_pool=self.connection_pool)
         except Exception as e:
-            logger.error("Error in conncetion redis !")
-            raise MessageException('Error in conncetion redis at Database.init_app() ')
+            msg_str = "Error in conncetion redis ! in Database.__init__()"
+            logger.error(msg_str)
+            raise MessageException(msg_str)
 
     #flask 初始化调用该函数
     def init_app(self,app=None):
-        logger.debug("Init database !")
+        logger.debug("Init database in Database.__init__()")
 
     #---------------------------上传前期处理函数--------------------------------------#
     #通过文件名key来获得对应的task编号，如果对应的key存在，则直接返回，否则在redis数据库中创建task编号并返回
@@ -123,7 +125,7 @@ class Database:
     def get_upload_failure_key_list(self):
         key_with_prefix = self.upload_prefix + "*"
         matched_upload_key_with_prefix_list = self.connection.keys(pattern=key_with_prefix)
-        print(matched_upload_key_with_prefix_list)
+        #logger.info(matched_upload_key_with_prefix_list)
         upload_failure_key_without_prefix_list = []
         begin = len(self.upload_prefix)
         for item_with_upload_prefix in matched_upload_key_with_prefix_list:
@@ -140,6 +142,8 @@ class Database:
             #    upload_name_without_prefix = item_with_prefix[begin:]
             #key = item_with_upload_prefix[begin:]
             upload_failure_key_without_prefix_list.append(key)
+
+        #logger.info("Find upload failure task {} in Database.get_upload_failure_key_list() ".format(matched_upload_key_with_prefix_list))
         return upload_failure_key_without_prefix_list
 
         '''
@@ -195,36 +199,36 @@ class Database:
         self.connection.hset(file_list_key, key ,DownloadFileStatus.PRESENT)
 
 
-    #从缓存中删除某个文件
+    #从缓存中删除某个文件,由于文件可能处于合并状态，因此先将文件从浏览列表中删除，并加入待删除文件列表，待后台进程定期删除该文件
     def delete_downloadable_file_list_by_key(self, key):
-        ##key_with_prefix = self.file_prefix + key
-        ##self.connection.delete(key_with_prefix)
         file_list_key = self.file_list_key
         self.connection.hdel(file_list_key, key)
 
+        file_deleting_list_key = self.file_deleting_list_key
+        self.connection.hset(file_deleting_list_key, key, DownloadFileStatus.PRESENT)
+
+
     #检查是否在可下载文件列表中
     def is_download_file_by_key(self,key):
-        #key_with_prefix = self.file_prefix + key
-        #if self.connection.exists(key_with_prefix):
         file_list_key = self.file_list_key
         if self.connection.hexists(file_list_key, key):
             return True
         else:
             return False
 
+
+    #获得待删除的文件列表
+    def get_deleting_file_list(self):
+        file_deleting_list_key = self.file_deleting_list_key
+        return self.connection.hkeys(file_deleting_list_key)
+
+    #从待删除文件列表中删除某个key
+    def delete_file_from_deleting_file_list_by_key(self, key):
+        file_deleting_list_key = self.file_deleting_list_key
+        return self.connection.hdel(file_deleting_list_key, key)
+
     #返回缓存的文件列表
     def get_file_list_cache(self):
-        '''
-        file_pattern = self.file_prefix + "*"
-        matched_file_name_with_prefix_list = self.connection.keys(pattern=file_pattern)
-        matched_file_name_without_prefix_list = []
-        begin = len(self.file_prefix)
-        for item_with_prefix in matched_file_name_with_prefix_list:
-            if item_with_prefix.startswith(self.file_prefix):
-                file_name_without_prefix = item_with_prefix[begin:]
-                matched_file_name_without_prefix_list.append(file_name_without_prefix)
-        return matched_file_name_without_prefix_list
-        '''
         file_list_key = self.file_list_key
         return self.connection.hkeys(file_list_key)
     # ---------------------------------------------------------------------------------#
