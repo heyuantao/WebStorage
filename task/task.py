@@ -62,9 +62,9 @@ def delete_file_marked_as_deleting():
             continue
 
         #如果该文件正处于下载状态，则等待文件生成的下载信息超时后再将其进行删除
-        if db.is_key_in_downloading_status(deleting_file_item):
-            logger.error("Key \"{}\" is in download status ,delete it next time in task.clear_key_marked_as_deleting() ".format(deleting_file_item))
-            continue
+        #if db.is_key_in_downloading_status(deleting_file_item):
+        #    logger.error("Key \"{}\" is in download status ,delete it next time in task.clear_key_marked_as_deleting() ".format(deleting_file_item))
+        #    continue
         try:
             store.delete_by_key(deleting_file_item)
             db.delete_file_from_deleting_file_list_by_key(deleting_file_item)

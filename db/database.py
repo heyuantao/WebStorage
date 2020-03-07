@@ -209,12 +209,12 @@ class Database:
 
 
     #查看key是否处在下载状态，即文件是否生成过下载链接，这个下载链接会在redis中保存一段时间
-    def is_key_in_downloading_status(self,key):
-        key_with_prefix = self.download_prefix + key
-        if self.connection.exists(key_with_prefix):
-            return True
-        else:
-            return False
+    #def is_key_in_downloading_status(self,key):
+    #    key_with_prefix = self.download_prefix + key
+    #    if self.connection.exists(key_with_prefix):
+    #        return True
+    #    else:
+    #        return False
     #---------------------------------------------------------------------------------#
 
     # -------------------------------------文件列表函数--------------------------------#
