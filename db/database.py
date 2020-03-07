@@ -6,6 +6,7 @@ from datetime import datetime,timedelta
 from config import config
 import redis
 import logging
+import json
 import traceback
 from storage import Storage
 
@@ -162,7 +163,9 @@ class Database:
 
     #-------------------------------------文件下载处理函数-----------------------------#
     #根据传入的文件名key，生成下载任务的task，并根据key和task来生成下载链接
-    def get_download_task_by_key(self, key):
+    def get_download_task_by_key(self, key, realname=None):
+        if realname==None:
+            realname = key
         connection = self.connection
         key_with_prefix = self.download_prefix + key
         task = str(uuid4().hex)
@@ -171,23 +174,33 @@ class Database:
             result = connection.get(key_with_prefix)
             return result
 
-        connection.set(key_with_prefix,task)
+        download_task_value = {'task':task, 'realname':realname}
+        connection.set(key_with_prefix,json.dumps(download_task_value))
         connection.expire(key_with_prefix,timedelta(hours =1))
         return task
 
     #检验下载链接的key和task是否有效
     def is_download_task_valid(self,key,task):
-        connection = self.connection
-
         key_with_prefix = self.download_prefix + key
-        if connection.exists(key_with_prefix):
-            result = connection.get(key_with_prefix)
-            if result == task:
+        if self.connection.exists(key_with_prefix):
+            result_str = self.connection.get(key_with_prefix)
+            result_dict = json.loads(result_str)
+            if result_dict['task'] == task:
                 return True
             else:
                 return False
         else:
             return False
+
+    #获取用户设置的下载文件名,用户获取某个文件的下载链接时，可以制定一个名字'realname'该名字再用户下载时作为保存的文件名存在，如果不设置则realname于key相同
+    def get_download_realname_by_key(self,key):
+        key_with_prefix = self.download_prefix + key
+        if self.connection.exists(key_with_prefix):
+            result_str = self.connection.get(key_with_prefix)
+            result_dict = json.loads(result_str)
+            return result_dict['realname']
+        else:
+            raise MessageException('the key not exist in')
     #---------------------------------------------------------------------------------#
 
     # -------------------------------------文件列表函数--------------------------------#

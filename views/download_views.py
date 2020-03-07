@@ -21,9 +21,11 @@ def api_file_info_view():
 
 
 def api_file_url_view():
-    #key = urllib.parse.quote(request.json.get('key'))
-    key = request.json.get('key')
-    task = db.get_download_task_by_key(key)
+    key = request.json.get('key','0')
+    realname = request.json.get('realname','0')
+    if realname=='0':
+        realname=key
+    task = db.get_download_task_by_key(key,realname)
     #site_url = config.App.SITE_URL
     site_url = "http://"+request.headers.get('host')
     api_url = "/file/content"
@@ -32,7 +34,7 @@ def api_file_url_view():
 
     return jsonify({'key': key, 'url':download_url})
 
-#不验证下载task的view用于测试文件下载
+#不验证下载task的view用于测试文件下载,该接口为测试接口
 def file_freecontent_view():
     key = request.args.get('key', '0')
     #key = base64.urlsafe_b64decode(raw_key).decode("utf-8")
@@ -67,21 +69,24 @@ def file_content_view():
 
     if not db.is_download_task_valid(key,task):
         return jsonify({'status':'error','error_message':'invalid'}), status.HTTP_403_FORBIDDEN
+    
+    realname = db.get_download_realname_by_key(key)
 
     if db.is_key_contents_in_merge_status(key):
         clip_list = db.get_clip_upload_status_list_of_key(key)
-        return _download_unmerged_content_of_key(key, clip_list)
+        return _download_unmerged_content_of_key(key, realname, clip_list)
     else:
-        return _download_merged_content_of_key(key)
+        return _download_merged_content_of_key(key,realname)
 
 #处理还在合并过程中的文件，要进行复杂的异常处理
-def _download_unmerged_content_of_key(key, clip_list):
+def _download_unmerged_content_of_key(key, realname, clip_list):
     try:
         content_generate = store.get_merging_content_generate_of_key_and_clipinforamtion(key, clip_list)
         file_size = store.get_merging_content_size_of_key(key, clip_list)
         #response = Response(stream_with_context(content_generate))
         response = Response(content_generate, content_type="application/octet-stream")
-        header = 'attachment; filename='+url_quote(key)
+        #header = 'attachment; filename='+url_quote(key)
+        header = 'attachment; filename=' + url_quote(realname)
         response.headers["Content-Disposition"] = header
         #response.headers.add('Accept-Ranges', 'bytes')
         response.headers['content-length'] = file_size
@@ -92,13 +97,14 @@ def _download_unmerged_content_of_key(key, clip_list):
         return jsonify({'status':'error'}), status.HTTP_404_NOT_FOUND
 
 #返回已经合并过的文件，该过程比较简单，直接读文件即可
-def _download_merged_content_of_key(key):
+def _download_merged_content_of_key(key, realname):
     try:
         content_generate = store.get_content_generate_of_key(key)
         file_size = store.get_content_size_of_key(key)
         #response = Response(stream_with_context(content_generate))
         response = Response(content_generate, content_type="application/octet-stream")
-        header = 'attachment; filename='+url_quote(key)
+        #header = 'attachment; filename='+url_quote(key)
+        header = 'attachment; filename=' + url_quote(realname)
         #headers['content-length'] = os.stat(str(file_path)).st_size
         response.headers["Content-Disposition"] = header
         response.headers['content-length'] = file_size
