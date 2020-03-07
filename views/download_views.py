@@ -69,7 +69,7 @@ def file_content_view():
 
     if not db.is_download_task_valid(key,task):
         return jsonify({'status':'error','error_message':'invalid'}), status.HTTP_403_FORBIDDEN
-    
+
     realname = db.get_download_realname_by_key(key)
 
     if db.is_key_contents_in_merge_status(key):

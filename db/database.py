@@ -166,17 +166,17 @@ class Database:
     def get_download_task_by_key(self, key, realname=None):
         if realname==None:
             realname = key
-        connection = self.connection
         key_with_prefix = self.download_prefix + key
         task = str(uuid4().hex)
 
-        if connection.exists(key_with_prefix):
-            result = connection.get(key_with_prefix)
-            return result
+        if self.connection.exists(key_with_prefix):
+            result_dict = json.loads(self.connection.get(key_with_prefix))
+            task = result_dict['task']
+            return task
 
         download_task_value = {'task':task, 'realname':realname}
-        connection.set(key_with_prefix,json.dumps(download_task_value))
-        connection.expire(key_with_prefix,timedelta(hours =1))
+        self.connection.set(key_with_prefix,json.dumps(download_task_value))
+        self.connection.expire(key_with_prefix,timedelta(hours =1))
         return task
 
     #检验下载链接的key和task是否有效
