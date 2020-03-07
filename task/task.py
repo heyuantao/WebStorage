@@ -56,8 +56,14 @@ def clear_upload_failure_clips():
 def delete_file_marked_as_deleting():
     deleting_file_list = db.get_deleting_file_list()
     for deleting_file_item in deleting_file_list:
+        #如果该文件正处于合并状态，则等待合并完成后再进行删除
         if db.is_key_contents_in_merge_status(deleting_file_item):
             logger.error("Key \"{}\" is in merge status ,delete it next time in task.clear_key_marked_as_deleting() ".format(deleting_file_item))
+            continue
+
+        #如果该文件正处于下载状态，则等待文件生成的下载信息超时后再将其进行删除
+        if db.is_key_in_downloading_status(deleting_file_item):
+            logger.error("Key \"{}\" is in download status ,delete it next time in task.clear_key_marked_as_deleting() ".format(deleting_file_item))
             continue
         try:
             store.delete_by_key(deleting_file_item)

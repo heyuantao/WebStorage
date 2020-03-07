@@ -171,8 +171,9 @@ class Database:
 
         if self.connection.exists(key_with_prefix):
             result_dict = json.loads(self.connection.get(key_with_prefix))
-            #如果用户在后续的提交中修改了下载显示的文件名，则将文件名刷新到db中
             task = result_dict['task']
+            #用户可能多次生成下载链接，每次下载链接生成使用的realname有可能不相同，因此如果用户修改了该值，则要将realname的信息保存到数据库中
+            #这样当用户再次下载时显示的文件名就是新设置的realname，而不是最近一次设置的名字
             if result_dict['realname']!=realname:
                 download_task_value = {'task': task, 'realname': realname}
                 self.connection.set(key_with_prefix, json.dumps(download_task_value))
@@ -205,6 +206,15 @@ class Database:
             return result_dict['realname']
         else:
             raise MessageException('the key not exist in')
+
+
+    #查看key是否处在下载状态，即文件是否生成过下载链接，这个下载链接会在redis中保存一段时间
+    def is_key_in_downloading_status(self,key):
+        key_with_prefix = self.download_prefix + key
+        if self.connection.exists(key_with_prefix):
+            return True
+        else:
+            return False
     #---------------------------------------------------------------------------------#
 
     # -------------------------------------文件列表函数--------------------------------#
