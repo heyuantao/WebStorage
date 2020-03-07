@@ -171,7 +171,11 @@ class Database:
 
         if self.connection.exists(key_with_prefix):
             result_dict = json.loads(self.connection.get(key_with_prefix))
+            #如果用户在后续的提交中修改了下载显示的文件名，则将文件名刷新到db中
             task = result_dict['task']
+            if result_dict['realname']!=realname:
+                download_task_value = {'task': task, 'realname': realname}
+                self.connection.set(key_with_prefix, json.dumps(download_task_value))
             return task
 
         download_task_value = {'task':task, 'realname':realname}
