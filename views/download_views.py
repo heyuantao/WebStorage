@@ -5,7 +5,7 @@ import time
 from werkzeug.urls import url_quote
 import urllib.parse
 import base64
-from datetime import datetime
+from datetime import datetime,timedelta
 import traceback
 from config import config
 from db import Database
@@ -28,7 +28,8 @@ def api_file_url_view():
     realname = request.json.get('realname','0')
     if realname=='0':
         realname=key
-    timestamp = str(time.time())
+    #设定url一分钟后超时
+    timestamp = str((datetime.now()+timedelta(minutes=1)).timestamp())
     secret = config.App.AUTH_TOKEN[0]
     sign = downloadkeycrpyto.sign(key,realname,timestamp,secret)
 
@@ -76,7 +77,8 @@ def file_content_view():
         return jsonify({'status': 'error','error_message': 'sign is not valid'}), status.HTTP_400_BAD_REQUEST
 
     timestamp_datatime =datetime.fromtimestamp(float(timestamp))
-    if timestamp_datatime > datetime.now():
+    #计算当前的时间是否大于url中时间戳的时间，如果超过则url无效
+    if datetime.now() >= timestamp_datatime :
         return jsonify({'status': 'error', 'error_message': 'expired'}), status.HTTP_400_BAD_REQUEST
 
     if not db.is_download_file_by_key(key):
