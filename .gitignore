@@ -12,3 +12,4 @@
 /data/tmp/*
 
 /celerybeat.pid
+/celerybeat-schedule
