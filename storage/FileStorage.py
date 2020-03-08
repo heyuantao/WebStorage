@@ -176,3 +176,35 @@ class FileStorage:
                 continue
         '''
         return clip_total_size
+
+
+    #用于处理部分请求时的函数，此时key已经合并完成
+    def get_partial_content_generate_of_key(self, key, begin, length):
+        file_abs_path = os.path.join(self.file_path, key)
+        chunk_size = 5 * 1024 * 1024
+        file = open(file_abs_path, 'rb')
+        current = begin
+        end = begin + length
+        while True:
+            if (end-current) > chunk_size:
+                size_to_read = chunk_size
+                file.seek(current)
+                data = file.read(size_to_read)
+                current = current + size_to_read
+                yield data
+                continue
+            elif 0<(end-current)<chunk_size:
+                size_to_read = end-current
+                file.seek(current)
+                data = file.read(size_to_read)
+                current = current + size_to_read
+                yield data
+                continue
+            else:
+                break
+
+        file.close()
+
+    # 用于处理部分请求时的函数，此时key仍在合并状态
+    def get_partial_merging_content_generate_of_key_and_clipinforamtion(self, key, clip_list, begin, length):
+        pass

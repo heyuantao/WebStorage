@@ -5,6 +5,7 @@ import time
 from werkzeug.urls import url_quote
 import urllib.parse
 import base64
+import re
 from datetime import datetime,timedelta
 import traceback
 from config import config
@@ -90,12 +91,65 @@ def file_content_view():
     #    return jsonify({'status':'error','error_message':'invalid'}), status.HTTP_403_FORBIDDEN
 
     #realname = db.get_download_realname_by_key(key)
+    #如果客户端请求部分内容，一般用于mp4或者断点续传
+    range_header = request.headers.get('Range', None)
+    if range_header:
+        #byte1和byte2分别是range的开始和结束位置
+        byte1, byte2 = 0, None
+        m = re.search('(\d+)-(\d*)', range_header)
+        g = m.groups()
+        if g[0]: byte1 = int(g[0])
+        if g[1]: byte2 = int(g[1])
 
+        if db.is_key_contents_in_merge_status(key):
+            clip_list = db.get_clip_upload_status_list_of_key(key)
+            file_size = store.get_merging_content_size_of_key(key, clip_list)
+            length = file_size - byte1
+            if byte2 is not None:
+                length = byte2 - byte1
+
+            return _download_partial_unmerged_content_of_key(key,realname,clip_list,byte1,length)
+        else:
+            file_size = store.get_content_size_of_key(key)
+            length = file_size - byte1
+            if byte2 is not None:
+                length = byte2 - byte1
+            return _download_partial_merged_content_of_key(key, realname,byte1,length)
+
+    #处理完整内容的请求
     if db.is_key_contents_in_merge_status(key):
         clip_list = db.get_clip_upload_status_list_of_key(key)
         return _download_unmerged_content_of_key(key, realname, clip_list)
     else:
         return _download_merged_content_of_key(key,realname)
+
+
+def _download_partial_unmerged_content_of_key(key, realname, clip_list, begin, length):
+    try:
+        content_generate = store.get_partial_merging_content_generate_of_key_and_clipinforamtion(key, clip_list, begin, length)
+        response = Response(content_generate, mimetype=mimetypes.guess_type(key)[0])
+        header = 'attachment; filename=' + url_quote(realname)
+        response.headers["Content-Disposition"] = header
+        response.headers['content-length'] = length
+        response.headers['Accept-Ranges'] = 'bytes'
+        return response.HTTP_206_PARTIAL_CONTENT
+    except Exception as e:
+        logger.error(traceback.format_exc())
+        return jsonify({'status':'error'}), status.HTTP_404_NOT_FOUND
+
+def _download_partial_merged_content_of_key(key, realname, begin, length):
+    try:
+        print("begin {} and length is {}".format(begin,length))
+        content_generate = store.get_partial_content_generate_of_key(key, begin, length)
+        response = Response(content_generate, mimetype=mimetypes.guess_type(key)[0])
+        header = 'attachment; filename=' + url_quote(realname)
+        response.headers["Content-Disposition"] = header
+        response.headers['content-length'] = length
+        response.headers['Accept-Ranges'] ='bytes'
+        return response,status.HTTP_206_PARTIAL_CONTENT
+    except Exception as e:
+        logger.error(traceback.format_exc())
+        return jsonify({'status':'error'}), status.HTTP_404_NOT_FOUND
 
 #处理还在合并过程中的文件，要进行复杂的异常处理
 def _download_unmerged_content_of_key(key, realname, clip_list):
@@ -108,6 +162,7 @@ def _download_unmerged_content_of_key(key, realname, clip_list):
         header = 'attachment; filename=' + url_quote(realname)
         response.headers["Content-Disposition"] = header
         response.headers['content-length'] = file_size
+        response.headers['Accept-Ranges'] = 'bytes'
         return response
 
     except Exception as e:
@@ -125,8 +180,7 @@ def _download_merged_content_of_key(key, realname):
         header = 'attachment; filename=' + url_quote(realname)
         response.headers["Content-Disposition"] = header
         response.headers['content-length'] = file_size
-
-
+        response.headers['Accept-Ranges'] ='bytes'
         return response
 
     except Exception as e:
