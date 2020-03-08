@@ -73,6 +73,7 @@ def file_content_view():
         return jsonify({'status': 'error', 'error_message': 'key timestamp and sign can not be empty '}), status.HTTP_400_BAD_REQUEST
     if realname=='0':
         realname = key
+    #config.App.AUTH_TOKEN 是一组密钥，以列表方式存放，任何一个密钥的验证成功就可以通过
     if not downloadkeycrpyto.valid(key,realname,timestamp, config.App.AUTH_TOKEN, sign):
         return jsonify({'status': 'error','error_message': 'sign is not valid'}), status.HTTP_400_BAD_REQUEST
 
