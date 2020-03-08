@@ -29,7 +29,7 @@ def api_file_url_view():
     if realname=='0':
         realname=key
     #设定url一分钟后超时
-    timestamp = str((datetime.now()+timedelta(minutes=1)).timestamp())
+    timestamp = str((datetime.now()+timedelta(minutes=120)).timestamp())
     secret = config.App.AUTH_TOKEN[0]
     sign = downloadkeycrpyto.sign(key,realname,timestamp,secret)
 
