@@ -95,7 +95,7 @@ class MainPage extends React.Component{
         const new_file_name = this.makeid()+new_file.name;
         this.setState({mediaUploading:true});
         console.log(new_file_name);
-        axios.post("/api/upload/token/",{'key':new_file_name},{headers: {'Authorization': 'Token 1234567890'}}
+        axios.post("/api/upload/token/",{'key':new_file_name},{headers: {'Authorization': 'Token UseMyWebStorageService'}}
         ).then((res)=>{
             const task = res.data.task;
             const key = res.data.key;
