@@ -11,6 +11,7 @@ from config import config
 from db import Database
 from storage import Storage
 from utils import downloadkeycrpyto
+import mimetypes
 import logging
 
 logger = logging.getLogger(__name__)
@@ -102,11 +103,10 @@ def _download_unmerged_content_of_key(key, realname, clip_list):
         content_generate = store.get_merging_content_generate_of_key_and_clipinforamtion(key, clip_list)
         file_size = store.get_merging_content_size_of_key(key, clip_list)
         #response = Response(stream_with_context(content_generate))
-        response = Response(content_generate, content_type="application/octet-stream")
-        #header = 'attachment; filename='+url_quote(key)
+        #response = Response(content_generate, content_type="application/octet-stream")
+        response = Response(content_generate, mimetype=mimetypes.guess_type(key)[0])
         header = 'attachment; filename=' + url_quote(realname)
         response.headers["Content-Disposition"] = header
-        #response.headers.add('Accept-Ranges', 'bytes')
         response.headers['content-length'] = file_size
         return response
 
@@ -120,12 +120,12 @@ def _download_merged_content_of_key(key, realname):
         content_generate = store.get_content_generate_of_key(key)
         file_size = store.get_content_size_of_key(key)
         #response = Response(stream_with_context(content_generate))
-        response = Response(content_generate, content_type="application/octet-stream")
-        #header = 'attachment; filename='+url_quote(key)
+        #response = Response(content_generate, content_type="application/octet-stream")
+        response = Response(content_generate, mimetype=mimetypes.guess_type(key)[0])
         header = 'attachment; filename=' + url_quote(realname)
-        #headers['content-length'] = os.stat(str(file_path)).st_size
         response.headers["Content-Disposition"] = header
         response.headers['content-length'] = file_size
+
 
         return response
 
