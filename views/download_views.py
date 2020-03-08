@@ -1,13 +1,16 @@
 #-*- coding=utf-8 -*-
 from flask import request, jsonify, current_app, stream_with_context, Response
 from flask_api import status
+import time
 from werkzeug.urls import url_quote
 import urllib.parse
 import base64
+from datetime import datetime
 import traceback
 from config import config
 from db import Database
 from storage import Storage
+from utils import downloadkeycrpyto
 import logging
 
 logger = logging.getLogger(__name__)
@@ -25,12 +28,14 @@ def api_file_url_view():
     realname = request.json.get('realname','0')
     if realname=='0':
         realname=key
-    task = db.get_download_task_by_key(key,realname)
-    #site_url = config.App.SITE_URL
+    timestamp = str(time.time())
+    secret = config.App.AUTH_TOKEN[0]
+    sign = downloadkeycrpyto.sign(key,realname,timestamp,secret)
+
     site_url = "http://"+request.headers.get('host')
     api_url = "/file/content"
     #download_url = "{0}{1}?key={2}&task={3}".format(site_url, api_url, base64.b64encode(urllib.parse.quote(key).encode("utf-8")).decode(), task) #urllib.parse.quote(key)
-    download_url = "{0}{1}?key={2}&task={3}".format(site_url, api_url, key, task) #urllib.parse.quote(key)
+    download_url = "{0}{1}?key={2}&realname={3}&timestamp={4}&sign={5}".format(site_url, api_url, key, realname, timestamp, sign) #urllib.parse.quote(key)
 
     return jsonify({'key': key, 'url':download_url})
 
@@ -52,7 +57,9 @@ def file_freecontent_view():
 
 def file_content_view():
     key = request.args.get('key', '0')
-
+    timestamp = request.args.get('timestamp','0')
+    realname = request.args.get('realname','0')
+    sign = request.args.get('sign','0')
     '''
     other_key =raw_key.encode('utf-8').decode()
     print(type(other_key))
@@ -61,16 +68,24 @@ def file_content_view():
     other3_key = urllib.parse.unquote(other2_key)
     key=other3_key
     '''
+    if (key=='0') or (timestamp=='0') or (sign=='0'):
+        return jsonify({'status': 'error', 'error_message': 'key timestamp and sign can not be empty '}), status.HTTP_400_BAD_REQUEST
+    if realname=='0':
+        realname = key
+    if not downloadkeycrpyto.valid(key,realname,timestamp, config.App.AUTH_TOKEN, sign):
+        return jsonify({'status': 'error','error_message': 'sign is not valid'}), status.HTTP_400_BAD_REQUEST
 
-    task = request.args.get('task','0')
+    timestamp_datatime =datetime.fromtimestamp(float(timestamp))
+    if timestamp_datatime > datetime.now():
+        return jsonify({'status': 'error', 'error_message': 'expired'}), status.HTTP_400_BAD_REQUEST
 
     if not db.is_download_file_by_key(key):
         return jsonify({'status':'error','error_message':'not exist'}), status.HTTP_404_NOT_FOUND
 
-    if not db.is_download_task_valid(key,task):
-        return jsonify({'status':'error','error_message':'invalid'}), status.HTTP_403_FORBIDDEN
+    #if not db.is_download_task_valid(key,task):
+    #    return jsonify({'status':'error','error_message':'invalid'}), status.HTTP_403_FORBIDDEN
 
-    realname = db.get_download_realname_by_key(key)
+    #realname = db.get_download_realname_by_key(key)
 
     if db.is_key_contents_in_merge_status(key):
         clip_list = db.get_clip_upload_status_list_of_key(key)
