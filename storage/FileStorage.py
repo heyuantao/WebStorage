@@ -83,7 +83,7 @@ class FileStorage:
 
 
     #从磁盘中删除文件
-    def delete_by_key(self, key):
+    def  delete_by_key(self, key):
         try:
             file_abs_path = os.path.join(self.file_path, key)
             if os.path.exists(file_abs_path):
