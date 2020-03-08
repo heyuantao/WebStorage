@@ -108,13 +108,13 @@ def file_content_view():
             if byte2 is not None:
                 length = byte2 - byte1
 
-            return _download_partial_unmerged_content_of_key(key,realname,clip_list,byte1,length)
+            return _download_partial_unmerged_content_of_key(key, realname, clip_list, byte1, length, file_size)
         else:
             file_size = store.get_content_size_of_key(key)
             length = file_size - byte1
             if byte2 is not None:
                 length = byte2 - byte1
-            return _download_partial_merged_content_of_key(key, realname,byte1,length,file_size)
+            return _download_partial_merged_content_of_key(key, realname, byte1, length, file_size)
 
     #处理完整内容的请求
     if db.is_key_contents_in_merge_status(key):
@@ -124,7 +124,7 @@ def file_content_view():
         return _download_merged_content_of_key(key,realname)
 
 
-def _download_partial_unmerged_content_of_key(key, realname, clip_list, begin, length):
+def _download_partial_unmerged_content_of_key(key, realname, clip_list, begin, length, file_size):
     try:
         content_generate = store.get_partial_merging_content_generate_of_key_and_clipinforamtion(key, clip_list, begin, length)
         response = Response(content_generate, mimetype=mimetypes.guess_type(key)[0])
@@ -132,6 +132,7 @@ def _download_partial_unmerged_content_of_key(key, realname, clip_list, begin, l
         response.headers["Content-Disposition"] = header
         response.headers['content-length'] = length
         response.headers['Accept-Ranges'] = 'bytes'
+        response.headers['Content-Range'] = "bytes {0}-{1}/{2}".format(begin, begin + length - 1, file_size)
         return response.HTTP_206_PARTIAL_CONTENT
     except Exception as e:
         logger.error(traceback.format_exc())
@@ -139,14 +140,13 @@ def _download_partial_unmerged_content_of_key(key, realname, clip_list, begin, l
 
 def _download_partial_merged_content_of_key(key, realname, begin, length, file_size):
     try:
-        print("begin {} and length is {}".format(begin,length/(1024*1024)))
+        #print("begin {} and length is {}".format(begin,length/(1024*1024)))
         content_generate = store.get_partial_content_generate_of_key(key, begin, length)
         response = Response(content_generate, mimetype=mimetypes.guess_type(key)[0])
         header = 'attachment; filename=' + url_quote(realname)
         response.headers["Content-Disposition"] = header
         response.headers['content-length'] = length
-        response.headers['Accept-Ranges'] ='bytes'
-        response.headers['Etag'] = '1116c8800-55ba3fb45b641'
+        response.headers['Accept-Ranges'] ='bytes' #response.headers['Etag'] = '1116c8800-55ba3fb45b641'
         response.headers['Content-Range'] = "bytes {0}-{1}/{2}".format(begin, begin + length - 1, file_size)
         return response,status.HTTP_206_PARTIAL_CONTENT
     except Exception as e:

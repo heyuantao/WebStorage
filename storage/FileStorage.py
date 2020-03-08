@@ -207,4 +207,76 @@ class FileStorage:
 
     # 用于处理部分请求时的函数，此时key仍在合并状态
     def get_partial_merging_content_generate_of_key_and_clipinforamtion(self, key, clip_list, begin, length):
-        pass
+        clip_count = len(clip_list)-1
+        #begin, end = 0, clip_count-1    #分片的开始标记和结束标记，类似key{begin}和key{end}
+        chunk_size = 5*1024*1024
+        #chunk = 0                        #chunk为文件分片序号，从0到clip_count-1
+        #current = begin
+        end = begin+length
+
+        first_chunk = int(begin / chunk_size)
+        first_chunk_seek = begin % chunk_size
+        first_chunk_size_to_read = chunk_size - first_chunk_seek  #必须考虑first 和 last chunk 在一个分片中的情况，修改代码
+
+        last_chunk = int(end / chunk_size)
+        last_chunk_seek = 0
+        last_chunk_size_to_read = end % chunk_size
+
+        #如果要读的内容都在一个分片之中，则要修正第一个分片读的长度，即不能读到5M结束的位置
+        if first_chunk==last_chunk:
+            first_chunk_size_to_read = length
+
+        #先从分片开始读，如果出现错误，再从合并过的文件开始读
+        try:
+            for current_chunk in range(first_chunk, last_chunk+1):
+                clip_file_name = "{0}/{1}{2}".format(self.tmp_path, key, current_chunk)
+                if current_chunk == first_chunk:
+                    clip_file = open(clip_file_name, "rb")
+                    clip_file.seek(first_chunk_seek)
+                    clip_file_content = clip_file.read(first_chunk_size_to_read)
+                    yield clip_file_content
+                    clip_file.close()
+                    continue
+                elif current_chunk == last_chunk:
+                    clip_file = open(clip_file_name, "rb")
+                    clip_file.seek(last_chunk_seek)
+                    clip_file_content = clip_file.read(last_chunk_size_to_read)
+                    yield clip_file_content
+                    clip_file.close()
+                    continue
+                else:
+                    clip_file = open(clip_file_name, "rb")
+                    clip_file_content = clip_file.read()
+                    yield clip_file_content
+                    clip_file.close()
+                    continue
+        except IOError:
+            logger.error("This clip \"{}\" not exist in Storage.get_partial_merging_content_generate_of_key_and_clipinforamtion()".format(clip_file_name))
+        #先判断是在读取分片的时候是否已经读取完毕，如果完毕则下面的程序不执行
+        if current_chunk == last_chunk:
+            return
+
+        #当执行到此步骤时，说明合并过程导致分片被删除，因此后续需要从合并过的文件中来读
+        error_at_this_chunk = current_chunk
+        try:
+            merged_file_path = os.path.join(self.file_path, key)
+            merged_file = open(merged_file_path, "rb")
+            for current_chunk in range(error_at_this_chunk, last_chunk+1):
+                if current_chunk == first_chunk:
+                    merged_file.seek(first_chunk_seek)
+                    chunk_content = merged_file.read(first_chunk_size_to_read)
+                    yield chunk_content
+                    continue
+                elif current_chunk == last_chunk:
+                    merged_file.seek(last_chunk_seek)
+                    chunk_content = merged_file.read(last_chunk_size_to_read)
+                    yield chunk_content
+                    continue
+                else:
+                    merged_file.seek(current_chunk*chunk_size)
+                    chunk_content = merged_file.read(chunk_size)
+                    yield chunk_content
+                    continue
+            merged_file.close()
+        except IOError:
+            logger.critical("Read merged file \"{}\" error, this may be a bug in Storage.get_partial_merging_content_generate_of_key_and_clipinforamtion()".format(merged_file_path))
