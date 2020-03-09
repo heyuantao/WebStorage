@@ -68,7 +68,11 @@ class FileStorage:
                 try:
                     #filename = self.tmp_path + '/%s%d' % (key, chunk)
                     clip_file_name = "{0}/{1}{2}".format(self.tmp_path, key, chunk)
-                    #time.sleep(3)
+
+                    if logger.getEffectiveLevel() == logging.DEBUG:
+                        logger.critical("The app is in debug mode, the merge process will execute slowly !")
+                        time.sleep(5)
+
                     clip_file = open(clip_file_name, 'rb')                              # 按序打开每个分片
                     saved_file.write(clip_file.read())
                     clip_file.close()

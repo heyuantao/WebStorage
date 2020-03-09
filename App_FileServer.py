@@ -26,11 +26,19 @@ def create_app():
     redis_instance = Database()
     redis_instance.init_app(app)
 
+    #从gunicorn获得loglevel等级，并将其设置到app中
+    gunicorn_logger = logging.getLogger("gunicorn.error")
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)
+
+    #if logger.getEffectiveLevel()==logging.DEBUG:
+    #    logger.critical("The app is in debug mode, the merge process will execute slowly !")
+
     return app
 
 WSGIRequestHandler.protocol_version = "HTTP/1.1"
 application = create_app()
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG)
+    #logging.basicConfig(level=logging.DEBUG)
     application.run(port=5001,host="0.0.0.0")

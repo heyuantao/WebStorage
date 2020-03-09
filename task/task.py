@@ -18,9 +18,10 @@ celery = Celery("task", broker = config.App.CELERY_BACKEND)
 
 @celery.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
-    #hour =60*60*60
-    hour = 60*20
-    little_time = 60*2
+    #hour = 60*20
+    #little_time = 60*2
+    hour = 10
+    little_time = 10
     sender.add_periodic_task(little_time, clear_upload_failure_clips.s(), name="clear_upload_failure_clip")
     sender.add_periodic_task(little_time, delete_file_marked_as_deleting.s(), name="delete_file_mark_as_deleting")
 

@@ -35,8 +35,17 @@ def create_app():
     redis_instance = Database()
     redis_instance.init_app(app)
 
-    #init finished
+    #从本次磁盘读入已经上传的文件列表，并将其保存如redis中
     read_upload_file_list_to_db(redis_instance, storage_instance)
+
+    # 从gunicorn获得loglevel等级，并将其设置到app中
+    gunicorn_logger = logging.getLogger("gunicorn.error")
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)
+
+    #if logger.getEffectiveLevel()==logging.DEBUG:
+    #    logger.critical("The app is in debug mode, the merge process will execute slowly !")
+
     return app
 
 #WSGIRequestHandler.protocol_version = "HTTP/1.1"
