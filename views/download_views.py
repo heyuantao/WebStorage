@@ -133,7 +133,7 @@ def _download_partial_unmerged_content_of_key(key, realname, clip_list, begin, l
         response.headers['content-length'] = length
         response.headers['Accept-Ranges'] = 'bytes'
         response.headers['Content-Range'] = "bytes {0}-{1}/{2}".format(begin, begin + length - 1, file_size)
-        return response.HTTP_206_PARTIAL_CONTENT
+        return response,status.HTTP_206_PARTIAL_CONTENT
     except Exception as e:
         logger.error(traceback.format_exc())
         return jsonify({'status':'error'}), status.HTTP_404_NOT_FOUND
