@@ -13,6 +13,11 @@ class CustomPageHeader extends React.Component{
             tokenValue:"",
         }
     }
+    componentDidMount() {
+        this.setState({tokenValue:"UseMyWebStorageService"});
+    }
+
+
     handleClearToken =()=>{
         this.props.updateToken("");
         this.setState({tokenValue:""})

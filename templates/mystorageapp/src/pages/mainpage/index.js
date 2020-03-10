@@ -32,7 +32,7 @@ class MainPage extends React.Component{
                             <Button onClick={()=>{this.handleFileListRefresh()}}>Refresh</Button>
                         </Col>
                         <Col>
-                            <ReactUploader></ReactUploader>
+                            <ReactUploader onUploadFinished={this.handleFileListRefresh}></ReactUploader>
                         </Col>
                     </Row>
                     <Row type="flex" justify="space-between" align="middle" style={{marginTop:"10px"}}>

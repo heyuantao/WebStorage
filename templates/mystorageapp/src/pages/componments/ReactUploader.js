@@ -36,6 +36,7 @@ class ReactUploader extends React.Component{
         if(this._uploader!==null){
             this._uploader.destroy();
         }
+        this.props.onUploadFinished();
         message.success('上传成功');
     }
 
