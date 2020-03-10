@@ -53,7 +53,7 @@ class LinkModal extends React.Component{
                        footer={this.footerContent()}>
                     <p>{this.state.url}</p>
 
-                    <a href="{this.state.url}" target="_blank"><CloudDownloadOutlined style={{ fontSize: 30 }} /></a>
+                    <a href={this.state.url} target="_blank"><CloudDownloadOutlined style={{ fontSize: 30 }} /></a>
                 </Modal>
             </div>
         )
