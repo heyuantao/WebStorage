@@ -40,6 +40,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="ignore.virus.scanning.warn.message" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/routes" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
@@ -134,6 +135,8 @@
       <workItem from="1583660335415" duration="12950000" />
       <workItem from="1583725115780" duration="12038000" />
       <workItem from="1583832377988" duration="11569000" />
+      <workItem from="1583847552557" duration="1037000" />
+      <workItem from="1583849704818" duration="314000" />
     </task>
     <servers />
   </component>

@@ -13,10 +13,8 @@ class FileList extends React.Component{
     }
 
     componentWillReceiveProps(props) {
-        let oldProps = this.props
-        let newProps = props;
-        console.log(oldProps);
-        console.log(newProps);
+        const oldProps = this.props
+        const newProps = props;
         if (oldProps.updateCount !== newProps.updateCount) {
             this.fetchFileList(newProps.token.value);
             return;
@@ -31,9 +29,9 @@ class FileList extends React.Component{
         const token = tokenValue;
         axios.post("/api/file/list/",{},{headers: {'Authorization': 'Token '+token}}
         ).then((res)=>{
-            console.log(res);
             this.postProcessData(res.data);
         }).catch((err)=>{
+            this.setState({fileList:[]});
             message.error('获取数据失败');
             console.log(err.data)
         })
@@ -51,7 +49,6 @@ class FileList extends React.Component{
     }
 
     render() {
-
         const columns = [
             {title:'ID',  key:'id',dataIndex: 'id',fixed:'left',width : '5%'},
             {title:'Name',key:'filename',dataIndex:'filename'},
@@ -68,7 +65,7 @@ class FileList extends React.Component{
         return (
             <div>
                 <h1>File In WebStorage</h1>
-                <Table columns={columns} dataSource={this.state.fileList} key="abc"/>
+                <Table columns={columns} dataSource={this.state.fileList} rowKey="id"/>
             </div>
 
         )

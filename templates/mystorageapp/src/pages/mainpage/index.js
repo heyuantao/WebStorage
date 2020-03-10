@@ -37,7 +37,6 @@ class MainPage extends React.Component{
                     </Row>
                     <Row type="flex" justify="space-between" align="middle" style={{marginTop:"10px"}}>
                         <Col span={24}>
-                            {/*ref={this.filelistref}*/}
                             <FileList updateCount={this.state.updateFileListCount} token={this.props.token.value}></FileList>
                         </Col>
                     </Row>
