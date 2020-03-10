@@ -14,7 +14,6 @@ class CustomPageHeader extends React.Component{
         }
     }
     componentDidMount() {
-        this.setState({tokenValue:"UseMyWebStorageService"});
     }
 
 
