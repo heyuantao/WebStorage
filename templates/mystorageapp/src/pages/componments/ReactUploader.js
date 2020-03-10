@@ -4,8 +4,7 @@ import axios from 'axios';
 import { UploadOutlined } from '@ant-design/icons';
 import WebUploader from 'webuploader';
 
-class MainPage extends React.Component{
-
+class ReactUploader extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -121,22 +120,19 @@ class MainPage extends React.Component{
             mediaFileList,
         };
         return (
-            <div>
-                <Upload {...uploadButtonprops}>
+            <div style={{lineHeight:"55.63px"}}>
+                <Upload {...uploadButtonprops} >
                     <Button>
                         <UploadOutlined /> Select File
                     </Button>
                 </Upload>
-
-                <div>
-                    <Button type="primary" onClick={this.handleUploadClick} disabled={mediaFileList.length === 0} loading={mediaUploading} style={{ marginTop: 16 }} >
+                <span style={{marginRight:"10px"}}></span>
+                <Button type="primary" onClick={this.handleUploadClick} disabled={mediaFileList.length === 0} loading={mediaUploading} style={{ marginTop: 16 }} >
                         {mediaUploading ? 'Uploading: '+mediaPercent+"%" : 'Start Upload'}
-                    </Button>
-                </div>
-
+                </Button>
             </div>
         );
     }
 }
 
-export default MainPage
+export default ReactUploader

@@ -1,15 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Provider } from "react-redux";
+import store from "./store"
+
+import MainPage from "./pages/mainpage";
+
 import './App.css';
 import 'antd/dist/antd.css';
-import MainPage from "./pages/MainPage";
+
 
 function App() {
     return (
-        <div className="App">
-            <header className="App-header">
+        <div>
+            <Provider store={store}>
                 <MainPage></MainPage>
-            </header>
+            </Provider>
         </div>
     );
 }

@@ -19,8 +19,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Flask Main" />
-        <option value="JavaScript File" />
         <option value="Python Script" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -46,19 +46,19 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Projects\WebStorage\templates\mystorageapp\src\pages\componments" />
+      <recent name="D:\Projects\WebStorage\templates\mystorageapp\src\pages\MainPage" />
+      <recent name="D:\Projects\WebStorage\templates\mystorageapp\src\pages" />
+      <recent name="D:\Projects\WebStorage\templates\test" />
+      <recent name="D:\Projects\WebStorage\utils" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Projects\WebStorage\routes" />
       <recent name="D:\Projects\WebStorage" />
       <recent name="D:\Projects\WebStorage\templates\backup\deleted" />
       <recent name="D:\Projects\WebStorage\views" />
       <recent name="D:\Projects\WebStorage\templates" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Projects\WebStorage\templates\test" />
-      <recent name="D:\Projects\WebStorage\utils" />
-      <recent name="D:\Projects\WebStorage\templates\backup\deleted" />
-      <recent name="D:\Projects\WebStorage\templates\backup" />
-      <recent name="D:\Projects\WebStorage\templates\mystorageapp\src" />
     </key>
   </component>
   <component name="RunManager">
@@ -132,7 +132,8 @@
       <workItem from="1583567926931" duration="13062000" />
       <workItem from="1583630093125" duration="7140000" />
       <workItem from="1583660335415" duration="12950000" />
-      <workItem from="1583725115780" duration="2577000" />
+      <workItem from="1583725115780" duration="12038000" />
+      <workItem from="1583832377988" duration="11569000" />
     </task>
     <servers />
   </component>
@@ -230,10 +231,14 @@
     </state>
     <state x="144" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1583120855727" />
     <state x="479" y="221" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1583314561005" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1583333852338">
+    <state x="484" y="125" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1583765131918">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1583333852338" />
+    <state x="484" y="125" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1583765131918" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1583844171625">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1583844171625" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/WebStorage$WebStorage.coverage" NAME="WebStorage Coverage Results" MODIFIED="1583505972366" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
