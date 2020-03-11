@@ -49,28 +49,33 @@ class Database:
         logger.debug("Init database in Database.__init__()")
 
     #---------------------------上传前期处理函数--------------------------------------#
+    #先查看该key是否被占用，因为key可能已经在文件列表或者在删除列表中
+    def is_key_occupied(self,key):
+        if self.connection.hexists(self.file_list_key,key):
+            return True
+        if self.connection.hexists(self.file_deleting_list_key,key):
+            return True
+        return False
+
     #通过文件名key来获得对应的task编号，如果对应的key存在，则直接返回，否则在redis数据库中创建task编号并返回
     def get_upload_task_by_key(self,key):
-        connection = self.connection
-
         key_with_prefix = self.task_prefix+key
-        task = str(uuid4().hex)
-
-        if connection.exists(key_with_prefix):
-            connection.expire(key_with_prefix, timedelta(hours=2))
-            result = connection.get(key_with_prefix)
+        #检查是否已经存在
+        if self.connection.exists(key_with_prefix):
+            self.connection.expire(key_with_prefix, timedelta(hours=2))
+            result = self.connection.get(key_with_prefix)
             return result
-        connection.set(key_with_prefix, task)
-        connection.expire(key_with_prefix, timedelta(hours =2))
+        #不存在则生成新的task编号
+        task = str(uuid4().hex)
+        self.connection.set(key_with_prefix, task)
+        self.connection.expire(key_with_prefix, timedelta(hours =2))
         return task
 
     #检查文件名key和task编号是否匹配，该函数被上传函数调用，用于检查上传是否合法
     def is_upload_task_valid(self,key,task):
-        connection = self.connection
-
         key_with_prefix = self.task_prefix + key
-        if connection.exists(key_with_prefix):
-            result = connection.get(key_with_prefix)
+        if self.connection.exists(key_with_prefix):
+            result = self.connection.get(key_with_prefix)
             if result == task:
                 return True
             else:
@@ -80,9 +85,8 @@ class Database:
 
     #清除文件名key对应的task编号，在文件所有分片上传完成后被调用
     def _delete_upload_task_by_key(self,key):
-        connection = self.connection
         key_with_prefix = self.task_prefix + key
-        connection.delete(key_with_prefix)
+        self.connection.delete(key_with_prefix)
     #--------------------------------------------------------------------------------#
 
     #------------------------------分片处理函数---------------------------------------#

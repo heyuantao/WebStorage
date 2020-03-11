@@ -75,6 +75,9 @@ def api_upload_success_view():  # 所有分片均上传完后被调用
 
 def api_upload_token_view():
     key = request.json.get('key')
+    #检查该key是否已经使用，即在"可下载"和"待删除"列表中
+    if db.is_key_occupied(key):
+        return jsonify({'status': 'error','error_message':'key is occupied'}), status.HTTP_403_FORBIDDEN
 
     task= db.get_upload_task_by_key(key)
     token_dict = {"key":key,"task":task}

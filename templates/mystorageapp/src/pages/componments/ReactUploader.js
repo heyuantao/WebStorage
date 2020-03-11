@@ -92,7 +92,7 @@ class ReactUploader extends React.Component{
     handleUploadClick = () => {
         const {mediaFileList} = this.state;
         const new_file = mediaFileList[0];
-        const new_file_name = this.makeid()+new_file.name;
+        const new_file_name = this.makeid()+"_"+new_file.name;
         this.setState({mediaUploading:true});
         console.log(new_file_name);
         axios.post("/api/upload/token/",{'key':new_file_name},{headers: {'Authorization': 'Token UseMyWebStorageService'}}
