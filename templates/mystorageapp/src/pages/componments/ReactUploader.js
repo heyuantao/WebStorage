@@ -3,6 +3,7 @@ import { Upload, Button, message } from 'antd';
 import axios from 'axios';
 import { UploadOutlined } from '@ant-design/icons';
 import WebUploader from 'webuploader';
+import {connect} from "react-redux";
 
 class ReactUploader extends React.Component{
     constructor(props) {
@@ -90,12 +91,19 @@ class ReactUploader extends React.Component{
     }
 
     handleUploadClick = () => {
+        const token = this.props.token.value;
         const {mediaFileList} = this.state;
         const new_file = mediaFileList[0];
         const new_file_name = this.makeid()+"_"+new_file.name;
-        this.setState({mediaUploading:true});
+
         console.log(new_file_name);
-        axios.post("/api/upload/token/",{'key':new_file_name},{headers: {'Authorization': 'Token UseMyWebStorageService'}}
+        //if(new_file.size>1024*1024*50){
+        //    message.error("文件大小超出限制");
+        //    return;
+        //}
+        this.setState({mediaUploading:true});
+        //{'key':new_file_name,'size':1024*1024*10}
+        axios.post("/api/upload/token/",{'key':new_file_name},{headers: {'Authorization': 'Token '+token}}
         ).then((res)=>{
             const task = res.data.task;
             const key = res.data.key;
@@ -136,4 +144,11 @@ class ReactUploader extends React.Component{
     }
 }
 
-export default ReactUploader
+const mapStoreToProps = (store) => {
+    return {
+        token:store.token,
+    }
+}
+
+
+export default connect(mapStoreToProps,null)(ReactUploader)
