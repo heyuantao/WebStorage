@@ -70,17 +70,19 @@ class Database:
 
         return False
 
-    #通过文件名key来获得对应的task编号，如果对应的key存在，则直接返回，否则在redis数据库中创建task编号并返回
-    def get_upload_task_by_key(self,key):
+    #通过文件名key来获得对应的task编号，如果对应的key存在，则直接返回，否则在redis数据库中创建task编号并返回。size为文件大小限制，-1表示不限制大小
+    def get_upload_task_by_key(self,key,size=-1):
         key_with_prefix = self.task_prefix+key
         #检查是否已经存在
         if self.connection.exists(key_with_prefix):
             self.connection.expire(key_with_prefix, timedelta(hours=2))
-            result = self.connection.get(key_with_prefix)
-            return result
+            value_dict = json.loads(self.connection.get(key_with_prefix))
+            return value_dict['task']
         #不存在则生成新的task编号
         task = str(uuid4().hex)
-        self.connection.set(key_with_prefix, task)
+        #size为文件大小限制，如果为-1则表示不限制大小
+        value_dict = {'task': task, 'size': size}
+        self.connection.set(key_with_prefix, json.dumps(value_dict))
         self.connection.expire(key_with_prefix, timedelta(hours =2))
         return task
 
@@ -88,7 +90,9 @@ class Database:
     def is_upload_task_valid(self,key,task):
         key_with_prefix = self.task_prefix + key
         if self.connection.exists(key_with_prefix):
-            result = self.connection.get(key_with_prefix)
+            value_dict = json.loads(self.connection.get(key_with_prefix))
+            result = value_dict['task']
+            #result = self.connection.get(key_with_prefix)
             if result == task:
                 return True
             else:
@@ -103,6 +107,22 @@ class Database:
     #--------------------------------------------------------------------------------#
 
     #------------------------------分片处理函数---------------------------------------#
+    #每次上传一个分片成功时检查是否超过所设定的文件大小限制
+    def is_exceed_size_limit_of_key(self, key):
+        #先从上传申请中获取上传文件的上限大小
+        key_with_prefix = self.task_prefix + key
+        value_dict = json.loads(self.connection.get(key_with_prefix))
+        size_limit = value_dict['size']
+        #从上传任务中计算已经上传的文件数量，即 分片数量*分片的大小
+        key_with_prefix = self.upload_prefix + key
+        clips_count = self.connection.scard(key_with_prefix)
+        upload_clips_total_size = clips_count*(5*1024*1024)  #5M的分片大小
+        if upload_clips_total_size > size_limit:
+            return True
+        else:
+            return False
+
+
     #将上传的文件分片信息记录到redis中，该记录以list进行保存，list的每个内容为分片的文件名，在上传彻底结束后，该list还有有一个"success"的内容
     def append_clip_upload_partial_status_of_key(self, key, clip_name):
         key_with_prefix = self.upload_prefix + key
