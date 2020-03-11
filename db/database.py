@@ -117,6 +117,9 @@ class Database:
         key_with_prefix = self.upload_prefix + key
         clips_count = self.connection.scard(key_with_prefix)
         upload_clips_total_size = clips_count*(5*1024*1024)  #5M的分片大小
+        #如果文件上限大小为-1,则不进行大小的检查
+        if size_limit==-1:
+            return False
         if upload_clips_total_size > size_limit:
             return True
         else:
