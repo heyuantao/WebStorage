@@ -19,7 +19,7 @@ class LinkModal extends React.Component{
         const oldProps = this.props
         const newProps = props;
         const token = newProps.token.value;
-        const id = newProps.instanceid
+        const id = newProps.instanceid;
         const key = newProps.instancekey;
         if(id!==0){
             this.fetchDownloadUrl(key,token);
