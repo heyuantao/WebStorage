@@ -61,7 +61,7 @@ class ReactUploader extends React.Component{
         });
 
         uploader.on('uploadProgress', function(file, percentage) { //一个分片上传成功后，调用该方法
-            console.log(percentage);
+            //console.log(percentage);
             const percentage_string = parseInt(percentage*100);
             _this.setState({mediaPercent:percentage_string});
         });

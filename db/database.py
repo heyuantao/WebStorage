@@ -49,12 +49,25 @@ class Database:
         logger.debug("Init database in Database.__init__()")
 
     #---------------------------上传前期处理函数--------------------------------------#
-    #先查看该key是否被占用，因为key可能已经在文件列表或者在删除列表中
+    #先查看该key是否被占用，因为key可能已经在文件列表或者在删除列表中，如果key被上传任务预约或者正在上传，则该key也不能使用
     def is_key_occupied(self,key):
         if self.connection.hexists(self.file_list_key,key):
             return True
         if self.connection.hexists(self.file_deleting_list_key,key):
             return True
+
+        #已经有任务预约了这个key
+        key_with_task_prefix = self.task_prefix + key
+        if self.connection.exists(key_with_task_prefix):
+            logger.error("A task want to use key {},but this key is using by other upload task before upload !".format(key))
+            return True
+
+        #已经有正在上传的任务使用这个key
+        key_with_upload_prefix = self.upload_prefix + key
+        if self.connection.exists(key_with_upload_prefix):
+            logger.error("A task want to use key {},but this key is using by other upload task at upload !".format(key))
+            return True
+
         return False
 
     #通过文件名key来获得对应的task编号，如果对应的key存在，则直接返回，否则在redis数据库中创建task编号并返回
