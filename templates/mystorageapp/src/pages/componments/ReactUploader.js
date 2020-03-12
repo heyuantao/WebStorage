@@ -105,6 +105,7 @@ class ReactUploader extends React.Component{
         //{'key':new_file_name,'size':1024*1024*10}
         axios.post("/api/upload/token/",{'key':new_file_name},{headers: {'Authorization': 'Token '+token}}
         ).then((res)=>{
+            console.log(res.data);
             const task = res.data.task;
             const key = res.data.key;
             const size = res.data.size;
