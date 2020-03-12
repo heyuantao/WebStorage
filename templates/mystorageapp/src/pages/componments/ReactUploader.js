@@ -107,6 +107,7 @@ class ReactUploader extends React.Component{
         ).then((res)=>{
             const task = res.data.task;
             const key = res.data.key;
+            const size = res.data.size;
             this.handleUploadProcess(task,key,new_file);
         }).catch((err)=>{
             message.error('初始化失败，请刷新该页面');

@@ -79,12 +79,12 @@ def api_upload_success_view():  # 所有分片均上传完后被调用
 def api_upload_token_view():
     key = request.json.get('key')
     #size要上传文件的大小上限，用于在上传时进行计算，如果实际上传文件大小超过该值，则中止上传。可以不携带该该参数，默认为-1，表示不限制上传大小
-    size = int(request.json.get('size','-1'))
+    size = request.json.get('size',-1)
     #检查该key是否已经使用，即在"可下载"和"待删除"列表中
     if db.is_key_occupied(key):
         return jsonify({'status': 'error','error_message':'key is occupied'}), status.HTTP_403_FORBIDDEN
 
     task= db.get_upload_task_by_key(key,size)
-    token_dict = {"key":key,"task":task}
+    token_dict = {"key":key,"task":task,"size":size}
 
     return jsonify(token_dict)
