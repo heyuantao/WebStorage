@@ -24,7 +24,7 @@ store = Storage()
 def api_file_info_view():
     key = request.json.get('key')
     if not db.is_download_file_by_key(key):
-        return jsonify({'key': key, 'exist': False}),status.HTTP_404_NOT_FOUND
+        return jsonify({'key': key, 'exist': False})
     return jsonify({'key':key,'exist':True})
 
 
