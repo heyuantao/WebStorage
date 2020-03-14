@@ -52,7 +52,7 @@ class Route:
         def api_file_delete():            # 删除文件，key为文件名
             return api_file_delete_view()
 
-        @app.route('/api/file/info/', methods=['POST'])     #获取文件信息
+        @app.route('/api/file/info/', methods=['POST'])     #获取文件信息，可以查看文件是否存在
         @auth.login_required
         def api_file_info():
             return api_file_info_view()

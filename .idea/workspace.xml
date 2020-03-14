@@ -41,7 +41,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="ignore.virus.scanning.warn.message" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/routes" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../EEAS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -141,7 +141,9 @@
       <workItem from="1583889655539" duration="3412000" />
       <workItem from="1583907321116" duration="449000" />
       <workItem from="1583934917057" duration="6250000" />
-      <workItem from="1583977396685" duration="1708000" />
+      <workItem from="1583977396685" duration="3697000" />
+      <workItem from="1584105157117" duration="122000" />
+      <workItem from="1584175945333" duration="310000" />
     </task>
     <servers />
   </component>
@@ -189,11 +191,11 @@
     </state>
     <state width="1234" height="305" key="DebuggerActiveHint/0.0.1280.680@0.0.1280.680" timestamp="1583155460187" />
     <state width="1850" height="466" key="DebuggerActiveHint/0.0.1920.1040@0.0.1920.1040" timestamp="1583335719117" />
-    <state x="630" y="150" key="FileChooserDialogImpl" timestamp="1583132018824">
+    <state x="630" y="150" key="FileChooserDialogImpl" timestamp="1584105278479">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="420" y="98" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1583120802296" />
-    <state x="630" y="150" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1583132018824" />
+    <state x="630" y="150" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1584105278479" />
     <state width="1877" height="311" key="GridCell.Tab.0.bottom" timestamp="1583508775407">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

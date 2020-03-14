@@ -20,9 +20,12 @@ logger = logging.getLogger(__name__)
 db = Database()
 store = Storage()
 
+#用户查看文件的信息，主要是文件的存在性
 def api_file_info_view():
     key = request.json.get('key')
-    return jsonify({'key':key,'exist':False})
+    if not db.is_download_file_by_key(key):
+        return jsonify({'key': key, 'exist': False}),status.HTTP_404_NOT_FOUND
+    return jsonify({'key':key,'exist':True})
 
 
 def api_file_url_view():
