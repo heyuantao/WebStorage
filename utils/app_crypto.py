@@ -42,11 +42,12 @@ class DownloadKeyCrypto:
 
     def urlSafeStringToString(self,safeString):
         #padding the =
-        pad = len(safeString) % 4
-        #safeString += b"=" * pad
-        safeString += "=" * pad
+        safeByte =  safeString.encode("utf-8")
+        missing_padding = len(safeByte) % 4
+        if missing_padding != 0:
+            safeByte += b'=' * (4 - missing_padding)
 
-        originString = base64.b64decode(safeString.encode("utf-8")).decode("utf-8")
+        originString = base64.b64decode(safeByte).decode("utf-8")
         return originString
 
 downloadkeycrpyto = DownloadKeyCrypto()
