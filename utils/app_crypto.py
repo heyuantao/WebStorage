@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import hashlib
+import base64
 from collections import Iterable
 
 #所有的参数都为字符串
@@ -33,5 +34,14 @@ class DownloadKeyCrypto:
                 return True
             else:
                 return False
+
+    #在url传递时，字符串可能还有特殊字符，用该方式进行url的编解码
+    def stringToUrlSafeString(self,originString):
+        safeString = base64.b64encode(originString.encode("utf-8")).decode("utf-8")
+        return safeString
+
+    def urlSafeStringToString(self,safeString):
+        originString = base64.b64decode(safeString.encode("utf-8")).decode("utf-8")
+        return originString
 
 downloadkeycrpyto = DownloadKeyCrypto()

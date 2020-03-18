@@ -38,6 +38,13 @@ def api_file_url_view():
     secret = config.App.AUTH_TOKEN[0]
     sign = downloadkeycrpyto.sign(key,realname,timestamp,secret)
 
+    ###把原始字符转换为URL安全的字符###
+    key = downloadkeycrpyto.stringToUrlSafeString(key)
+    realname = downloadkeycrpyto.stringToUrlSafeString(realname)
+    timestamp = downloadkeycrpyto.stringToUrlSafeString(timestamp)
+    sign = downloadkeycrpyto.stringToUrlSafeString(sign)
+    ################################
+
     site_url = "http://"+request.headers.get('host')
     api_url = "/file/content"
     #download_url = "{0}{1}?key={2}&task={3}".format(site_url, api_url, base64.b64encode(urllib.parse.quote(key).encode("utf-8")).decode(), task) #urllib.parse.quote(key)
@@ -78,6 +85,14 @@ def file_content_view():
         return jsonify({'status': 'error', 'error_message': 'key timestamp and sign can not be empty '}), status.HTTP_400_BAD_REQUEST
     if realname=='0':
         realname = key
+
+    ##########把原始的URL安全的字符转换为普通字符####################
+    key = downloadkeycrpyto.urlSafeStringToString(key)
+    realname = downloadkeycrpyto.urlSafeStringToString(realname)
+    timestamp = downloadkeycrpyto.urlSafeStringToString(timestamp)
+    sign = downloadkeycrpyto.urlSafeStringToString(sign)
+    #############################################################
+    
     #config.App.AUTH_TOKEN 是一组密钥，以列表方式存放，任何一个密钥的验证成功就可以通过
     if not downloadkeycrpyto.valid(key,realname,timestamp, config.App.AUTH_TOKEN, sign):
         return jsonify({'status': 'error','error_message': 'sign is not valid'}), status.HTTP_400_BAD_REQUEST
