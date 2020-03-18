@@ -41,6 +41,11 @@ class DownloadKeyCrypto:
         return safeString
 
     def urlSafeStringToString(self,safeString):
+        #padding the =
+        pad = len(safeString) % 4
+        #safeString += b"=" * pad
+        safeString += "=" * pad
+
         originString = base64.b64decode(safeString.encode("utf-8")).decode("utf-8")
         return originString
 
