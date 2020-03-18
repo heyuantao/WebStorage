@@ -37,17 +37,16 @@ class DownloadKeyCrypto:
 
     #在url传递时，字符串可能还有特殊字符，用该方式进行url的编解码
     def stringToUrlSafeString(self,originString):
-        safeString = base64.b64encode(originString.encode("utf-8")).decode("utf-8")
+        safeString = base64.urlsafe_b64encode(originString.encode("utf-8")).decode("utf-8")
         return safeString
 
     def urlSafeStringToString(self,safeString):
-        #padding the =
-        safeByte =  safeString.encode("utf-8")
-        missing_padding = len(safeByte) % 4
-        if missing_padding != 0:
-            safeByte += b'=' * (4 - missing_padding)
+        #safeByte =  safeString.encode("utf-8")
+        #missing_padding = len(safeByte) % 4
+        #if missing_padding != 0:
+        #    safeByte += b'=' * (4 - missing_padding)
 
-        originString = base64.b64decode(safeByte).decode("utf-8")
+        originString = base64.urlsafe_b64decode(safeString.encode("utf-8")).decode("utf-8")
         return originString
 
 downloadkeycrpyto = DownloadKeyCrypto()
