@@ -75,7 +75,7 @@ class Database:
         key_with_prefix = self.task_prefix+key
         #检查是否已经存在
         if self.connection.exists(key_with_prefix):
-            self.connection.expire(key_with_prefix, timedelta(hours=2))
+            self.connection.expire(key_with_prefix, timedelta(hours=1))
             value_dict = json.loads(self.connection.get(key_with_prefix))
             return value_dict['task']
         #不存在则生成新的task编号
@@ -83,8 +83,16 @@ class Database:
         #size为文件大小限制，如果为-1则表示不限制大小
         value_dict = {'task': task, 'size': size}
         self.connection.set(key_with_prefix, json.dumps(value_dict))
-        self.connection.expire(key_with_prefix, timedelta(hours =2))
+        self.connection.expire(key_with_prefix, timedelta(hours =1))
         return task
+
+    #如果文件过大，上传时在redis中生成的task_prefix的信息可能会超时而删除，从而导致上传任务失败，因此更新其超时时间
+    def update_upload_task_expire_time_by_key(self,key):
+        key_with_prefix = self.task_prefix + key
+        if self.connection.exists(key_with_prefix):
+            self.connection.expire(key_with_prefix, timedelta(hours=1))
+        else:
+            logger.critical('Try to update task expire time ,but the task with key \"{}\" no exist !'.format(key))
 
     #检查文件名key和task编号是否匹配，该函数被上传函数调用，用于检查上传是否合法
     def is_upload_task_valid(self,key,task):
