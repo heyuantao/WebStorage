@@ -33,7 +33,7 @@ def api_upload_view():  # 一个分片上传后被调用
     #upload_file.save(TMP_UPLOAD_PATH+'/%s' % filename)  # 保存分片到本地
     store.save_clip(upload_file_clip, key, chunk)
     #根据上传的分片序号来更新上传任务设置的超时时间，而不是每次都去更新超时时间，即每50*5=250M上传后更新一下
-    if int(chunk+1)%50==0:
+    if (int(chunk)+1)%50==0:
         db.update_upload_task_expire_time_by_key(key)
 
     db.append_clip_upload_partial_status_of_key(key,filename)
