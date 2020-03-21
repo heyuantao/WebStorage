@@ -75,7 +75,8 @@ class Database:
         key_with_prefix = self.task_prefix+key
         #检查是否已经存在
         if self.connection.exists(key_with_prefix):
-            self.connection.expire(key_with_prefix, timedelta(hours=1))
+            #self.connection.expire(key_with_prefix, timedelta(hours=1))
+            self.connection.expire(key_with_prefix, timedelta(minutes=15))
             value_dict = json.loads(self.connection.get(key_with_prefix))
             return value_dict['task']
         #不存在则生成新的task编号
@@ -83,7 +84,8 @@ class Database:
         #size为文件大小限制，如果为-1则表示不限制大小
         value_dict = {'task': task, 'size': size}
         self.connection.set(key_with_prefix, json.dumps(value_dict))
-        self.connection.expire(key_with_prefix, timedelta(hours =1))
+        #self.connection.expire(key_with_prefix, timedelta(hours =1))
+        self.connection.expire(key_with_prefix, timedelta(minutes=15))
         return task
 
 
@@ -103,7 +105,8 @@ class Database:
     def update_upload_task_expire_time_by_key(self,key):
         key_with_prefix = self.task_prefix + key
         if self.connection.exists(key_with_prefix):
-            self.connection.expire(key_with_prefix, timedelta(hours=1))
+            #self.connection.expire(key_with_prefix, timedelta(hours=1))
+            self.connection.expire(key_with_prefix, timedelta(minutes=15))
         else:
             logger.critical('Try to update task expire time ,but the task with key \"{}\" no exist !'.format(key))
 
