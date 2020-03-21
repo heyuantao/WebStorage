@@ -93,7 +93,7 @@ class Database:
         #检查是否已经存在
         if self.connection.exists(key_with_prefix):
             #self.connection.expire(key_with_prefix, timedelta(hours=1))
-            value_dict = json.loads(self.connection.get(key_with_prefix))
+            value_dict = json.loads(self.connection.get(key_with_prefix))   #{'task': task, 'size': size}
             return value_dict
         else:
             logger.critical('Try to get upload info with \'{}\' but its not exist !'.format(key))

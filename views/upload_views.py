@@ -94,6 +94,12 @@ def api_upload_token_view():
     return jsonify(token_dict)
 
 def api_upload_info_view():
-    key = request.json.get('key')
-    result_dict = db.get_upload_info_by_key(key)
+    key = request.json.get('key','0')
+    task = request.json.get('task','0')
+    if key =='0' or task=='0':
+        return jsonify({'status': 'error', 'error_message': 'key or task is empty'}), status.HTTP_400_BAD_REQUEST
+    result_dict = db.get_upload_info_by_key(key)        #{'task': task, 'size': size}
+    task_value = result_dict['task']
+    if task_value!=task:
+        return jsonify({'status': 'error', 'error_message': 'task is not valid'}), status.HTTP_400_BAD_REQUEST
     return jsonify(result_dict)

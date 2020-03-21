@@ -3,7 +3,7 @@ from flask import render_template, request, session, jsonify
 from views.download_views import api_file_info_view, api_file_url_view, file_content_view, \
     file_freecontent_view
 from views.file_views import api_file_list_view, api_file_delete_view
-from views.upload_views import api_upload_view, api_upload_success_view, api_upload_token_view
+from views.upload_views import api_upload_view, api_upload_success_view, api_upload_token_view, api_upload_info_view
 
 class Route:
 
@@ -41,7 +41,7 @@ class Route:
             return api_upload_token_view()
 
         @app.route('/api/upload/info/', methods=['POST'])       #获取上传task的信息，主要是获取size的大小，即上传文件大小的限制
-        @auth.login_required
+        #@auth.login_required                                   #该接口用于给javascript客户端验证文件大小
         def upload_info():
             return api_upload_info_view()
         # ------------------------------------用于文件上传的接口---------------------------------#
