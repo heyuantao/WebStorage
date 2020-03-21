@@ -102,4 +102,4 @@ def api_upload_info_view():
     task_value = result_dict['task']
     if task_value!=task:
         return jsonify({'status': 'error', 'error_message': 'task is not valid'}), status.HTTP_400_BAD_REQUEST
-    return jsonify(result_dict)
+    return jsonify(result_dict), status.HTTP_200_OK
