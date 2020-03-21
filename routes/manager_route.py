@@ -39,6 +39,11 @@ class Route:
         @auth.login_required
         def upload_token():
             return api_upload_token_view()
+
+        @app.route('/api/upload/info/', methods=['POST'])       #获取上传task的信息，主要是获取size的大小，即上传文件大小的限制
+        @auth.login_required
+        def upload_info():
+            return api_upload_info_view()
         # ------------------------------------用于文件上传的接口---------------------------------#
 
         # ------------------------------------用于文件管理的接口---------------------------------#

@@ -92,3 +92,8 @@ def api_upload_token_view():
     token_dict = {"key":key,"task":task,"size":size}
 
     return jsonify(token_dict)
+
+def api_upload_info_view():
+    key = request.json.get('key')
+    result_dict = db.get_upload_info_by_key(key)
+    return jsonify(result_dict)
