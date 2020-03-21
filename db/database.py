@@ -92,12 +92,12 @@ class Database:
         key_with_prefix = self.task_prefix+key
         #检查是否已经存在
         if self.connection.exists(key_with_prefix):
-            self.connection.expire(key_with_prefix, timedelta(hours=1))
+            #self.connection.expire(key_with_prefix, timedelta(hours=1))
             value_dict = json.loads(self.connection.get(key_with_prefix))
             return value_dict
         else:
             logger.critical('Try to get upload info with \'{}\' but its not exist !'.format(key))
-            raise MessageException('该上传信息不存在')
+            raise MessageException('该上传任务信息不存在')
 
     #如果文件过大，上传时在redis中生成的task_prefix的信息可能会超时而删除，从而导致上传任务失败，因此更新其超时时间
     def update_upload_task_expire_time_by_key(self,key):
