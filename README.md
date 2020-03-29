@@ -4,7 +4,7 @@
 1.1 文件上传和管理模块
 
 启用用于上传和管理接口的微服务
-gunicorn -w 6 -b 0.0.0.0:5000 --log-level=DEBUG --timeout 30 App_Manager:application
+gunicorn -w 6 -b 0.0.0.0:5000 --log-level=DEBUG --timeout 30 -k gevent App_Manager:application
 
 启动工作列队
 celery -A task.task worker --loglevel=DEBUG
