@@ -11,6 +11,7 @@ class FileStorageConfig:
 
 
 class AppConfig:
+    ROUTE_PREFIX = "" # 为路由的前缀，如果与其他网站共享一个ip且通过nginx反向代理转发时使用，默认为空。样式为 "/site_url_prefix" or ""
     SITE_URL = "http://127.0.0.1:5000"
     STATIC_FOLDER = "./templates/mystorageapp/build/static"  # not end with slash
     TEMPLATE_FOLDER = "./templates/mystorageapp/build"  # not end with slash

@@ -4,6 +4,9 @@ from views.download_views import api_file_info_view, api_file_url_view, file_con
     file_freecontent_view
 from views.file_views import api_file_list_view, api_file_delete_view
 from views.upload_views import api_upload_view, api_upload_success_view, api_upload_token_view
+from config import config
+
+ROUTER_PREFIX = config.App.ROUTE_PREFIX
 
 class Route:
 
@@ -27,11 +30,11 @@ class Route:
             return api_download_url_view()
         '''
 
-        @app.route('/file/content', methods=['GET',])  #下载文件
+        @app.route(ROUTER_PREFIX+'/file/content', methods=['GET',])  #下载文件
         def file_content():
             return file_content_view()
 
-        @app.route('/file/freecontent', methods=['GET',])  #下载文件
+        @app.route(ROUTER_PREFIX+'/file/freecontent', methods=['GET',])  #下载文件
         def file_freecontent():
             return file_freecontent_view()
         # ------------------------------------------------------------------------------------#
