@@ -1,0 +1,29 @@
+[program:app]
+command = /app/WebStorageEnv/bin/gunicorn -w 6 -b 0.0.0.0:5000 --log-level=ERROR --timeout 30 -k gevent App_Manager:application
+directory = /app/WebStorage/
+autorestart = true
+stdout_logfile = /var/log/supervisor/app_out.log
+stderr_logfile = /var/log/supervisor/app_err.log
+
+[program:file]
+command = /app/WebStorageEnv/bin/gunicorn -w 6 -b 0.0.0.0:5001 --log-level=ERROR --timeout 30 -k gevent App_FileServer:application
+directory = /app/WebStorage/
+autorestart = true
+stdout_logfile = /var/log/supervisor/file_out.log
+stderr_logfile = /var/log/supervisor/file_err.log
+
+
+[program:celery]
+command = /app/WebStorageEnv/bin/celery -A task.task worker --loglevel=ERROR
+directory = /app/WebStorage/
+autorestart = true
+stdout_logfile = /var/log/supervisor/celery_out.log
+stderr_logfile = /var/log/supervisor/celery_err.log
+
+
+[program:beat]
+command = /app/WebStorageEnv/bin/celery -A task.task beat
+directory = /app/WebStorage/
+autorestart = true
+stdout_logfile = /var/log/supervisor/beat_out.log
+stderr_logfile = /var/log/supervisor/beat_err.log

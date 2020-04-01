@@ -1,0 +1,46 @@
+- name: Create app directory
+  file:
+    path: /app/WebStorage/
+    state: directory
+    owner: root
+    group: root
+    mode: 0777
+
+
+- name: Clone the app repo
+  git: 
+    repo: http://github.com/heyuantao/WebStorage.git
+    dest: /app/WebStorage/
+    version: r1
+
+- name: "Create app virtualenv"
+  command: virtualenv -p /usr/bin/python3 /app/WebStorageEnv
+
+
+- name: Initiate package in virtualenv
+  pip:
+     virtualenv: /app/WebStorageEnv
+     requirements: /app/WebStorage/requirements.txt
+     extra_args:  -i https://pypi.douban.com/simple
+
+
+- name: Install js modules
+  command: yarn install
+  args:
+   chdir: /app/WebStorage/templates/mystorageapp/
+
+
+- name: Build react file
+  command: yarn run build
+  args:
+   chdir: /app/WebStorage/templates/mystorageapp/
+
+
+- name: Create file directory for upload and merge
+  command: mkdir -p data/tmp data/merged
+  args:
+   chdir: /app/WebStorage/
+
+
+
+

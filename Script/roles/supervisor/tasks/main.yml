@@ -1,0 +1,20 @@
+- name: Install Supervisor
+  apt:
+    name: "{{item}}"
+  with_items:
+    - supervisor
+
+
+- name: Create app supervisor conf file
+  template:
+    src:  webstorage.conf.j2
+    dest: /etc/supervisor/conf.d/webstorage.conf
+    mode: 0644
+
+
+- name: Restart supervisor
+  service:
+    name: supervisor
+    state: restarted
+
+

@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="62e4d7ef-91bf-44db-a8e3-7da930fe9347" name="Default Changelist" comment="size append">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/celerybeat-schedule" beforeDir="false" afterPath="$PROJECT_DIR$/celerybeat-schedule" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/fileserver_route.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/fileserver_route.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/manager_route.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/manager_route.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,6 +153,7 @@
       <workItem from="1584786111830" duration="1621000" />
       <workItem from="1584791022124" duration="193000" />
       <workItem from="1585444825438" duration="1027000" />
+      <workItem from="1585704074496" duration="1036000" />
     </task>
     <servers />
   </component>

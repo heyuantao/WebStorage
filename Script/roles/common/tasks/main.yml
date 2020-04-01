@@ -1,0 +1,41 @@
+- name: "Update The APT REPO"
+  command: apt-get update
+
+
+- name: Install The Base deb software
+  apt:
+    name: "{{item}}"
+  with_items:
+    - python3
+    - python3-pip
+    - python3-dev
+    - virtualenv
+    - libmysqlclient-dev
+
+
+- name: Download the nodejs 10 install script
+  get_url: 
+    url: https://deb.nodesource.com/setup_10.x
+    dest: /tmp/nodejs.sh
+
+
+- name: Run the nodejs script
+  script: /tmp/nodejs.sh
+
+
+- name: Install nodejs 10
+  apt:
+    name: nodejs
+
+
+- name: Set taobao as nodejs registry
+  command: npm config set registry https://registry.npm.taobao.org
+
+
+- name: Install yarn package manager
+  command: npm install -g yarn
+
+
+- name: Set taobao as yarn registry
+  command: yarn config set registry https://registry.npm.taobao.org
+
