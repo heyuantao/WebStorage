@@ -9,7 +9,7 @@
 
 - name: Clone the app repo
   git: 
-    repo: http://github.com/heyuantao/WebStorage.git
+    repo: https://github.com/heyuantao/WebStorage.git
     dest: /app/WebStorage/
     version: r1
 
