@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="62e4d7ef-91bf-44db-a8e3-7da930fe9347" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Script/roles/nginx/templates/default.j2" beforeDir="false" afterPath="$PROJECT_DIR$/Script/roles/nginx/templates/default.j2" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -155,7 +154,7 @@
       <workItem from="1584791022124" duration="193000" />
       <workItem from="1585444825438" duration="1027000" />
       <workItem from="1585704074496" duration="1036000" />
-      <workItem from="1585707003526" duration="2878000" />
+      <workItem from="1585707003526" duration="2958000" />
     </task>
     <task id="LOCAL-00001" summary="ansible">
       <created>1585707089369</created>
@@ -171,7 +170,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585707772789</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="client body size">
+      <created>1585711546125</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1585711546125</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,7 +196,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="size append" />
     <MESSAGE value="ansible" />
-    <option name="LAST_COMMIT_MESSAGE" value="ansible" />
+    <MESSAGE value="client body size" />
+    <option name="LAST_COMMIT_MESSAGE" value="client body size" />
   </component>
   <component name="WindowStateProjectService">
     <state x="568" y="237" key="#HTTP_Proxy" timestamp="1583161168036">
@@ -210,10 +217,10 @@
     </state>
     <state x="191" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1583156187631" />
     <state x="414" y="178" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1583314540634" />
-    <state x="381" y="0" key="CommitChangelistDialog2" timestamp="1585707771469">
+    <state x="381" y="0" key="CommitChangelistDialog2" timestamp="1585711544952">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="381" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1585707771469" />
+    <state x="381" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1585711544952" />
     <state x="572" y="105" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1583485841078" />
     <state width="1850" height="466" key="DebuggerActiveHint" timestamp="1583335719117">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -270,10 +277,10 @@
     </state>
     <state x="144" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1583120855727" />
     <state x="479" y="221" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1583314561005" />
-    <state x="233" y="65" key="Vcs.Push.Dialog.v2" timestamp="1585707776548">
+    <state x="233" y="65" key="Vcs.Push.Dialog.v2" timestamp="1585711670692">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="233" y="65" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1585707776548" />
+    <state x="233" y="65" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1585711670692" />
     <state x="484" y="125" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1583765131918">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

@@ -39,7 +39,7 @@ server {
 	index index.html index.htm index.nginx-debian.html;
 
 	server_name _;
-    client_max_body_size   10m;
+    client_max_body_size 10m;
     location /static/
     {
         alias /app/WebStorage/templates/mystorageapp/build/static/;
