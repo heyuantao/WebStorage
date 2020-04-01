@@ -21,7 +21,4 @@ sudo passwd root
 echo "Restart SSH Deamon !"
 service sshd restart
 
-echo "Git clone code !"
-git clone http://github.com/heyuantao/WebStorage.git
-
 echo "Plase Reboot The System and Run Ansible Playbook !"
