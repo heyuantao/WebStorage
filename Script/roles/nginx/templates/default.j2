@@ -39,36 +39,49 @@ server {
 	index index.html index.htm index.nginx-debian.html;
 
 	server_name _;
+    client_max_body_size   10m;
+    location /static/
+    {
+        alias /app/WebStorage/templates/mystorageapp/build/static/;
+        #proxy_pass http://webstorage.syslab.org:5000;
+        #charset utf-8;
+        #proxy_set_header Host $host;
+        #proxy_set_header X-Forwarded-for $remote_addr;
+        #proxy_set_header X-Real-IP $remote_addr;
+    }
 
-        location /main/manager/media/static/ {
-            alias /app/EEAS/media/manager/build/static/;
-        }
-        location /main/examinee/media/static/ {
-            alias /app/EEAS/media/examinee/build/static/;
-        }
-        location /main/guest/media/static/ {
-            alias /app/EEAS/media/guest/build/static/;
-        }
-        location /media/libs/ {
-            alias /app/EEAS/media/libs/;
-        }
-        location /media/avatar/ {
-            alias /app/EEAS/media/avatar/;
-        }
+    location /api/
+    {
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+        proxy_pass http://127.0.0.1:5000;
+        charset utf-8;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-for $remote_addr;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
 
-	location / {
-                proxy_pass http://127.0.0.1:8080;
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    location /file/
+    {
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+        proxy_pass http://127.0.0.1:5001;
+        charset utf-8;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-for $remote_addr;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
 
+
+	#location / {
+    #    proxy_pass http://127.0.0.1:8080;
+    #    proxy_set_header Host $host;
+    #    proxy_set_header X-Real-IP $remote_addr;
+    #    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 		# First attempt to serve request as file, then
 		# as directory, then fall back to displaying a 404.
 		#try_files $uri $uri/ =404;
-	}
-        #location /media/ {
-        #    root /app/EEAS/;
-        #}
+	#}
 
 	# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
 	#
