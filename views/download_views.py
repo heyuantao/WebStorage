@@ -87,10 +87,14 @@ def file_content_view():
         realname = key
 
     ##########把原始的URL安全的字符转换为普通字符####################
-    key = downloadkeycrpyto.urlSafeStringToString(key)
-    realname = downloadkeycrpyto.urlSafeStringToString(realname)
-    timestamp = downloadkeycrpyto.urlSafeStringToString(timestamp)
-    sign = downloadkeycrpyto.urlSafeStringToString(sign)
+    try:
+        key = downloadkeycrpyto.urlSafeStringToString(key)
+        realname = downloadkeycrpyto.urlSafeStringToString(realname)
+        timestamp = downloadkeycrpyto.urlSafeStringToString(timestamp)
+        sign = downloadkeycrpyto.urlSafeStringToString(sign)
+    except Exception as e:
+        logger.info("Invalid url \"{}\" in file_content_view() !".format(request.url))
+        return jsonify({'status': 'error','error_message': 'url invalid'}), status.HTTP_400_BAD_REQUEST
     #############################################################
 
     #config.App.AUTH_TOKEN 是一组密钥，以列表方式存放，任何一个密钥的验证成功就可以通过
