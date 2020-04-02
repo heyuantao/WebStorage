@@ -147,7 +147,7 @@ def _download_partial_unmerged_content_of_key(key, realname, clip_list, begin, l
         content_generate = store.get_partial_merging_content_generate_of_key_and_clipinforamtion(key, clip_list, begin, length)
         response = Response(content_generate, mimetype=mimetypes.guess_type(key)[0])
         header = 'attachment; filename=' + url_quote(realname)
-        response.headers["ETag"] = generateETagbyString(key)
+        response.headers['ETag'] = generateETagbyString(key)
         response.headers["Content-Disposition"] = header
         response.headers['content-length'] = length
         response.headers['Accept-Ranges'] = 'bytes'
@@ -163,7 +163,7 @@ def _download_partial_merged_content_of_key(key, realname, begin, length, file_s
         content_generate = store.get_partial_content_generate_of_key(key, begin, length)
         response = Response(content_generate, mimetype=mimetypes.guess_type(key)[0])
         header = 'attachment; filename=' + url_quote(realname)
-        response.headers["ETag"] = generateETagbyString(key)
+        response.headers['ETag'] = generateETagbyString(key)
         response.headers["Content-Disposition"] = header
         response.headers['content-length'] = length
         response.headers['Accept-Ranges'] ='bytes' #response.headers['Etag'] = '1116c8800-55ba3fb45b641'
@@ -182,7 +182,7 @@ def _download_unmerged_content_of_key(key, realname, clip_list):
         #response = Response(content_generate, content_type="application/octet-stream")
         response = Response(content_generate, mimetype=mimetypes.guess_type(key)[0])
         header = 'attachment; filename=' + url_quote(realname)
-        response.headers["ETag"] = generateETagbyString(key)
+        response.headers['ETag'] = generateETagbyString(key)
         response.headers["Content-Disposition"] = header
         response.headers['content-length'] = file_size
         response.headers['Accept-Ranges'] = 'bytes'
@@ -201,7 +201,7 @@ def _download_merged_content_of_key(key, realname):
         #response = Response(content_generate, content_type="application/octet-stream")
         response = Response(content_generate, mimetype=mimetypes.guess_type(key)[0])
         header = 'attachment; filename=' + url_quote(realname)
-        response.headers["ETag"] = generateETagbyString(key)
+        response.headers['ETag'] = generateETagbyString(key)
         response.headers["Content-Disposition"] = header
         response.headers['content-length'] = file_size
         response.headers['Accept-Ranges'] ='bytes'
