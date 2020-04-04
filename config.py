@@ -24,7 +24,7 @@ class Config:
     App = AppConfig()
 
     def __init__(self):
-        default_token_list = ["UseMyWebStorageService","6ea4ef99ab4a56e322c2bea276d6337c"]
+        default_token_list = [os.getenv('TOKEN',default="UseMyWebStorageService")]  #the token variables
         for token_item in default_token_list:
             if token_item in self.App.AUTH_TOKEN:
                 logger.critical("The default auth token \"{}\" is using .This may cause secure problem !".format(token_item))
