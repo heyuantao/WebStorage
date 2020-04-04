@@ -10,19 +10,17 @@ docker build -t webstorage:1.0 .
 1.2 运行容器
 先运行redis：
 ```
-sudo mkdir /app/
+sudo mkdir -p /app/
 sudo chown -R ${USER}:${USER} /app/
-cd /app/
-git clone https://github.com/heyuantao/WebStorage.git
-cd WebStorage
-docker run -d --name redis --restart=always --network=host -v $PWD/docker/redis/redis.conf:/etc/redis/redis.conf redis:5.0 redis-server /etc/redis/redis.conf
+git clone https://github.com/heyuantao/WebStorage.git /app/WebStorage/
+docker run -d --name redis --restart=always --network=host -v /app/WebStorage/docker/redis/redis.conf:/etc/redis/redis.conf redis:5.0 redis-server /etc/redis/redis.conf
 ```
 然后运行应用
 ```
-sudo mkdir /app/data/
-cd /app/data/
-sudo mkdir merged tmp logs                #merged放置合并后的文件,tmp放置上传未合并的文件分片,logs放置supervisor的日志
-docker run -d --name webstorage --restart=always --net=host -e TOKEN=UseMyWebStorage -v $PWD/merged:/app/WebStorage/data/merged/ -v $PWD/tmp:/app/WebStorage/data/tmp/ -v $PWD/logs:/var/log/supervisor/ webstorage:1.0 
+mkdir -p /app/data/files/merged /app/data/files/tmp /app/data/logs  #merged存放合并后的文件,tmp存放未合并的文件,logs放置supervisor的日志
+mkdir -p /app/data/files/tmp       #存放未合并的文件
+mkdir -p /app/data/logs            #存放日志，放置supervisor的日志
+docker run -d --name webstorage --restart=always --net=host -e TOKEN=UseMyWebStorage -v /app/data/files/merged:/app/WebStorage/data/merged/ -v /app/data/files/tmp:/app/WebStorage/data/tmp/ -v /app/data/logs:/var/log/supervisor/ webstorage:1.0 
 ```
 其中"TOKEN"为其他服务连接使用的密钥,切记不要泄露。
 
