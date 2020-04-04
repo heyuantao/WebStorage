@@ -10,7 +10,7 @@ docker build -t webstorage:1.0 .
 1.2 运行容器
 ```
 mkdir merged tmp logs                #merged放置合并后的文件,tmp放置上传未合并的文件分片,logs放置supervisor的日志
-docker run -d --name redis --restart=always --network=host redis:5.0
+docker run -d --name redis --restart=always --network=host -v $PWD/docker/redis/redis.conf:/etc/redis/redis.conf redis:5.0 redis-server /etc/redis/redis.conf
 docker run -d --name webstorage --restart=always --net=host -e TOKEN=UseMyWebStorage -v $PWD/merged:/app/WebStorage/data/merged/ -v $PWD/tmp:/app/WebStorage/data/tmp/ -v $PWD/logs:/var/log/supervisor/ webstorage:1.0 
 ```
 其中"TOKEN"为其他服务连接使用的密钥,切记不要泄露。
