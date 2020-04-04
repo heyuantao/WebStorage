@@ -40,7 +40,7 @@ server {
 
 	server_name _;
     location /static/ {
-            alias /app/WebStorage/templates/mystorageapp/build/;
+            alias /app/WebStorage/templates/mystorageapp/build/static/;
     }
     location /api/ {
             proxy_http_version 1.1;
