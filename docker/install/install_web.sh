@@ -11,6 +11,6 @@ pip3 install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/
 
 echo "Copy Nginx and Supervisor Config Fle !"
 cp /app/WebStorage/docker/nginx/default /etc/nginx/sites-enabled/default
-cp /app/WebStorage/docker/supervisor/filemanager.conf /etc/supervisor/conf.d/filemanager.conf
+cp /app/WebStorage/docker/supervisor/webstorage.conf /etc/supervisor/conf.d/webstorage.conf
 
 echo "Install Finished !" 
