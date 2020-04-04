@@ -1,9 +1,10 @@
 该项目实现了一个大文件上传的微服务（前端依赖webuploader),软件分为两个部分，一个用于文件的上传和管理，另一个模块用于文件的下载
+该软件可以利用给第三方网站提供微服务，并支持大文件的分片直传，类似于云存储的大文件直传方案。
 
 一、以容器方式运行
 1.1 构建容器
 ```
-cd templates/mystorageapp/ ; yarn run build ; cd -
+cd templates/mystorageapp/ ; yarn run build ; cd -            #将自带的单页面程序打包下
 docker build -t webstorage:1.0 .
 ```
 1.2 运行容器
@@ -12,6 +13,7 @@ mkdir merged tmp logs                #merged放置合并后的文件,tmp放置�
 docker run -d --name redis --network=host redis:5.0
 docker run -d --name webstorage -e TOKEN=UseMyWebStorage --net=host -v $PWD/merged:/app/WebStorage/data/merged/ -v $PWD/tmp:/app/WebStorage/data/tmp/ -v $PWD/logs:/var/log/supervisor/ webstorage:1.0 
 ```
+其中"TOKEN"为其他服务连接使用的密钥,切记不要泄露。
 
 二、源代码方式安装和调试
 2.1 文件上传和管理模块
