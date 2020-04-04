@@ -3,6 +3,7 @@
 一、以容器方式运行
 1.1 构建容器
 ```
+cd templates/mystorageapp/ ; yarn run build ; cd -
 docker build -t webstorage:1.0 .
 ```
 1.2 运行容器
