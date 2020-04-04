@@ -1,3 +1,7 @@
+echo "Create directorys for tmp and merged !"
+mkdir -p /app/WebStorage/data/tmp
+mkdir -p /app/WebStorage/data/merged
+
 echo "Remove the node_modules !"
 rm -Rf /app/WebStorage/templates/mystorageapp/node_modules/
 
@@ -12,5 +16,6 @@ pip3 install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/
 echo "Copy Nginx and Supervisor Config Fle !"
 cp /app/WebStorage/docker/nginx/default /etc/nginx/sites-enabled/default
 cp /app/WebStorage/docker/supervisor/webstorage.conf /etc/supervisor/conf.d/webstorage.conf
+
 
 echo "Install Finished !" 
