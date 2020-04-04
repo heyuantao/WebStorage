@@ -11,7 +11,7 @@ docker build -t webstorage:1.0 .
 先运行redis：
 ```
 sudo mkdir /app/
-sudo chown -R xxx:xxx /app/
+sudo chown -R ${USER}:${USER} /app/
 cd /app/
 git clone https://github.com/heyuantao/WebStorage.git
 cd WebStorage
