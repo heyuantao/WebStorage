@@ -40,7 +40,7 @@ server {
 
 	server_name _;
 	client_max_body_size 15m; 
-    	location /static/ {
+    	location /api/static/ {
             alias /app/WebStorage/templates/mystorageapp/build/static/;
     	}
     	location /api/ {
