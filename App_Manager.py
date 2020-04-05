@@ -14,7 +14,7 @@ def read_upload_file_list_to_db(db,store):
         db.add_to_downloadable_file_list_by_key(file)
 
 def create_app():
-    app = Flask(__name__,static_folder=config.App.STATIC_FOLDER, template_folder=config.App.TEMPLATE_FOLDER)
+    app = Flask(__name__,static_folder=config.App.STATIC_FOLDER, static_url_path=config.App.STATIC_URL, template_folder=config.App.TEMPLATE_FOLDER)
     app.config.from_object(config)
     CORS(app)
     app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
