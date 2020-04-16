@@ -8,6 +8,7 @@
 /views/__pycache__
 /exceptions/__pycache__
 
+/data/*
 /data/merged/*
 /data/tmp/*
 
