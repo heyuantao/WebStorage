@@ -5,13 +5,15 @@ from werkzeug.serving import WSGIRequestHandler
 from config import config
 import logging
 
+from task import init_db_by_upload_files
+
 logger = logging.getLogger(__name__)
 
 
-def read_upload_file_list_to_db(db,store):
-    file_list = store.get_upload_file_list()
-    for file in file_list:
-        db.add_to_downloadable_file_list_by_key(file)
+#def read_upload_file_list_to_db(db,store):
+#    file_list = store.get_upload_file_list()
+#    for file in file_list:
+#        db.add_to_downloadable_file_list_by_key(file)
 
 def create_app():
     app = Flask(__name__,static_folder=config.App.STATIC_FOLDER, static_url_path=config.App.STATIC_URL, template_folder=config.App.TEMPLATE_FOLDER)
@@ -35,8 +37,9 @@ def create_app():
     redis_instance = Database()
     redis_instance.init_app(app)
 
-    #从本次磁盘读入已经上传的文件列表，并将其保存如redis中
-    read_upload_file_list_to_db(redis_instance, storage_instance)
+    #从本次磁盘读入已经上传的文件列表，并将其保存如redis中,使用异步任务完成
+    init_db_by_upload_files.delay()
+    #read_upload_file_list_to_db(redis_instance, storage_instance)
 
     # 从gunicorn获得loglevel等级，并将其设置到app中
     gunicorn_logger = logging.getLogger("gunicorn.error")

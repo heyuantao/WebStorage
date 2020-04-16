@@ -72,3 +72,12 @@ def delete_file_marked_as_deleting():
         except Exception as e:
             logger.critical("Error Happend when delete \"{}\" in db and store in task.delete_file_marked_as_deleting() ".format(deleting_file_item))
 
+
+#初始化数据库，使用merged目录下的文件名
+@celery.task
+def init_db_by_upload_files():
+    print("Init db with uplod file begin !")
+    file_list = store.get_upload_file_list()
+    for file in file_list:
+        db.add_to_downloadable_file_list_by_key(file)
+    print("Init db with uplod file finished !")

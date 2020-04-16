@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="62e4d7ef-91bf-44db-a8e3-7da930fe9347" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/docker/nginx/default" beforeDir="false" afterPath="$PROJECT_DIR$/docker/nginx/default" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App_Manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/App_Manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/task.py" beforeDir="false" afterPath="$PROJECT_DIR$/task/task.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,9 +36,10 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="ignore.virus.scanning.warn.message" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../EEAS" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -190,6 +194,11 @@
       <workItem from="1586000964612" duration="1340000" />
       <workItem from="1586003345223" duration="2492000" />
       <workItem from="1586061606451" duration="796000" />
+      <workItem from="1586439083815" duration="83000" />
+      <workItem from="1586526848791" duration="16000" />
+      <workItem from="1586788956448" duration="578000" />
+      <workItem from="1587020731354" duration="703000" />
+      <workItem from="1587035970849" duration="430000" />
     </task>
     <task id="LOCAL-00001" summary="ansible">
       <created>1585707089369</created>
@@ -219,7 +228,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585711688772</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="change apt repo">
+      <created>1586439122161</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1586439122161</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -239,7 +255,8 @@
     <MESSAGE value="size append" />
     <MESSAGE value="ansible" />
     <MESSAGE value="client body size" />
-    <option name="LAST_COMMIT_MESSAGE" value="client body size" />
+    <MESSAGE value="change apt repo" />
+    <option name="LAST_COMMIT_MESSAGE" value="change apt repo" />
   </component>
   <component name="WindowStateProjectService">
     <state x="568" y="237" key="#HTTP_Proxy" timestamp="1583161168036">
@@ -263,11 +280,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="665" y="328" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1585989624283" />
-    <state x="381" y="0" key="CommitChangelistDialog2" timestamp="1585711687657">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="572" y="105" key="CommitChangelistDialog2" timestamp="1586439121497">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="381" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1585711687657" />
-    <state x="572" y="105" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1583485841078" />
+    <state x="572" y="105" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1586439121497" />
     <state width="1850" height="466" key="DebuggerActiveHint" timestamp="1583335719117">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -323,14 +340,19 @@
     </state>
     <state x="144" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1583120855727" />
     <state x="479" y="221" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1583314561005" />
-    <state x="233" y="65" key="Vcs.Push.Dialog.v2" timestamp="1585711690758">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="350" y="99" key="Vcs.Push.Dialog.v2" timestamp="1586439138179">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="233" y="65" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1585711690758" />
+    <state x="350" y="99" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1586439138179" />
     <state x="484" y="125" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1583765131918">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="484" y="125" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1583765131918" />
+    <state x="658" y="322" key="git4idea.merge.GitPullDialog" timestamp="1587035982678">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="658" y="322" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1587035982678" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1583844171625">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
