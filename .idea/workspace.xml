@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="62e4d7ef-91bf-44db-a8e3-7da930fe9347" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/task/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task/task.py" beforeDir="false" afterPath="$PROJECT_DIR$/task/task.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,7 +196,7 @@
       <workItem from="1586526848791" duration="16000" />
       <workItem from="1586788956448" duration="578000" />
       <workItem from="1587020731354" duration="703000" />
-      <workItem from="1587035970849" duration="736000" />
+      <workItem from="1587035970849" duration="1384000" />
     </task>
     <task id="LOCAL-00001" summary="ansible">
       <created>1585707089369</created>
@@ -241,7 +240,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587036414346</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="find a bug">
+      <created>1587036721825</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1587036721825</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -263,7 +269,8 @@
     <MESSAGE value="client body size" />
     <MESSAGE value="change apt repo" />
     <MESSAGE value="init with async task" />
-    <option name="LAST_COMMIT_MESSAGE" value="init with async task" />
+    <MESSAGE value="find a bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="find a bug" />
   </component>
   <component name="WindowStateProjectService">
     <state x="568" y="237" key="#HTTP_Proxy" timestamp="1583161168036">
@@ -287,11 +294,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="665" y="328" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1585989624283" />
-    <state x="572" y="105" key="CommitChangelistDialog2" timestamp="1587036413739">
+    <state x="572" y="105" key="CommitChangelistDialog2" timestamp="1587036721230">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="381" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1585711687657" />
-    <state x="572" y="105" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1587036413739" />
+    <state x="572" y="105" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1587036721230" />
     <state width="1850" height="466" key="DebuggerActiveHint" timestamp="1583335719117">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -347,11 +354,11 @@
     </state>
     <state x="144" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1583120855727" />
     <state x="479" y="221" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1583314561005" />
-    <state x="350" y="99" key="Vcs.Push.Dialog.v2" timestamp="1587036417121">
+    <state x="350" y="99" key="Vcs.Push.Dialog.v2" timestamp="1587036723104">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="233" y="65" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1585711690758" />
-    <state x="350" y="99" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1587036417121" />
+    <state x="350" y="99" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1587036723104" />
     <state x="484" y="125" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1583765131918">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
