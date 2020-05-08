@@ -4,7 +4,6 @@
 一、以容器方式运行
 1.1 构建容器
 ```
-cd templates/mystorageapp/ ; yarn run build ; cd -            #将自带的单页面程序打包下
 docker build -t webstorage:3.0 .
 ```
 1.2 运行容器
