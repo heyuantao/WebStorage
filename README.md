@@ -5,7 +5,7 @@
 1.1 构建容器
 ```
 cd templates/mystorageapp/ ; yarn run build ; cd -            #将自带的单页面程序打包下
-docker build -t webstorage:1.0 .
+docker build -t webstorage:3.0 .
 ```
 1.2 运行容器
 先运行redis：
@@ -20,7 +20,7 @@ docker run -d --name redis --restart=always --network=host -v /app/WebStorage/do
 mkdir -p /app/data/files/merged /app/data/files/tmp /app/data/logs  #merged存放合并后的文件,tmp存放未合并的文件,logs放置supervisor的日志
 mkdir -p /app/data/files/tmp       #存放未合并的文件
 mkdir -p /app/data/logs            #存放日志，放置supervisor的日志
-docker run -d --name webstorage --restart=always --net=host -e TOKEN=UseMyWebStorage -v /app/data/files/merged:/app/WebStorage/data/merged/ -v /app/data/files/tmp:/app/WebStorage/data/tmp/ -v /app/data/logs:/var/log/supervisor/ webstorage:1.0 
+docker run -d --name webstorage --restart=always --net=host -e TOKEN=UseMyWebStorage -v /app/data/files/merged:/app/WebStorage/data/merged/ -v /app/data/files/tmp:/app/WebStorage/data/tmp/ -v /app/data/logs:/var/log/supervisor/ webstorage:3.0 
 ```
 其中"TOKEN"为其他服务连接使用的密钥,切记不要泄露。
 
