@@ -21,12 +21,9 @@ ENV LANGUAGE zh_CN.UTF-8
 ENV LC_ALL zh_CN.UTF-8
 
 WORKDIR /app/WebStorage
-
 COPY ./ /app/WebStorage/
-
 RUN bash /app/WebStorage/docker/install/install_web.sh
 
-#VOLUME ['/app/EEAS/media/avatar/','/var/log/supervisor/']
 VOLUME ['/app/WebStorage/data/merged/','/app/WebStorage/data/tmp/','/var/log/supervisor/']
 
 ENTRYPOINT  ["supervisord","-n"]

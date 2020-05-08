@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="62e4d7ef-91bf-44db-a8e3-7da930fe9347" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/task.py" beforeDir="false" afterPath="$PROJECT_DIR$/task/task.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,19 +44,19 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Projects\WebStorage\routes" />
-      <recent name="D:\Projects\WebStorage" />
-      <recent name="D:\Projects\WebStorage\templates\backup\deleted" />
-      <recent name="D:\Projects\WebStorage\views" />
-      <recent name="D:\Projects\WebStorage\templates" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Projects\WebStorage\templates\mystorageapp\src\pages\componments" />
       <recent name="D:\Projects\WebStorage\templates\mystorageapp\src\pages\MainPage" />
       <recent name="D:\Projects\WebStorage\templates\mystorageapp\src\pages" />
       <recent name="D:\Projects\WebStorage\templates\test" />
       <recent name="D:\Projects\WebStorage\utils" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\projects\WebStorage" />
+      <recent name="D:\Projects\WebStorage\routes" />
+      <recent name="D:\Projects\WebStorage" />
+      <recent name="D:\Projects\WebStorage\templates\backup\deleted" />
+      <recent name="D:\Projects\WebStorage\views" />
     </key>
   </component>
   <component name="RunManager" selected="Python.app_common">
@@ -196,7 +197,8 @@
       <workItem from="1586526848791" duration="16000" />
       <workItem from="1586788956448" duration="578000" />
       <workItem from="1587020731354" duration="703000" />
-      <workItem from="1587035970849" duration="1384000" />
+      <workItem from="1587035970849" duration="2054000" />
+      <workItem from="1588918052708" duration="553000" />
     </task>
     <task id="LOCAL-00001" summary="ansible">
       <created>1585707089369</created>
@@ -247,7 +249,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587036721825</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="init db bug fixed">
+      <created>1587037419543</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1587037419543</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,7 +279,8 @@
     <MESSAGE value="change apt repo" />
     <MESSAGE value="init with async task" />
     <MESSAGE value="find a bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="find a bug" />
+    <MESSAGE value="init db bug fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="init db bug fixed" />
   </component>
   <component name="WindowStateProjectService">
     <state x="568" y="237" key="#HTTP_Proxy" timestamp="1583161168036">
@@ -294,11 +304,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="665" y="328" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1585989624283" />
-    <state x="572" y="105" key="CommitChangelistDialog2" timestamp="1587036721230">
+    <state x="572" y="105" key="CommitChangelistDialog2" timestamp="1587037418947">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="381" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1585711687657" />
-    <state x="572" y="105" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1587036721230" />
+    <state x="572" y="105" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1587037418947" />
     <state width="1850" height="466" key="DebuggerActiveHint" timestamp="1583335719117">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -354,19 +364,19 @@
     </state>
     <state x="144" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1583120855727" />
     <state x="479" y="221" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1583314561005" />
-    <state x="350" y="99" key="Vcs.Push.Dialog.v2" timestamp="1587036723104">
+    <state x="350" y="99" key="Vcs.Push.Dialog.v2" timestamp="1587037420826">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="233" y="65" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1585711690758" />
-    <state x="350" y="99" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1587036723104" />
+    <state x="350" y="99" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1587037420826" />
     <state x="484" y="125" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1583765131918">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="484" y="125" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1583765131918" />
-    <state x="658" y="322" key="git4idea.merge.GitPullDialog" timestamp="1587035982678">
+    <state x="658" y="322" key="git4idea.merge.GitPullDialog" timestamp="1588918115395">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="658" y="322" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1587035982678" />
+    <state x="658" y="322" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1588918115395" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1583844171625">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
