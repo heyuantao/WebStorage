@@ -2,16 +2,18 @@ echo "Create directorys for tmp and merged !"
 mkdir -p /app/WebStorage/data/tmp
 mkdir -p /app/WebStorage/data/merged
 
-echo "Remove the node_modules !"
-rm -Rf /app/WebStorage/templates/mystorageapp/node_modules/
+echo "Install virtualenv and requirements !"
+cd /app/WebStorage && make installenv
 
-echo "Install Apt Package !"
-apt-get install -y nginx supervisor
-apt-get install -y python3 python3-pip #python3-dev libmysqlclient-dev
-#apt-get install -y libssl-dev
+echo "Install node yarn and node modules !"
+cd /app/WebStorage && make installnodeenv
 
-echo "Install Python Package !"
-pip3 install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/
+echo "Build node modules !"
+cd /app/WebStorage && make buildnodemodules
+
+echo "Clear useless node modules !"
+cd /app/WebStorage && make cleannodemodules
+
 
 echo "Copy Nginx and Supervisor Config Fle !"
 cp /app/WebStorage/docker/nginx/default /etc/nginx/sites-enabled/default
